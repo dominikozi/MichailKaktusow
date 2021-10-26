@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".View.Notatki">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notatkiRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/nowanotatka_linearlayout">
 
-
-
-
-
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notatkiRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100dp" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

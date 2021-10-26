@@ -1,10 +1,13 @@
 package com.example.mkaktusow.View;
+import com.example.mkaktusow.Controller.NotatkaAdapter;
 import com.example.mkaktusow.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,14 +15,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Notatki extends AppCompatActivity {
 
     Button buttonDodajNotatke;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+
+
+    ArrayList<String> notatki;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notatki);
+
+
+        notatki = new ArrayList<>();
+        for( int i=0;i<100; i++){
+            notatki.add("Notatka # "+ i);
+        }
+        //recycler view
+        recyclerView = findViewById(R.id.notatkiRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new NotatkaAdapter(notatki);
+
+        recyclerView.setAdapter(adapter);
+
+
+
+
+
+
 
 
         //----bottom navigation bar
@@ -48,7 +79,7 @@ public class Notatki extends AppCompatActivity {
         });
         //!!!!!----bottom navigation bar
 
-
+        //Button dodaj notatke
         buttonDodajNotatke=findViewById(R.id.notatki_button_dodajNotatke);
         buttonDodajNotatke.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,6 +87,8 @@ public class Notatki extends AppCompatActivity {
                 startActivity(new Intent(Notatki.this, NowaNotatka.class));
             }
         });
+
+
 
 
 
