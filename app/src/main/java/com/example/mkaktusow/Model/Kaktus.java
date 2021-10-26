@@ -16,8 +16,7 @@ public class Kaktus {
     private String nazwaMiejsca;
     private String lokalizacja;
 
-    public Kaktus(long idKaktus, String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, String lokalizacja) {
-        this.idKaktus = idKaktus;
+    public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, String lokalizacja) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
         this.dataOstPodlania = dataOstPodlania;

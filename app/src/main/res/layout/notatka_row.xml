@@ -9,6 +9,15 @@
         android:id="@+id/nazwa_notatka_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"/>
+        android:textSize="18dp"/>
+
+    <TextView
+        android:id="@+id/typ_notatki_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"/>
+
+
+
 
 </LinearLayout>

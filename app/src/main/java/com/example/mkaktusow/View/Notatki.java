@@ -1,5 +1,6 @@
 package com.example.mkaktusow.View;
 import com.example.mkaktusow.Controller.NotatkaAdapter;
+import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -26,7 +27,7 @@ public class Notatki extends AppCompatActivity {
     RecyclerView.Adapter adapter;
 
 
-    ArrayList<String> notatki;
+    ArrayList<Notatka> notatki;
 
 
     @Override
@@ -37,7 +38,8 @@ public class Notatki extends AppCompatActivity {
 
         notatki = new ArrayList<>();
         for( int i=0;i<100; i++){
-            notatki.add("Notatka # "+ i);
+            Notatka notatka = new Notatka("typ Notatki"+i*3, "nazwaNotatki #"+ i);
+            notatki.add(notatka);
         }
         //recycler view
         recyclerView = findViewById(R.id.notatkiRecyclerView);

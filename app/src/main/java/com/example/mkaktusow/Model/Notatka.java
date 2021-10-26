@@ -13,7 +13,8 @@ public class Notatka {
     @PrimaryKey(autoGenerate = true)
     private long idNotatka;
 
-    private int typNotatki; //0-tekstowa, 1-audio, 2-zdjecie, 3-film
+    private String typNotatki; //0-tekstowa, 1-audio, 2-zdjecie, 3-film
+    private String nazwaNotatki;
     private String sciezkaDoZdjecia;
     private String sciezkaDoAudio;
     private String dataDodania;
@@ -24,8 +25,13 @@ public class Notatka {
 
     }
 
-    public Notatka(long idNotatka, int typNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String dataDodania, long kaktusId) {
-        this.idNotatka = idNotatka;
+    public Notatka(String typNotatki, String nazwaNotatki) {
+        this.typNotatki = typNotatki;
+        this.nazwaNotatki=nazwaNotatki;
+    }
+
+    public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String dataDodania, long kaktusId) {
+        this.nazwaNotatki=nazwaNotatki;
         this.typNotatki = typNotatki;
         this.sciezkaDoZdjecia = sciezkaDoZdjecia;
         this.sciezkaDoAudio = sciezkaDoAudio;
@@ -41,11 +47,11 @@ public class Notatka {
         this.idNotatka = idNotatka;
     }
 
-    public int getTypNotatki() {
+    public String getTypNotatki() {
         return typNotatki;
     }
 
-    public void setTypNotatki(int typNotatki) {
+    public void setTypNotatki(String typNotatki) {
         this.typNotatki = typNotatki;
     }
 
@@ -79,5 +85,13 @@ public class Notatka {
 
     public void setKaktusId(long kaktusId) {
         this.kaktusId = kaktusId;
+    }
+
+    public String getNazwaNotatki() {
+        return nazwaNotatki;
+    }
+
+    public void setNazwaNotatki(String nazwaNotatki) {
+        this.nazwaNotatki = nazwaNotatki;
     }
 }

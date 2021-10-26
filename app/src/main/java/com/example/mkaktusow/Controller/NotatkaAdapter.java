@@ -1,4 +1,5 @@
 package com.example.mkaktusow.Controller;
+import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 
 public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHolder> {
 
-    ArrayList<String> notatki;
+    ArrayList<Notatka> notatki;
 
-    public NotatkaAdapter(ArrayList<String> notatki) {
+    public NotatkaAdapter(ArrayList<Notatka> notatki) {
         this.notatki = notatki;
     }
 
@@ -26,7 +27,8 @@ public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull NotatkaAdapter.ViewHolder holder, int position) {
-        holder.nazwa.setText(notatki.get(position));
+        holder.nazwa.setText(notatki.get(position).getNazwaNotatki());
+        holder.typNotatki.setText(notatki.get(position).getTypNotatki());
     }
 
     @Override
@@ -36,9 +38,11 @@ public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nazwa;
+        public TextView typNotatki;
         public ViewHolder(View itemView) {
             super(itemView);
             nazwa=itemView.findViewById(R.id.nazwa_notatka_row);
+            typNotatki=itemView.findViewById(R.id.typ_notatki_row);
         }
     }
 }
