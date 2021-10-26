@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHolder> {
 
-    ArrayList<Notatka> notatki;
+    List<Notatka> notatki;
 
-    public NotatkaAdapter(ArrayList<Notatka> notatki) {
+    public NotatkaAdapter(List<Notatka> notatki) {
         this.notatki = notatki;
     }
 

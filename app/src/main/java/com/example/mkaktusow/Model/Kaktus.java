@@ -1,19 +1,26 @@
 package com.example.mkaktusow.Model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Kaktus {
 
-    @PrimaryKey(autoGenerate = true)
-    private long idKaktus;
+    @PrimaryKey
+    private long idkaktus;
 
+    @ColumnInfo(name="nazwa_kaktusa")
     private String nazwaKaktusa;
+    @ColumnInfo(name="gatunek")
     private String gatunek;
+    @ColumnInfo(name="data_podlania")
     private String dataOstPodlania;
+    @ColumnInfo(name="data_zakwitu")
     private String dataOstZakwitu;
+    @ColumnInfo(name="nazwa_miejsca")
     private String nazwaMiejsca;
+    @ColumnInfo(name="lokalizacja")
     private String lokalizacja;
 
     public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, String lokalizacja) {
@@ -28,12 +35,13 @@ public class Kaktus {
     public Kaktus() {
     }
 
-    public long getIdKaktus() {
-        return idKaktus;
+
+    public long getIdkaktus() {
+        return idkaktus;
     }
 
-    public void setIdKaktus(long idKaktus) {
-        this.idKaktus = idKaktus;
+    public void setIdkaktus(long idkaktus) {
+        this.idkaktus = idkaktus;
     }
 
     public String getNazwaKaktusa() {

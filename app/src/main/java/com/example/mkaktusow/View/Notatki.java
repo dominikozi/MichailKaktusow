@@ -1,5 +1,6 @@
 package com.example.mkaktusow.View;
 import com.example.mkaktusow.Controller.NotatkaAdapter;
+import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.widget.Button;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Notatki extends AppCompatActivity {
 
@@ -27,7 +30,7 @@ public class Notatki extends AppCompatActivity {
     RecyclerView.Adapter adapter;
 
 
-    ArrayList<Notatka> notatki;
+ //   ArrayList<Notatka> notatki;
 
 
     @Override
@@ -36,11 +39,17 @@ public class Notatki extends AppCompatActivity {
         setContentView(R.layout.activity_notatki);
 
 
-        notatki = new ArrayList<>();
+     /*   notatki = new ArrayList<>();
         for( int i=0;i<100; i++){
             Notatka notatka = new Notatka("typ Notatki"+i*3, "nazwaNotatki #"+ i);
             notatki.add(notatka);
-        }
+        }*/
+        //TODO robić to w background treat a nie w main!
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
+        List<Notatka> notatki = db.notatkaDAO().getAllNotatki();
+
+
         //recycler view
         recyclerView = findViewById(R.id.notatkiRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
