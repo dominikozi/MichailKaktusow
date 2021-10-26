@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Miejsca"
+        android:title="Kaktusy"
+        android:icon="@drawable/ic_leaf_24"/>
+
+    <item
+        android:id="@+id/Notatki"
+        android:title="Notatki"
+        android:icon="@drawable/ic_list_24"/>
+
+    <item
+        android:id="@+id/Encyklopedia"
+        android:title="Encyklopedia"
+        android:icon="@drawable/ic_book_24"/>
+</menu>
