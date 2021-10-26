@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class Notatki extends AppCompatActivity {
+
+    Button buttonDodajNotatke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,19 @@ public class Notatki extends AppCompatActivity {
                 return false;
             }
         });
-        //----bottom navigation bar
+        //!!!!!----bottom navigation bar
+
+
+        buttonDodajNotatke=findViewById(R.id.notatki_button_dodajNotatke);
+        buttonDodajNotatke.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Notatki.this, NowaNotatka.class));
+            }
+        });
+
+
+
 
         //
     }

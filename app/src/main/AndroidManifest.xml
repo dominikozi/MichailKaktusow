@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MKaktusow">
         <activity
+            android:name=".View.NowaNotatka"
+            android:exported="false" />
+        <activity
             android:name=".View.Encyklopedia"
             android:exported="false" />
         <activity

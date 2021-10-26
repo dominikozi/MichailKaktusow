@@ -6,13 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".View.Notatki">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Notatki"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notatkiRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+
+
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -24,10 +28,14 @@
         app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true"    />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notatkiRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/notatki_button_dodajNotatke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dodaj notatke"
+        android:layout_marginBottom="55dp"
+        android:layout_alignBottom="@id/bottom_navigation"
+        />
 
 
 </RelativeLayout>
