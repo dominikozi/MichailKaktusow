@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MKaktusow">
         <activity
+            android:name=".View.NowyKaktus"
+            android:exported="false" />
+        <activity
             android:name=".View.NowaNotatka"
             android:exported="false" />
         <activity
@@ -19,7 +22,7 @@
             android:name=".View.Notatki"
             android:exported="false" />
         <activity
-            android:name=".View.Miejsca"
+            android:name=".View.Kaktusy"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

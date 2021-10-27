@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Kaktus {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long idkaktus;
 
     @ColumnInfo(name="nazwa_kaktusa")
@@ -22,6 +22,12 @@ public class Kaktus {
     private String nazwaMiejsca;
     @ColumnInfo(name="lokalizacja")
     private String lokalizacja;
+
+    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca) {
+        this.nazwaKaktusa = nazwaKaktusa;
+        this.gatunek = gatunek;
+        this.nazwaMiejsca = nazwaMiejsca;
+    }
 
     public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, String lokalizacja) {
         this.nazwaKaktusa = nazwaKaktusa;

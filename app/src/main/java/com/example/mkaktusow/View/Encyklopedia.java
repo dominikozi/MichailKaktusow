@@ -36,7 +36,7 @@ public class Encyklopedia extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.Miejsca:
-                        startActivity(new Intent(getApplicationContext(),Miejsca.class));
+                        startActivity(new Intent(getApplicationContext(), Kaktusy.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

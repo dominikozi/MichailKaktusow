@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".View.NowyKaktus"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nowykaktus_textinputlayout_1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nowykaktus_textinputedittext_1_nazwakaktusa"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="Nazwa kaktusa"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nowykaktus_textinputlayout_2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nowykaktus_textinputedittext_2_gatunek"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="Gatunek"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nowykaktus_textinputlayout_3"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nowykaktus_textinputedittext_3_miejsce"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="Nazwa miejsca"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nowykaktus_button_dodajkaktus"
+        android:text="Dodaj kaktusa"/>
+
+</LinearLayout>

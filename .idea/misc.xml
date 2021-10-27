@@ -8,10 +8,12 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/ic_leaf_24.xml" value="0.3828125" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/selector.xml" value="0.3828125" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_encyklopedia.xml" value="0.2966485507246377" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.36666666666666664" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_notatki.xml" value="0.25" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.1" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_notatki.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowa_notatka.xml" value="0.36666666666666664" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowy_kaktus.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/fragment_notatki_recycler_one.xml" value="0.36666666666666664" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/kaktus_row.xml" value="0.21" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_row.xml" value="0.36666666666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_rzad.xml" value="0.36666666666666664" />
       </map>

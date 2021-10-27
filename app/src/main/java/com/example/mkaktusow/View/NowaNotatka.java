@@ -16,8 +16,6 @@ import android.widget.EditText;
 
 public class NowaNotatka extends AppCompatActivity {
 
-    private static final String TAG = "StworzNotatke";
-
     EditText nazwa;
     EditText typNotatki;
     Button buttonDodajNotatke;
@@ -38,7 +36,7 @@ public class NowaNotatka extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: save to datebase
-                //Log.d(TAG, "onClick: Nazwa:" + nazwa.getText().toString()+ "onClick: typNotatki:" + typNotatki.getText().toString());
+                //Log.d("StworzNotatke", "onClick: Nazwa:" + nazwa.getText().toString()+ "onClick: typNotatki:" + typNotatki.getText().toString());
 
                 db.notatkaDAO().insertAll(new Notatka(typNotatki.getText().toString(), nazwa.getText().toString()));
                 startActivity(new Intent(NowaNotatka.this,Notatki.class));
