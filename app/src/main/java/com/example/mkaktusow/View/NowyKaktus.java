@@ -49,3 +49,5 @@ public class NowyKaktus extends AppCompatActivity {
         //String nazwaKaktusa, String gatunek, String nazwaMiejsca
     }
 }
+
+//TODO lokalizacja+mapy,  przypomnienia, kalendarz, rozpoznawanie po zdjeciu(w google grafika podobne zdjecia)
