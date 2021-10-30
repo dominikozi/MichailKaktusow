@@ -19,17 +19,130 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nowanotatka_textinputlayout_2"
+    <RadioGroup
+        android:id="@+id/nowanotatka_radiogroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nowanotatka_textinputedittext_2_typnotatki"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Typ notatki: "
+            android:textColor="@color/black"/>
+        <RadioButton
+            android:id="@+id/nowanotatka_radiobutton_czytekstowa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tekstowa"/>
+        <RadioButton
+            android:id="@+id/nowanotatka_radiobutton_czyzdj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zdjecie"/>
+        <RadioButton
+            android:id="@+id/nowanotatka_radiobutton_czyaudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="audio"/>
+        <RadioButton
+            android:id="@+id/nowanotatka_radiobutton_czyfilm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="film"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/nowanotatka_linear_doukrywania_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:hint="Typ notatki"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/nowanotatka_przycisk_nagraj_audio"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_mikrofon_24"
+                android:background="@drawable/zaokraglony_przycisk"/>
+
+            <ImageButton
+                android:id="@+id/nowanotatka_przycisk_stop_nagrywania_audio"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_stop_24"
+                android:background="@drawable/zaokraglony_przycisk"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <ImageButton
+                android:id="@+id/nowanotatka_przycisk_odtworz_audio"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_play_arrow_24"
+                android:background="@drawable/zaokraglony_przycisk"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nowanotatka_tekst_czynagrywanietrwa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Rozpocznij nagrywanie"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nowanotatka_linear_doukrywania_zdjecia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/nowanotatka_image_view"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nowanotatka_zrobzdj"
+            android:text="Zrob zdjecie"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nowanotatka_linear_doukrywania_tekstu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/nowanotatka_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="Treść notatki"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nowanotatka_linear_doukrywania_filmu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <VideoView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/nowanotatka_video_view"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nowanotatka_nagrajfilm"
+            android:text="Nagraj film"/>
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"

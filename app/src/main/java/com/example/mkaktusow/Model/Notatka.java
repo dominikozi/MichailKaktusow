@@ -33,7 +33,7 @@ public class Notatka {
 
     }
 
-    public Notatka(String typNotatki, String nazwaNotatki) {
+    public Notatka(String nazwaNotatki) {
         this.typNotatki = typNotatki;
         this.nazwaNotatki=nazwaNotatki;
     }

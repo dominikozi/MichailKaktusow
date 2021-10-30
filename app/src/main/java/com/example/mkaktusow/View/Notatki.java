@@ -42,7 +42,7 @@ public class Notatki extends AppCompatActivity {
             Notatka notatka = new Notatka("typ Notatki"+i*3, "nazwaNotatki #"+ i);
             notatki.add(notatka);
         }*/
-        //TODO robić to w background treat a nie w main!
+        //TODO robić to w background threat a nie w main!
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         List<Notatka> notatki = db.notatkaDAO().getAllNotatki();

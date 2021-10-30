@@ -43,6 +43,23 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:id="@+id/nowykaktus_linear_doukrywania_zdjecia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/new_kaktus_image_view"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nowykaktus_zrobzdj"
+        android:text="Zrob zdjecie"/>
+    </LinearLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

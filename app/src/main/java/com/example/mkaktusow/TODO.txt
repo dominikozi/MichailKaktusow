@@ -1,0 +1,14 @@
+//TODO
+    -dodanie audio
+    -zapisywanie zdjec i plikow a nie tylko przechocywanie w pamieci tymczasowej
+    -dodanie wszystkich pól do bazy danych a nie np. tylko nazwy
+    -lokalizacja
+    -automatyczne numerowanie notatek zeby nazwa na poczatku była wypelniona 'notatka #' i mozna zmienic a mozna nie zmieniac
+                                                              (to jako hint a jak nie zmieni to wtedy jako normalna nazwa tez)
+    -
+    -
+    -
+    -
+    -
+    -
+    -zmiana wpisywania,inicjacji,odczytu z bazy danych na inny thread niż main
