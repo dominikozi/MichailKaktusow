@@ -1,16 +1,14 @@
 package com.example.mkaktusow.Model;
 
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-
-   /*     (foreignKeys = @ForeignKey(entity=Kaktus.class,
+@Entity(foreignKeys = @ForeignKey(entity=Kaktus.class,
         parentColumns = "idkaktus",
-        childColumns="kaktusid"))*/
-@Entity
+        childColumns="kaktusid",
+        onDelete = ForeignKey.CASCADE))
 public class Notatka {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,15 +25,18 @@ public class Notatka {
     @ColumnInfo(name="data_dodania")
     private String dataDodania;
 
- //   private long kaktusid;
+    private long kaktusid;
 
     public Notatka(){
 
     }
 
     public Notatka(String nazwaNotatki) {
-        this.typNotatki = typNotatki;
         this.nazwaNotatki=nazwaNotatki;
+    }
+    public Notatka(String nazwaNotatki, long kaktusid) {
+           this.nazwaNotatki=nazwaNotatki;
+           this.kaktusid=kaktusid;
     }
 
     public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String dataDodania, long kaktusId) {
@@ -44,7 +45,7 @@ public class Notatka {
         this.sciezkaDoZdjecia = sciezkaDoZdjecia;
         this.sciezkaDoAudio = sciezkaDoAudio;
         this.dataDodania = dataDodania;
-  //      this.kaktusid = kaktusId;
+        this.kaktusid = kaktusId;
     }
 
     public long getIdnotatka() {
@@ -77,6 +78,14 @@ public class Notatka {
 
     public void setSciezkaDoZdjecia(String sciezkaDoZdjecia) {
         this.sciezkaDoZdjecia = sciezkaDoZdjecia;
+    }
+
+    public long getKaktusid() {
+        return kaktusid;
+    }
+
+    public void setKaktusid(long kaktusid) {
+        this.kaktusid = kaktusid;
     }
 
     public String getSciezkaDoAudio() {

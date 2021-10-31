@@ -1,5 +1,7 @@
 package com.example.mkaktusow.View;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -40,8 +43,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NowaNotatka extends AppCompatActivity implements View.OnClickListener {
@@ -76,11 +84,15 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     ImageButton imageButtonStart;
     ImageButton imageButtonStop;
     ImageButton imageButtonOdtworz;
-   // String file = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+fileName;
+ // String file = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+fileName;
     String file = Environment.getExternalStorageDirectory()+"/Kaktusy/"+File.separator+fileName;
 
 
     Spinner spinnerlistakaktusow;
+
+    //zmienne do zapisywania do bazy danych
+    Long idWybranegoKaktusa;
+    String typNotatki; //0-tekstowa, 1-audio, 2-zdjecie, 3-film
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,9 +162,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Kaktus kaktustemp = (Kaktus) spinnerlistakaktusow.getSelectedItem();
-                String nazwakaktusatemp = kaktustemp.getNazwaKaktusa();
-                Long idKaktusatemp = kaktustemp.getIdkaktus();
-                Toast.makeText(NowaNotatka.this, nazwakaktusatemp +", ID: "+idKaktusatemp, Toast.LENGTH_LONG).show();
+                idWybranegoKaktusa = kaktustemp.getIdkaktus();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -189,10 +199,9 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             public void onClick(View v) {
                 //TODO: save to datebase
                 //Log.d("StworzNotatke", "onClick: Nazwa:" + nazwa.getText().toString()+ "onClick: typNotatki:" + typNotatki.getText().toString());
+                db.notatkaDAO().insertAll(new Notatka(nazwa.getText().toString(),idWybranegoKaktusa));
 
-                db.notatkaDAO().insertAll(new Notatka(nazwa.getText().toString()));
                 startActivity(new Intent(NowaNotatka.this,Notatki.class));
-
             }
         });
 
@@ -210,6 +219,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 launchZrobZdjActivity.launch(intent);
+
             }
         });
 
@@ -231,6 +241,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniazdjecia.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
+                typNotatki="tekstowa";
                 break;
 
             case R.id.nowanotatka_radiobutton_czyzdj:
@@ -238,6 +249,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
+                typNotatki="zdjecie";
                 break;
 
             case R.id.nowanotatka_radiobutton_czyaudio:
@@ -245,6 +257,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
+                typNotatki="audio";
                 break;
 
             case R.id.nowanotatka_radiobutton_czyfilm:
@@ -252,24 +265,40 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
-
+                typNotatki="film";
                 break;
 
         }
     }
 
-    ActivityResultLauncher<Intent> launchZrobZdjActivity = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-                        imageView.setImageBitmap(captureImage);
+        ActivityResultLauncher<Intent> launchZrobZdjActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+                            imageView.setImageBitmap(captureImage);
+
+                            OutputStream imageOutStream;
+                            String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+                            File image = new File(Environment.getExternalStorageDirectory()+"/Kaktusy/"+File.separator, "zdjeciekaktusa.jpeg");
+                            try {
+                                imageOutStream = new FileOutputStream(image);
+                                captureImage.compress(Bitmap.CompressFormat.JPEG, 100, imageOutStream);
+                                imageOutStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                     }
-                }
-            });
+                });
+
+
 
     ActivityResultLauncher<Intent> launchNagrajFilmActivity = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
