@@ -97,4 +97,10 @@ public class Kaktus {
     public void setLokalizacja(String lokalizacja) {
         this.lokalizacja = lokalizacja;
     }
+
+    @Override
+    public String toString(){
+        //jesli bedzie potrzeba to kiedys zmienic to należy tez zmienic w kodzie NowaNotatka w linijce "Spinner z lista kaktusow do wyboru" zeby byla lista stringow a nie kaktusow.
+        return nazwaKaktusa;
+    }
 }

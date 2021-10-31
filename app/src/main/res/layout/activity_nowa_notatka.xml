@@ -19,6 +19,16 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Spinner
+        android:id="@+id/nowanotatka_spinner_listakaktusow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:dropDownWidth="wrap_content"
+        android:layout_margin="10dp"
+        android:dropDownSelector="@color/gray"
+        >
+    </Spinner>
+
     <RadioGroup
         android:id="@+id/nowanotatka_radiogroup"
         android:layout_width="wrap_content"

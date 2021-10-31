@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 import com.example.mkaktusow.Model.AppDatabase;
+import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 
@@ -26,16 +27,22 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NowaNotatka extends AppCompatActivity implements View.OnClickListener {
 
@@ -72,11 +79,16 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
    // String file = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+fileName;
     String file = Environment.getExternalStorageDirectory()+"/Kaktusy/"+File.separator+fileName;
 
+
+    Spinner spinnerlistakaktusow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nowa_notatka);
-
+        //--db
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        //!!--db
         File f = new File(Environment.getExternalStorageDirectory()+"/Kaktusy/");
         if (!f.exists()) {
             f.mkdirs();
@@ -125,6 +137,28 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         mediaRecorder.setOutputFile(file);
         }
+
+        //Spinner z lista kaktusow do wyboru
+        spinnerlistakaktusow = findViewById(R.id.nowanotatka_spinner_listakaktusow);
+        List<Kaktus> kaktusy = db.kaktusDAO().getAllKaktusy();
+
+        ArrayAdapter<Kaktus> spinnnerKaktusyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, kaktusy);
+        spinnnerKaktusyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerlistakaktusow.setAdapter(spinnnerKaktusyAdapter);
+
+        spinnerlistakaktusow.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Kaktus kaktustemp = (Kaktus) spinnerlistakaktusow.getSelectedItem();
+                String nazwakaktusatemp = kaktustemp.getNazwaKaktusa();
+                Long idKaktusatemp = kaktustemp.getIdkaktus();
+                Toast.makeText(NowaNotatka.this, nazwakaktusatemp +", ID: "+idKaktusatemp, Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         //obsługa audio
         imageButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,8 +184,6 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         nazwa=findViewById(R.id.nowanotatka_textinputedittext_1_nazwanotatki);
         buttonDodajNotatke=findViewById(R.id.nowanotatka_button_dodaj_notatke);
 
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-
         buttonDodajNotatke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +205,6 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                     }, 100);
         }
 
-
         buttonZrobzdj.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -189,7 +220,6 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 launchNagrajFilmActivity.launch(intent);
             }
         });
-
     }
 
 
