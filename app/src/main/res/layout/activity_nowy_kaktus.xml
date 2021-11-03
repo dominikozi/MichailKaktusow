@@ -6,7 +6,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nowykaktus_textinputlayout_1"
         android:layout_height="wrap_content"
@@ -47,10 +53,12 @@
         android:id="@+id/nowykaktus_linear_doukrywania_zdjecia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         android:id="@+id/new_kaktus_image_view"/>
 
     <Button
@@ -65,5 +73,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/nowykaktus_button_dodajkaktus"
         android:text="Dodaj kaktusa"/>
-
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

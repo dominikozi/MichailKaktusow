@@ -1,5 +1,8 @@
 package com.example.mkaktusow.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -14,14 +17,27 @@ public class Kaktus {
     private String nazwaKaktusa;
     @ColumnInfo(name="gatunek")
     private String gatunek;
+    @ColumnInfo(name="sciezkadozdjecia")
+    private String sciezkaDoZdjecia;
+    @ColumnInfo(name="nazwa_miejsca")
+    private String nazwaMiejsca;
+
+    @ColumnInfo(name="lokalizacja")
+    private String lokalizacja;
     @ColumnInfo(name="data_podlania")
     private String dataOstPodlania;
     @ColumnInfo(name="data_zakwitu")
     private String dataOstZakwitu;
-    @ColumnInfo(name="nazwa_miejsca")
-    private String nazwaMiejsca;
-    @ColumnInfo(name="lokalizacja")
-    private String lokalizacja;
+
+
+
+
+    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia) {
+        this.nazwaKaktusa = nazwaKaktusa;
+        this.gatunek = gatunek;
+        this.nazwaMiejsca = nazwaMiejsca;
+        this.sciezkaDoZdjecia=sciezkaDoZdjecia;
+    }
 
     public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca) {
         this.nazwaKaktusa = nazwaKaktusa;
@@ -74,6 +90,14 @@ public class Kaktus {
         this.dataOstPodlania = dataOstPodlania;
     }
 
+    public String getSciezkaDoZdjecia() {
+        return sciezkaDoZdjecia;
+    }
+
+    public void setSciezkaDoZdjecia(String sciezkaDoZdjecia) {
+        this.sciezkaDoZdjecia = sciezkaDoZdjecia;
+    }
+
     public String getDataOstZakwitu() {
         return dataOstZakwitu;
     }
@@ -100,7 +124,7 @@ public class Kaktus {
 
     @Override
     public String toString(){
-        //jesli bedzie potrzeba to kiedys zmienic to należy tez zmienic w kodzie NowaNotatka w linijce "Spinner z lista kaktusow do wyboru" zeby byla lista stringow a nie kaktusow.
-        return nazwaKaktusa;
+        return getNazwaKaktusa();
     }
+
 }

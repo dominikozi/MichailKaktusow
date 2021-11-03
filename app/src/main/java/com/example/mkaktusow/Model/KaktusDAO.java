@@ -12,6 +12,9 @@ public interface KaktusDAO {
     @Query("Select * FROM kaktus")
     List<Kaktus> getAllKaktusy();
 
+    @Query("Select * FROM kaktus WHERE idkaktus=:id")
+    Kaktus getKaktusWithID(Long id);
+
     @Insert
     void insertAll(Kaktus... kaktusy);
 

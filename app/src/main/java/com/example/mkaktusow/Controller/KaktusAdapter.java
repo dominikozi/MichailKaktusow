@@ -17,16 +17,18 @@ import java.util.List;
 public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder>{
 
     List<Kaktus> kaktusy;
+    private OnKaktusListener mOnKaktusListener;
 
-    public KaktusAdapter(List<Kaktus> kaktusy) {
+    public KaktusAdapter(List<Kaktus> kaktusy, OnKaktusListener onKaktusListener) {
         this.kaktusy = kaktusy;
+        this.mOnKaktusListener =onKaktusListener;
     }
 
 
     @Override
     public KaktusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kaktus_row,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnKaktusListener);
     }
 
     @Override
@@ -41,16 +43,30 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         return kaktusy.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView nazwaKaktusa;
         public TextView gatunek;
         public TextView nazwaMiejsca;
+        OnKaktusListener onKaktusListener;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, OnKaktusListener onKaktusListener) {
             super(itemView);
             nazwaKaktusa=itemView.findViewById(R.id.nazwaKaktusa_row);
             gatunek=itemView.findViewById(R.id.gatunek_row);
             nazwaMiejsca=itemView.findViewById(R.id.nazwaMiejsca_row);
+            this.onKaktusListener=onKaktusListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onKaktusListener.onKaktusClick(getAdapterPosition());
         }
     }
+
+    public interface OnKaktusListener{
+        void onKaktusClick(int position);
+    }
+
 }

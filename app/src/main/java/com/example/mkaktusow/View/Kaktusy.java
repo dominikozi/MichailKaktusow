@@ -22,13 +22,13 @@ import android.widget.Button;
 
 import java.util.List;
 
-public class Kaktusy extends AppCompatActivity {
+public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
 
     Button buttonDodajKaktusa;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-
+    List<Kaktus> kaktusy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,24 +37,14 @@ public class Kaktusy extends AppCompatActivity {
         //TODO robić to w background treat a nie w main!
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        List<Kaktus> kaktusy = db.kaktusDAO().getAllKaktusy();
+        kaktusy = db.kaktusDAO().getAllKaktusy();
 
         //recycler view
         recyclerView = findViewById(R.id.kaktusyRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new KaktusAdapter(kaktusy);
+        adapter=new KaktusAdapter(kaktusy, this);
 
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
-
 
         //----bottom navigation bar
         //Initialize and assign variable
@@ -92,5 +82,16 @@ public class Kaktusy extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onKaktusClick(int position) {
+        Intent intent = new Intent(this, JedenKaktus.class);
+        //intent.putExtra("wybrany_kaktus", kaktusy.get(position) );
+
+        Long tempId = kaktusy.get(position).getIdkaktus();
+        intent.putExtra("id_kaktusa", tempId);
+
+        startActivity(intent);
     }
 }

@@ -11,11 +11,12 @@
         android:layout_height="match_parent"
         android:id="@+id/nowanotatka_linearlayout">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notatkiRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="100dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notatkiRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp" />
+
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

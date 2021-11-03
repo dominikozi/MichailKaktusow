@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.JedenKaktus" >
+
+    <TextView
+        android:id="@+id/jedenkaktus_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="30dp"/>
+    <TextView
+        android:id="@+id/jedenkaktus_textview2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_below="@id/jedenkaktus_textview"/>
+    <TextView
+        android:id="@+id/jedenkaktus_textview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_below="@id/jedenkaktus_textview2"/>
+
+    <ImageView
+        android:id="@+id/jedenkaktus_imageview"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_below="@id/jedenkaktus_textview3" />
+
+    <View
+        android:id="@+id/kreskaview"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        android:layout_below="@id/jedenkaktus_imageview"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/jedenkaktus_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kreskaview" />
+</RelativeLayout>

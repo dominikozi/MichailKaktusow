@@ -5,8 +5,13 @@
     tools:context=".View.NowaNotatka"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <com.google.android.material.textfield.TextInputLayout
          android:id="@+id/nowanotatka_textinputlayout_1"
          android:layout_height="wrap_content"
@@ -21,7 +26,7 @@
 
     <Spinner
         android:id="@+id/nowanotatka_spinner_listakaktusow"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dropDownWidth="wrap_content"
         android:layout_margin="10dp"
@@ -111,17 +116,20 @@
         android:id="@+id/nowanotatka_linear_doukrywania_zdjecia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center">
         <ImageView
             android:layout_width="300dp"
             android:layout_height="400dp"
-            android:id="@+id/nowanotatka_image_view"/>
+            android:id="@+id/nowanotatka_image_view"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nowanotatka_zrobzdj"
-            android:text="Zrob zdjecie"/>
+            android:text="Zrob zdjecie"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -130,28 +138,36 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/nowanotatka_edittext"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nowanotatka_textinputlayout_trescnotatki"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:hint="Treść notatki"/>
+            android:layout_height="200dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nowanotatka_textinputedittext_trescnotatki"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Treść notatki"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/nowanotatka_linear_doukrywania_filmu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_gravity="center">
         <VideoView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
             android:id="@+id/nowanotatka_video_view"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nowanotatka_nagrajfilm"
-            android:text="Nagraj film"/>
+            android:text="Nagraj film"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <Button
@@ -159,6 +175,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/nowanotatka_button_dodaj_notatke"
         android:text="dodaj notatke"/>
+</LinearLayout>
+</ScrollView>
 
 </LinearLayout>
 

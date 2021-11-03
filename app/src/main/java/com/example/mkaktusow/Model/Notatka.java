@@ -18,10 +18,14 @@ public class Notatka {
     private String typNotatki; //0-tekstowa, 1-audio, 2-zdjecie, 3-film
     @ColumnInfo(name="nazwa_notatki")
     private String nazwaNotatki;
+    @ColumnInfo(name="tresc_notatki")
+    private String trescNotatki;
     @ColumnInfo(name="sciezka_zdjecie")
     private String sciezkaDoZdjecia;
     @ColumnInfo(name="sciezka_audio")
     private String sciezkaDoAudio;
+    @ColumnInfo(name="sciezka_film")
+    private String sciezkaDoFilmu;
     @ColumnInfo(name="data_dodania")
     private String dataDodania;
 
@@ -34,9 +38,11 @@ public class Notatka {
     public Notatka(String nazwaNotatki) {
         this.nazwaNotatki=nazwaNotatki;
     }
-    public Notatka(String nazwaNotatki, long kaktusid) {
+
+    public Notatka(String nazwaNotatki, long kaktusid, String typNotatki) {
            this.nazwaNotatki=nazwaNotatki;
            this.kaktusid=kaktusid;
+           this.typNotatki=typNotatki;
     }
 
     public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String dataDodania, long kaktusId) {
@@ -56,14 +62,22 @@ public class Notatka {
         this.idnotatka = idnotatka;
     }
 
-/*    public long getKaktusid() {
-        return kaktusid;
+    public String getTrescNotatki() {
+        return trescNotatki;
     }
 
-    public void setKaktusid(long kaktusid) {
-        this.kaktusid = kaktusid;
+    public void setTrescNotatki(String trescNotatki) {
+        this.trescNotatki = trescNotatki;
     }
-*/
+
+    public String getSciezkaDoFilmu() {
+        return sciezkaDoFilmu;
+    }
+
+    public void setSciezkaDoFilmu(String sciezkaDoFilmu) {
+        this.sciezkaDoFilmu = sciezkaDoFilmu;
+    }
+
     public String getTypNotatki() {
         return typNotatki;
     }
@@ -104,14 +118,7 @@ public class Notatka {
         this.dataDodania = dataDodania;
     }
 
- /*   public long getKaktusId() {
-        return kaktusid;
-    }
 
-    public void setKaktusId(long kaktusId) {
-        this.kaktusid = kaktusId;
-    }
-*/
     public String getNazwaNotatki() {
         return nazwaNotatki;
     }

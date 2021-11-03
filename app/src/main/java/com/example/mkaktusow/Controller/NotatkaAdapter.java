@@ -15,15 +15,17 @@ import java.util.List;
 public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHolder> {
 
     List<Notatka> notatki;
+    private NotatkaAdapter.OnNotatkaListener mOnNotatkaListener;
 
-    public NotatkaAdapter(List<Notatka> notatki) {
+    public NotatkaAdapter(List<Notatka> notatki, OnNotatkaListener onNotatkaListener) {
         this.notatki = notatki;
+        this.mOnNotatkaListener=onNotatkaListener;
     }
 
     @Override
     public NotatkaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notatka_row,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnNotatkaListener);
     }
 
     @Override
@@ -37,13 +39,27 @@ public class NotatkaAdapter extends RecyclerView.Adapter<NotatkaAdapter.ViewHold
         return notatki.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView nazwa;
         public TextView typNotatki;
-        public ViewHolder(View itemView) {
+        OnNotatkaListener onNotatkaListener;
+
+        public ViewHolder(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
             nazwa=itemView.findViewById(R.id.nazwa_notatka_row);
             typNotatki=itemView.findViewById(R.id.typ_notatki_row);
+            this.onNotatkaListener=onNotatkaListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onNotatkaListener.onNotatkaClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnNotatkaListener{
+        void onNotatkaClick(int position);
     }
 }

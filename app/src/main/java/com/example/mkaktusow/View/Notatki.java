@@ -20,16 +20,14 @@ import android.widget.Button;
 
 import java.util.List;
 
-public class Notatki extends AppCompatActivity {
+public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotatkaListener {
 
     Button buttonDodajNotatke;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
-
- //   ArrayList<Notatka> notatki;
-
+    List<Notatka> notatki;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +43,14 @@ public class Notatki extends AppCompatActivity {
         //TODO robić to w background threat a nie w main!
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        List<Notatka> notatki = db.notatkaDAO().getAllNotatki();
+        notatki = db.notatkaDAO().getAllNotatki();
+
 
 
         //recycler view
         recyclerView = findViewById(R.id.notatkiRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new NotatkaAdapter(notatki);
+        adapter=new NotatkaAdapter(notatki, this);
 
         recyclerView.setAdapter(adapter);
 
@@ -97,11 +96,16 @@ public class Notatki extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
         //
+    }
+
+    @Override
+    public void onNotatkaClick(int position) {
+        Intent intent = new Intent(this, JednaNotatka.class);
+        Long tempId = notatki.get(position).getIdnotatka();
+
+        intent.putExtra("id_notatki",tempId);
+
+        startActivity(intent);
     }
 }

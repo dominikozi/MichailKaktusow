@@ -12,9 +12,13 @@ public interface NotatkaDAO {
     @Query("Select * FROM notatka")
     List<Notatka> getAllNotatki();
 
+    @Query("Select * FROM notatka WHERE kaktusid=:id")
+    List<Notatka> getAllNotatkiWithID(Long id);
+
+    @Query("Select * FROM notatka WHERE idnotatka=:id")
+    Notatka getNotatkaWithID(Long id);
+
     @Insert
     void insertAll(Notatka... notatki);
-
-
 
 }
