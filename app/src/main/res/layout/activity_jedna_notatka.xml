@@ -29,7 +29,8 @@
     <ImageView
         android:id="@+id/jednanotatka_zdjecie"
         android:layout_width="300dp"
-        android:layout_height="400dp"/>
+        android:layout_height="400dp"
+        android:layout_below="@id/jednanotatka_nazwakaktusa" />
 
 
 </RelativeLayout>

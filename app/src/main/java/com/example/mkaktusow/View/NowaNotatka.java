@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -153,20 +154,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         mediaRecorder = new MediaRecorder();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 0);
-        } else {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "3GP_" + timeStamp + "_";
-            fileName = imageFileName;
-            File storageDir2 = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-
-            file = storageDir2+"/"+imageFileName+".3gp";
-            pathDoAudio=file;
-
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setOutputFile(file);
         }
+
         imageButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,27 +205,14 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         buttonDodajNotatke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   String pathDoZdjecia;
                 //    String pathDoAudio;
                 //    String pathDoFilmu;
                 //    String trescNotatki;
-                switch(typNotatki){
-                    case "tekstowa":
-                        trescNotatki=editTrescNotatki.getText().toString();
-                        //dodac do db z tym tekstem i nullem w miesjcu pathow
-                        break;
-                    case "zdjecie":
+                trescNotatki=editTrescNotatki.getText().toString();
+                Date dataDodaniaNotatki = Calendar.getInstance().getTime();
 
-                        break;
-                    case "audio":
-
-                        break;
-                    case "film":
-
-                        break;
-                }
-
-                db.notatkaDAO().insertAll(new Notatka(nazwa.getText().toString(),idWybranegoKaktusa, typNotatki));
+                //    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
+                db.notatkaDAO().insertAll(new Notatka( typNotatki, nazwa.getText().toString(), trescNotatki, pathDoZdjecia,pathDoAudio,pathDoFilmu,dataDodaniaNotatki ,idWybranegoKaktusa ));
 
                 startActivity(new Intent(NowaNotatka.this,Notatki.class));
             }
@@ -403,9 +379,9 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
             case R.id.nowanotatka_radiobutton_czyzdj:
                 linearLayoutdoukrywaniazdjecia.setVisibility(View.VISIBLE);
-                linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
+                linearLayoutdoukrywaniatekstu.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
-                linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
+                linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
                 typNotatki="zdjecie";
                 buttonDodajNotatke.setEnabled(true);
                 break;
@@ -451,6 +427,18 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
     public void rozpocznijNagrywanieDzwieku(){
         try {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "3GP_" + timeStamp + "_";
+            fileName = imageFileName;
+            File storageDir2 = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+
+            file = storageDir2+"/"+imageFileName+".3gp";
+            pathDoAudio=file;
+
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.setOutputFile(file);
             mediaRecorder.prepare();
             mediaRecorder.start();
         } catch (IOException e) {

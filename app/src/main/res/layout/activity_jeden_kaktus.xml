@@ -27,11 +27,19 @@
         android:textSize="20dp"
         android:layout_below="@id/jedenkaktus_textview2"/>
 
+    <Button
+        android:id="@+id/jedenkaktus_button_mapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jedenkaktus_textview3"
+        android:text="Mapa" />
+
     <ImageView
         android:id="@+id/jedenkaktus_imageview"
         android:layout_width="300dp"
         android:layout_height="400dp"
-        android:layout_below="@id/jedenkaktus_textview3" />
+        android:layout_below="@id/jedenkaktus_button_mapa"
+       />
 
     <View
         android:id="@+id/kreskaview"

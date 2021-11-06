@@ -21,9 +21,10 @@ public class Kaktus {
     private String sciezkaDoZdjecia;
     @ColumnInfo(name="nazwa_miejsca")
     private String nazwaMiejsca;
-
-    @ColumnInfo(name="lokalizacja")
-    private String lokalizacja;
+    @ColumnInfo(name="latitude")
+    private Double latitude;
+    @ColumnInfo(name="longtitude")
+    private Double longtitude;
     @ColumnInfo(name="data_podlania")
     private String dataOstPodlania;
     @ColumnInfo(name="data_zakwitu")
@@ -32,26 +33,31 @@ public class Kaktus {
 
 
 
-    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia) {
+    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
         this.nazwaMiejsca = nazwaMiejsca;
         this.sciezkaDoZdjecia=sciezkaDoZdjecia;
+        this.latitude=latitude;
+        this.longtitude=longtitude;
     }
 
-    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca) {
+    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, Double latitude, Double longtitude) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
         this.nazwaMiejsca = nazwaMiejsca;
+        this.latitude=latitude;
+        this.longtitude=longtitude;
     }
 
-    public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, String lokalizacja) {
+    public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, Double latitude, Double longtitude) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
         this.dataOstPodlania = dataOstPodlania;
         this.dataOstZakwitu = dataOstZakwitu;
         this.nazwaMiejsca = nazwaMiejsca;
-        this.lokalizacja = lokalizacja;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
     }
 
     public Kaktus() {
@@ -114,12 +120,20 @@ public class Kaktus {
         this.nazwaMiejsca = nazwaMiejsca;
     }
 
-    public String getLokalizacja() {
-        return lokalizacja;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLokalizacja(String lokalizacja) {
-        this.lokalizacja = lokalizacja;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(Double longtitude) {
+        this.longtitude = longtitude;
     }
 
     @Override

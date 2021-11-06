@@ -5,6 +5,7 @@ import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -29,12 +30,13 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<Kaktus> kaktusy;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miejsca);
 
-        //TODO robić to w background treat a nie w main!
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         kaktusy = db.kaktusDAO().getAllKaktusy();

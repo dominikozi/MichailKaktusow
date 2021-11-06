@@ -41,26 +41,18 @@ public class JednaNotatka extends AppCompatActivity {
 
         notatka = db.notatkaDAO().getNotatkaWithID(idNotatki);
         kaktus = db.kaktusDAO().getKaktusWithID(notatka.getKaktusid());
-
+        getSupportActionBar().setTitle("Notatka: " + notatka.getNazwaNotatki());
         nazwa.setText(notatka.getNazwaNotatki());
 
         typ.setText("Typ: "+notatka.getTypNotatki());
 
-        nazwaKaktusa.setText("Nazwa kaktusa: "+kaktus.getNazwaKaktusa());
+        nazwaKaktusa.setText("Nazwa kaktusa: " + kaktus.getNazwaKaktusa());
 
         zdjecie=findViewById(R.id.jednanotatka_zdjecie);
         zdjecie.setVisibility(View.GONE);
         if(notatka.getTypNotatki().equals("zdjecie")){
-            //NIE DZIAłA.
             zdjecie.setVisibility(View.VISIBLE);
-      /*      BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inPurgeable = true;
-            Bitmap bitmap = BitmapFactory.decodeFile(notatka.getSciezkaDoZdjecia(), bmOptions);
-
-            zdjecie.setImageBitmap(bitmap);
-      */
+            zdjecie.setImageURI(Uri.parse(notatka.getSciezkaDoZdjecia()));
         }
 
 

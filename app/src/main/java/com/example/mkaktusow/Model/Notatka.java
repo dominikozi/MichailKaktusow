@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(foreignKeys = @ForeignKey(entity=Kaktus.class,
         parentColumns = "idkaktus",
         childColumns="kaktusid",
@@ -27,12 +29,25 @@ public class Notatka {
     @ColumnInfo(name="sciezka_film")
     private String sciezkaDoFilmu;
     @ColumnInfo(name="data_dodania")
-    private String dataDodania;
+    private Date dataDodania;
 
     private long kaktusid;
 
     public Notatka(){
 
+    }
+    //nazwa.getText().toString(),idWybranegoKaktusa, typNotatki, trescNotatki, pathDoZdjecia,pathDoAudio,pathDoFilmu,dataDodaniaNotatki
+
+
+    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
+        this.typNotatki = typNotatki;
+        this.nazwaNotatki = nazwaNotatki;
+        this.trescNotatki = trescNotatki;
+        this.sciezkaDoZdjecia = sciezkaDoZdjecia;
+        this.sciezkaDoAudio = sciezkaDoAudio;
+        this.sciezkaDoFilmu = sciezkaDoFilmu;
+        this.dataDodania = dataDodania;
+        this.kaktusid = kaktusid;
     }
 
     public Notatka(String nazwaNotatki) {
@@ -45,7 +60,7 @@ public class Notatka {
            this.typNotatki=typNotatki;
     }
 
-    public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String dataDodania, long kaktusId) {
+    public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, Date dataDodania, long kaktusId) {
         this.nazwaNotatki=nazwaNotatki;
         this.typNotatki = typNotatki;
         this.sciezkaDoZdjecia = sciezkaDoZdjecia;
@@ -110,11 +125,11 @@ public class Notatka {
         this.sciezkaDoAudio = sciezkaDoAudio;
     }
 
-    public String getDataDodania() {
+    public Date getDataDodania() {
         return dataDodania;
     }
 
-    public void setDataDodania(String dataDodania) {
+    public void setDataDodania(Date dataDodania) {
         this.dataDodania = dataDodania;
     }
 

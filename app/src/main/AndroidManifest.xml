@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mkaktusow">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -10,10 +13,27 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Kaktusy"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MKaktusow">
+
+        <meta-data
+        android:name="com.google.android.API_KEY"
+        android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc"/>
+
+
+
+        <activity
+            android:name=".View.Mapa"
+            android:exported="false" />
+
         <activity
             android:name=".View.JednaNotatka"
             android:exported="false"
@@ -24,20 +44,25 @@
             android:parentActivityName=".View.Kaktusy" />
         <activity
             android:name=".View.NowyKaktus"
+            android:label="Nowy kaktus"
             android:exported="false"
             android:parentActivityName=".View.Kaktusy" />
         <activity
             android:name=".View.NowaNotatka"
+            android:label="Nowa notatka"
             android:exported="false"
             android:parentActivityName=".View.Notatki" />
         <activity
             android:name=".View.Encyklopedia"
+            android:label="Encyklopedia"
             android:exported="false" />
         <activity
             android:name=".View.Notatki"
+            android:label="Notatki"
             android:exported="false" />
         <activity
             android:name=".View.Kaktusy"
+            android:label="Kaktusy"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

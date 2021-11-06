@@ -1,13 +1,20 @@
 package com.example.mkaktusow.View;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +23,16 @@ import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -31,6 +48,8 @@ public class JedenKaktus extends AppCompatActivity implements NotatkaAdapter.OnN
     Kaktus kaktus;
 
     List<Notatka> notatki;
+
+    Button buttonMapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +71,32 @@ public class JedenKaktus extends AppCompatActivity implements NotatkaAdapter.OnN
 
         kaktus = db.kaktusDAO().getKaktusWithID(idKaktusa);
 
+        getSupportActionBar().setTitle("Kaktus: " + kaktus.getNazwaKaktusa());
         nazwa.setText(kaktus.getNazwaKaktusa());
         gatunek.setText(kaktus.getGatunek());
         miejsce.setText(kaktus.getNazwaMiejsca());
-        imageViewZdjecieKaktusa.setImageURI(Uri.parse(kaktus.getSciezkaDoZdjecia()));
 
+        if(kaktus.getSciezkaDoZdjecia()!=null) {
+            imageViewZdjecieKaktusa.setImageURI(Uri.parse(kaktus.getSciezkaDoZdjecia()));
+        }
         recyclerViewNotatki.setLayoutManager(new LinearLayoutManager(this));
         notatki = db.notatkaDAO().getAllNotatkiWithID(kaktus.getIdkaktus());
         adapter=new NotatkaAdapter(notatki, this);
 
         recyclerViewNotatki.setAdapter(adapter);
 
+        buttonMapa = findViewById(R.id.jedenkaktus_button_mapa);
+        buttonMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JedenKaktus.this, Mapa.class);
+
+                Long tempId = kaktus.getIdkaktus();
+                intent.putExtra("id_kaktusa", tempId);
+
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -75,4 +109,6 @@ public class JedenKaktus extends AppCompatActivity implements NotatkaAdapter.OnN
 
         startActivity(intent);
     }
+
+
 }
