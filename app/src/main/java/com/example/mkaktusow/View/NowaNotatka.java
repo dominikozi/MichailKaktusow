@@ -85,6 +85,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     LinearLayout linearLayoutdoukrywaniatekstu;
     LinearLayout linearLayoutdoukrywaniafilmu;
     LinearLayout linearLayoutdoukrywaniaaudio;
+    LinearLayout linearvideoviewwrapper;
     ImageView imageView;
     VideoView videoView;
     TextView textViewCzynagrywanietrwa;
@@ -123,6 +124,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         linearLayoutdoukrywaniatekstu=findViewById(R.id.nowanotatka_linear_doukrywania_tekstu);
         linearLayoutdoukrywaniafilmu=findViewById(R.id.nowanotatka_linear_doukrywania_filmu);
         linearLayoutdoukrywaniaaudio=findViewById(R.id.nowanotatka_linear_doukrywania_audio);
+        linearvideoviewwrapper = findViewById(R.id.nowanotatka_linear_videoview_wrapper);
 
         buttonZrobzdj=findViewById(R.id.nowanotatka_zrobzdj);
         buttonNagrajfilm=findViewById(R.id.nowanotatka_nagrajfilm);
@@ -130,6 +132,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         editTrescNotatki=findViewById(R.id.nowanotatka_textinputedittext_trescnotatki);
         imageView = findViewById(R.id.nowanotatka_image_view);
         videoView = findViewById(R.id.nowanotatka_video_view);
+        videoView.setVisibility(View.GONE);
         //ustawienie poczatkowe widzialnosci
         linearLayoutdoukrywaniazdjecia.setVisibility(View.GONE);
         linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
@@ -264,6 +267,19 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
             }
         });
+
+        linearvideoviewwrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(videoView.isPlaying()) {
+                    videoView.pause();
+                }
+                else {
+                    videoView.start();
+                }
+            }
+        });
+
     }
     static final int REQUEST_VIDEO_CAPTURE = 111;
 
@@ -335,8 +351,9 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(this, "uri " + contentUri, Toast.LENGTH_LONG).show();
 
                 videoView.setVideoURI(Uri.parse(pathDoFilmu));
-                videoView.start();
-
+                videoView.seekTo(1);
+                videoView.setVisibility(View.VISIBLE);
+                buttonNagrajfilm.setEnabled(false);
             }
         }
     }
@@ -406,46 +423,31 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-    ActivityResultLauncher<Intent> launchNagrajFilmActivity = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Uri videoUri = data.getData();
-                        videoView.setVideoURI(videoUri);
-                        videoView.start();
-                        // akcje
-
-
-
-                    }
-                }
-            });
-
     public void rozpocznijNagrywanieDzwieku(){
         try {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "3GP_" + timeStamp + "_";
-            fileName = imageFileName;
-            File storageDir2 = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+            if(pathDoAudio==null) {
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "3GP_" + timeStamp + "_";
+                fileName = imageFileName;
+                File storageDir2 = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
 
-            file = storageDir2+"/"+imageFileName+".3gp";
-            pathDoAudio=file;
+                file = storageDir2 + "/" + imageFileName + ".3gp";
+                pathDoAudio = file;
 
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setOutputFile(file);
-            mediaRecorder.prepare();
-            mediaRecorder.start();
+                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mediaRecorder.setOutputFile(file);
+                mediaRecorder.prepare();
+                mediaRecorder.start();
+                textViewCzynagrywanietrwa.setText("Trwa nagrywanie dźwięku");
+            }else{
+                Toast.makeText(this, "nagrales juz audio",Toast.LENGTH_LONG).show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        textViewCzynagrywanietrwa.setText("Trwa nagrywanie dźwięku");
 
     }
     public void przerwijNagrywanieDzwieku(){

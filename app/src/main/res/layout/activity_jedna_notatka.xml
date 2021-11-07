@@ -6,31 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".View.JednaNotatka">
 
-    <TextView
-        android:id="@+id/jednanotatka_nazwa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/jednanotatka_nazwa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
-    <TextView
-        android:id="@+id/jednanotatka_typ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@id/jednanotatka_nazwa"/>
+        <TextView
+            android:id="@+id/jednanotatka_typ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/jednanotatka_nazwa"
+            android:text="TextView" />
 
-    <TextView
-        android:id="@+id/jednanotatka_nazwakaktusa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@id/jednanotatka_typ"/>
+        <TextView
+            android:id="@+id/jednanotatka_nazwakaktusa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/jednanotatka_typ"
+            android:text="TextView" />
 
-    <ImageView
-        android:id="@+id/jednanotatka_zdjecie"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:layout_below="@id/jednanotatka_nazwakaktusa" />
+        <ImageView
+            android:id="@+id/jednanotatka_zdjecie"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_below="@id/jednanotatka_nazwakaktusa" />
 
+            <TextView
+                android:id="@+id/jednanotatka_tresc_notatki"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/jednanotatka_zdjecie"
+                android:background="@drawable/textview_border"
+                android:text="tekst notatki" />
 
+        <ImageButton
+            android:id="@+id/jednanotatka_odtworz_audio"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/jednanotatka_tresc_notatki"
+            android:background="@drawable/zaokraglony_przycisk"
+            android:src="@drawable/ic_play_arrow_24" />
+            <LinearLayout
+                android:id="@+id/jednanotatka_film_linear_wrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/jednanotatka_odtworz_audio">
+            <VideoView
+                android:id="@+id/jednanotatka_video_view"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+
+                />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
