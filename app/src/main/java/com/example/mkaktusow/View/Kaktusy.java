@@ -7,7 +7,9 @@ import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.components.Lazy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,16 +22,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
 
-    Button buttonDodajKaktusa;
-
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<Kaktus> kaktusy;
+
+    FloatingActionButton fabDuzy;
+    FloatingActionButton fabMalyZdj;
+    FloatingActionButton fabMalyBezZdj;
 
 
     @Override
@@ -74,16 +79,36 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         });
         //----bottom navigation bar
 
+        //fab
+        fabDuzy = findViewById(R.id.kaktusy_floatingActionButtonDuzy);
+        fabMalyZdj = findViewById(R.id.kaktusy_floatingActionButtonZdjecie);
+        fabMalyBezZdj = findViewById(R.id.kaktusy_floatingActionButtonBezZdjecia);
 
-        //Button dodaj kaktusa
-        buttonDodajKaktusa=findViewById(R.id.kaktusy_button_dodajKaktusa);
-        buttonDodajKaktusa.setOnClickListener(new View.OnClickListener(){
+        fabDuzy.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(fabMalyZdj.getVisibility()!=View.VISIBLE) {
+                    fabMalyZdj.setVisibility(View.VISIBLE);
+                    fabMalyBezZdj.setVisibility(View.VISIBLE);
+                }else{
+                    fabMalyZdj.setVisibility(View.GONE);
+                    fabMalyBezZdj.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        fabMalyZdj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"nowy kaktus bez zdj", Toast.LENGTH_LONG).show();
+            }
+        });
+        fabMalyBezZdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Kaktusy.this, NowyKaktus.class));
             }
         });
-
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import androidx.annotation.NonNull;
@@ -22,12 +23,13 @@ import java.util.List;
 
 public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotatkaListener {
 
-    Button buttonDodajNotatke;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
     List<Notatka> notatki;
+
+    FloatingActionButton fabDuzy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +89,16 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         });
         //!!!!!----bottom navigation bar
 
-        //Button dodaj notatke
-        buttonDodajNotatke=findViewById(R.id.notatki_button_dodajNotatke);
-        buttonDodajNotatke.setOnClickListener(new View.OnClickListener(){
+
+        //fab
+        fabDuzy=findViewById(R.id.notatki_floatingActionButtonDuzy);
+        fabDuzy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Notatki.this, NowaNotatka.class));
             }
         });
 
-        //
     }
 
     @Override

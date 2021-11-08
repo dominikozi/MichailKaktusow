@@ -105,13 +105,7 @@ public class JednaNotatka extends AppCompatActivity {
         }else{
             film.setVisibility(View.VISIBLE);
             film.setVideoURI(Uri.parse(notatka.getSciezkaDoFilmu()));
-         /*   film.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                   film.start();
-                   return true;
-                }
-            });*/
+
             film.seekTo(1);
             filmlinearwrapper.setOnClickListener(new View.OnClickListener() {
                 @Override

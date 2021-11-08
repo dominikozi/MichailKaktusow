@@ -28,6 +28,14 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc"/>
 
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="label"/>
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ica" />
+        <!-- To use multiple models: android:value="ica,model2,model3" -->
 
 
         <activity

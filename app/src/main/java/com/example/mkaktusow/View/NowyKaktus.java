@@ -45,6 +45,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class NowyKaktus extends AppCompatActivity {
@@ -129,11 +130,13 @@ public class NowyKaktus extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO: save to datebase
                 //Log.d("StworzKaktus", "onClick: Nazwa:" + nazwa.getText().toString()+ "onClick: typNotatki:" + typNotatki.getText().toString());
+                Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
+
 
                 if (TextUtils.isEmpty(pathDoZdjecia)) {
-                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), lokalizacja.latitude, lokalizacja.longitude));
+                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(),null, lokalizacja.latitude, lokalizacja.longitude,dataDodaniaKaktusa));
                 } else {
-                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude));
+                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude,dataDodaniaKaktusa));
                 }
 
                 startActivity(new Intent(NowyKaktus.this, Kaktusy.class));

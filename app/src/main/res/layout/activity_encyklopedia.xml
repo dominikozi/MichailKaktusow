@@ -39,4 +39,25 @@
         android:layout_marginTop="-1dp"
         android:paddingTop="20dp"
         android:text="http://kaktusy.net/joomla16/index.php/edu-kaktus" />
+
+    <ImageView
+        android:id="@+id/encyklopedia_imageview"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_below="@+id/Encyklopedia_textView2"
+        />
+    <Button
+        android:id="@+id/encyklopedia_zrobzdj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zrob zdj"
+        android:layout_below="@+id/encyklopedia_imageview"
+        />
+    <TextView
+        android:id="@+id/encyklopedia_tekstimage_ML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/encyklopedia_zrobzdj"
+        />
+
 </RelativeLayout>

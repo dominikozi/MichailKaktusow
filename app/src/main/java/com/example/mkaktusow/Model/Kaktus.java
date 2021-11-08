@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity
 public class Kaktus {
 
@@ -25,44 +27,32 @@ public class Kaktus {
     private Double latitude;
     @ColumnInfo(name="longtitude")
     private Double longtitude;
+    @ColumnInfo(name="data_dodania")
+    private Date dataDodania;
     @ColumnInfo(name="data_podlania")
-    private String dataOstPodlania;
+    private Date dataOstPodlania;
     @ColumnInfo(name="data_zakwitu")
-    private String dataOstZakwitu;
+    private Date dataOstZakwitu;
 
 
 
-
-    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude) {
+    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude, Date dataDodania) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
         this.nazwaMiejsca = nazwaMiejsca;
         this.sciezkaDoZdjecia=sciezkaDoZdjecia;
         this.latitude=latitude;
         this.longtitude=longtitude;
+        this.dataDodania=dataDodania;
     }
 
-    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, Double latitude, Double longtitude) {
-        this.nazwaKaktusa = nazwaKaktusa;
-        this.gatunek = gatunek;
-        this.nazwaMiejsca = nazwaMiejsca;
-        this.latitude=latitude;
-        this.longtitude=longtitude;
-    }
-
-    public Kaktus(String nazwaKaktusa, String gatunek, String dataOstPodlania, String dataOstZakwitu, String nazwaMiejsca, Double latitude, Double longtitude) {
-        this.nazwaKaktusa = nazwaKaktusa;
-        this.gatunek = gatunek;
-        this.dataOstPodlania = dataOstPodlania;
-        this.dataOstZakwitu = dataOstZakwitu;
-        this.nazwaMiejsca = nazwaMiejsca;
-        this.latitude = latitude;
-        this.longtitude = longtitude;
-    }
-
-    public Kaktus() {
-    }
-
+//    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, Double latitude, Double longtitude, Date dataDodania) {
+//        this.nazwaKaktusa = nazwaKaktusa;
+//        this.gatunek = gatunek;
+//        this.nazwaMiejsca = nazwaMiejsca;
+//        this.latitude=latitude;
+//        this.longtitude=longtitude;
+//    }
 
     public long getIdkaktus() {
         return idkaktus;
@@ -88,12 +78,28 @@ public class Kaktus {
         this.gatunek = gatunek;
     }
 
-    public String getDataOstPodlania() {
+    public Date getDataDodania() {
+        return dataDodania;
+    }
+
+    public void setDataDodania(Date dataDodania) {
+        this.dataDodania = dataDodania;
+    }
+
+    public Date getDataOstPodlania() {
         return dataOstPodlania;
     }
 
-    public void setDataOstPodlania(String dataOstPodlania) {
+    public void setDataOstPodlania(Date dataOstPodlania) {
         this.dataOstPodlania = dataOstPodlania;
+    }
+
+    public Date getDataOstZakwitu() {
+        return dataOstZakwitu;
+    }
+
+    public void setDataOstZakwitu(Date dataOstZakwitu) {
+        this.dataOstZakwitu = dataOstZakwitu;
     }
 
     public String getSciezkaDoZdjecia() {
@@ -104,13 +110,7 @@ public class Kaktus {
         this.sciezkaDoZdjecia = sciezkaDoZdjecia;
     }
 
-    public String getDataOstZakwitu() {
-        return dataOstZakwitu;
-    }
 
-    public void setDataOstZakwitu(String dataOstZakwitu) {
-        this.dataOstZakwitu = dataOstZakwitu;
-    }
 
     public String getNazwaMiejsca() {
         return nazwaMiejsca;
