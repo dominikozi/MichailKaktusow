@@ -34,8 +34,6 @@ public class Kaktus {
     @ColumnInfo(name="data_zakwitu")
     private Date dataOstZakwitu;
 
-
-
     public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude, Date dataDodania) {
         this.nazwaKaktusa = nazwaKaktusa;
         this.gatunek = gatunek;
@@ -45,14 +43,6 @@ public class Kaktus {
         this.longtitude=longtitude;
         this.dataDodania=dataDodania;
     }
-
-//    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, Double latitude, Double longtitude, Date dataDodania) {
-//        this.nazwaKaktusa = nazwaKaktusa;
-//        this.gatunek = gatunek;
-//        this.nazwaMiejsca = nazwaMiejsca;
-//        this.latitude=latitude;
-//        this.longtitude=longtitude;
-//    }
 
     public long getIdkaktus() {
         return idkaktus;
