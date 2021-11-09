@@ -89,11 +89,17 @@ public class JedenKaktus extends AppCompatActivity implements NotatkaAdapter.OnN
         buttonMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(JedenKaktus.this, Mapa.class);
+            /*    Intent intent = new Intent(JedenKaktus.this, Mapa.class);
 
                 Long tempId = kaktus.getIdkaktus();
                 intent.putExtra("id_kaktusa", tempId);
 
+                startActivity(intent);
+                */
+
+                Intent intent = new Intent(JedenKaktus.this, JedenKaktusTL.class);
+                Long tempId = kaktus.getIdkaktus();
+                intent.putExtra("id_kaktusa", tempId);
                 startActivity(intent);
             }
         });
@@ -109,6 +115,7 @@ public class JedenKaktus extends AppCompatActivity implements NotatkaAdapter.OnN
 
         startActivity(intent);
     }
+
 
 
 }

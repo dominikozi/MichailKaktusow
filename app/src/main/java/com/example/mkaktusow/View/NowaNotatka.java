@@ -188,19 +188,27 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         spinnnerKaktusyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerlistakaktusow.setAdapter(spinnnerKaktusyAdapter);
 
-        spinnerlistakaktusow.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Kaktus kaktustemp = (Kaktus) spinnerlistakaktusow.getSelectedItem();
-                idWybranegoKaktusa = kaktustemp.getIdkaktus();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        Long idkaktusaprzekazana=getIntent().getLongExtra("idkaktusap",0L);
+        if(idkaktusaprzekazana==-1){
+            spinnerlistakaktusow.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Kaktus kaktustemp = (Kaktus) spinnerlistakaktusow.getSelectedItem();
+                    idWybranegoKaktusa = kaktustemp.getIdkaktus();
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }else{
+            spinnerlistakaktusow.setVisibility(View.GONE);
+            idWybranegoKaktusa=idkaktusaprzekazana;
+        }
 
         //OBSLUGA PRZYCISKU DODAJ NOTATKE
         nazwa=findViewById(R.id.nowanotatka_textinputedittext_1_nazwanotatki);
+        int idtemp = getIntent().getIntExtra("liczbanotatek", 0)+1;
+        nazwa.setText("Notatka #"+idtemp);
         buttonDodajNotatke=findViewById(R.id.nowanotatka_button_dodaj_notatke);
 
         buttonDodajNotatke.setEnabled(false);
@@ -211,13 +219,17 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 //    String pathDoAudio;
                 //    String pathDoFilmu;
                 //    String trescNotatki;
-                trescNotatki=editTrescNotatki.getText().toString();
-                Date dataDodaniaNotatki = Calendar.getInstance().getTime();
+                if(typNotatki=="zdjecie"&&pathDoZdjecia==null){
+                    Toast.makeText(getApplicationContext(),"musi byc zdjecie",Toast.LENGTH_LONG).show();
+                }else {
 
-                //    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
-                db.notatkaDAO().insertAll(new Notatka( typNotatki, nazwa.getText().toString(), trescNotatki, pathDoZdjecia,pathDoAudio,pathDoFilmu,dataDodaniaNotatki ,idWybranegoKaktusa ));
+                    trescNotatki = editTrescNotatki.getText().toString();
+                    Date dataDodaniaNotatki = Calendar.getInstance().getTime();
+                    //    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
+                    db.notatkaDAO().insertAll(new Notatka(typNotatki, nazwa.getText().toString(), trescNotatki, pathDoZdjecia, pathDoAudio, pathDoFilmu, dataDodaniaNotatki, idWybranegoKaktusa));
 
-                startActivity(new Intent(NowaNotatka.this,Notatki.class));
+                    startActivity(new Intent(NowaNotatka.this, Notatki.class));
+                }
             }
         });
 

@@ -15,20 +15,18 @@
         android:background="@color/light_blue">
 
         <ImageView
-            android:id="@+id/preview_zdj_notatki_row"
-            android:layout_width="72dp"
-            android:layout_height="96dp"
-            android:layout_marginLeft="10dp"/>
+            android:id="@+id/ikona_notatki_tekstowej_row"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginLeft="10dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="5dp">
+                android:orientation="vertical">
                 <TextView
                     android:id="@+id/nazwaNotatki_row"
                     android:layout_width="wrap_content"
@@ -36,14 +34,20 @@
                     android:text="Nazwa notatki"
                     android:textSize="20dp"
                     android:textStyle="bold"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/typNotatki_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+
                     android:text="typ notatki"
-                    android:textSize="15dp"
-                    android:layout_marginTop="10dp"/>
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/Datadodania_notatki_row"
@@ -51,8 +55,9 @@
                     android:layout_height="wrap_content"
                     android:text="data dodania"
                     android:textSize="15dp"
-                    android:layout_marginTop="15dp"/>
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +65,7 @@
                 android:layout_marginLeft="55dp"
                 android:layout_marginTop="2dp"
                 >
+
 
             </LinearLayout>
         </LinearLayout>

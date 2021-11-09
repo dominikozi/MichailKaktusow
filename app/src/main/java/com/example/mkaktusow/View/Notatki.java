@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -57,12 +58,6 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         recyclerView.setAdapter(adapter);
 
 
-
-
-
-
-
-
         //----bottom navigation bar
         //Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -95,7 +90,10 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         fabDuzy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Notatki.this, NowaNotatka.class));
+                Intent intent = new Intent(Notatki.this, NowaNotatka.class);
+                intent.putExtra("idkaktusap",-1L);
+                intent.putExtra("liczbanotatek",adapter.getItemCount());
+                startActivity(intent);
             }
         });
 
@@ -105,6 +103,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
     public void onNotatkaClick(int position) {
         Intent intent = new Intent(this, JednaNotatka.class);
         Long tempId = notatki.get(position).getIdnotatka();
+        Toast.makeText(this,"d "+tempId, Toast.LENGTH_LONG).show();
 
         intent.putExtra("id_notatki",tempId);
 

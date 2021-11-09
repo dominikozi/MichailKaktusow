@@ -128,8 +128,6 @@ public class NowyKaktus extends AppCompatActivity {
         buttonDodajKaktusa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: save to datebase
-                //Log.d("StworzKaktus", "onClick: Nazwa:" + nazwa.getText().toString()+ "onClick: typNotatki:" + typNotatki.getText().toString());
                 Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
 
 

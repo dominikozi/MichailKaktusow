@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/om_k_podlanie"
+        android:icon="@drawable/cactus"
+        android:title="Ustaw datę podlania" />
+    <item android:id="@+id/om_k_kwitniecie"
+        android:title="Ustaw datę kwitnięcia"
+        app:showAsAction="never"/>
+</menu>

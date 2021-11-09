@@ -1,14 +1,4 @@
 //TODO
-    -lokalizacja
-    -Data, sprawdzic jak przechowuje się date w roomie
-    -automatyczne numerowanie notatek zeby nazwa na poczatku była wypelniona 'notatka #' i mozna zmienic a mozna nie zmieniac
-                                                              (to jako hint a jak nie zmieni to wtedy jako normalna nazwa tez)
-    -zeby cofajac odswiezal sie recyclerview a nie pokazywal stary z przed przejscia do kolejnej aktywnosci
-    -
-    -
-    -
-    -
-    -
     -zmiana wpisywania,inicjacji,odczytu z bazy danych na inny thread niż main
 
 

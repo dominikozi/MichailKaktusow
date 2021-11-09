@@ -1,10 +1,12 @@
 package com.example.mkaktusow.Controller;
 
 import android.net.Uri;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.example.mkaktusow.R;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder>{
@@ -27,7 +30,6 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         this.kaktusy = kaktusy;
         this.mOnKaktusListener =onKaktusListener;
     }
-
 
     @Override
     public KaktusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,7 +47,8 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         }else {
             holder.previewKaktusa.setImageURI(Uri.parse(kaktusy.get(position).getSciezkaDoZdjecia()));
         }
-        holder.dataDodaniaK.setText(kaktusy.get(position).getDataDodania().toString());
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        holder.dataDodaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataDodania()));
     }
 
     @Override
@@ -53,7 +56,7 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         return kaktusy.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         public TextView nazwaKaktusa;
         public TextView gatunek;
         public TextView nazwaMiejsca;
@@ -63,6 +66,8 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         public ImageView previewKaktusa;
         OnKaktusListener onKaktusListener;
 
+        LinearLayout linearLayout;
+
         public ViewHolder(View itemView, OnKaktusListener onKaktusListener) {
             super(itemView);
             nazwaKaktusa=itemView.findViewById(R.id.nazwaKaktusa_row);
@@ -71,6 +76,8 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
             previewKaktusa=itemView.findViewById(R.id.preview_zdj_kaktusa_row);
             dataDodaniaK=itemView.findViewById(R.id.datadodania_kaktusa_row);
             this.onKaktusListener=onKaktusListener;
+            linearLayout = itemView.findViewById(R.id.kaktus_row_Caly_row);
+            linearLayout.setOnCreateContextMenuListener(this);
 
             itemView.setOnClickListener(this);
         }
@@ -79,10 +86,26 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         public void onClick(View v) {
             onKaktusListener.onKaktusClick(getAdapterPosition());
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.setHeaderIcon(R.drawable.cactus);
+            menu.setHeaderTitle("Akcja " + nazwaKaktusa.getText());
+
+            menu.add(this.getAdapterPosition(), 121, 0 , "Usun");
+            menu.add(this.getAdapterPosition(), 122, 1 , "Edytuj");
+
+        }
     }
 
     public interface OnKaktusListener{
         void onKaktusClick(int position);
+    }
+
+    public void removeItem(int position){
+        kaktusy.remove(position);
+        notifyDataSetChanged();
     }
 
 }

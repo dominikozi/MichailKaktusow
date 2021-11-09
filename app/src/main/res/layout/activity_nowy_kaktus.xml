@@ -72,7 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nowykaktus_button_dodajkaktus"
-        android:text="Dodaj kaktusa"/>
+        android:text="Dodaj kaktusa"
+        android:layout_gravity="center"/>
     </LinearLayout>
     </ScrollView>
 </LinearLayout>

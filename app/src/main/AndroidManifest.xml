@@ -18,30 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MKaktusow">
 
+        <activity
+            android:name=".View.JedenKaktusTL"
+            android:parentActivityName=".View.Kaktusy"
+            android:exported="false" />
+
         <meta-data
-        android:name="com.google.android.API_KEY"
-        android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc" />
+            android:name="com.google.android.API_KEY"
+            android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc"/>
-
+            android:value="AIzaSyBULXrC9MeyuYsylDttvrU4FgKZUhCI1pc" />
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="label"/>
-
+            android:value="label" />
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ica" />
-        <!-- To use multiple models: android:value="ica,model2,model3" -->
-
-
         <activity
             android:name=".View.Mapa"
             android:exported="false" />
-
         <activity
             android:name=".View.JednaNotatka"
             android:exported="false"
@@ -52,26 +51,26 @@
             android:parentActivityName=".View.Kaktusy" />
         <activity
             android:name=".View.NowyKaktus"
-            android:label="Nowy kaktus"
             android:exported="false"
+            android:label="Nowy kaktus"
             android:parentActivityName=".View.Kaktusy" />
         <activity
             android:name=".View.NowaNotatka"
-            android:label="Nowa notatka"
             android:exported="false"
+            android:label="Nowa notatka"
             android:parentActivityName=".View.Notatki" />
         <activity
             android:name=".View.Encyklopedia"
-            android:label="Encyklopedia"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Encyklopedia" />
         <activity
             android:name=".View.Notatki"
-            android:label="Notatki"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Notatki" />
         <activity
             android:name=".View.Kaktusy"
-            android:label="Kaktusy"
-            android:exported="true">
+            android:exported="true"
+            android:label="Kaktusy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -18,4 +18,7 @@ public interface KaktusDAO {
     @Insert
     void insertAll(Kaktus... kaktusy);
 
+    @Query("DELETE FROM kaktus WHERE idkaktus = :id")
+    abstract void deleteByKaktusId(long id);
+
 }

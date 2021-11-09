@@ -29,12 +29,13 @@ import java.util.List;
 public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    KaktusAdapter adapter;
     List<Kaktus> kaktusy;
 
     FloatingActionButton fabDuzy;
     FloatingActionButton fabMalyZdj;
     FloatingActionButton fabMalyBezZdj;
+
 
 
     @Override
@@ -113,7 +114,7 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
 
     @Override
     public void onKaktusClick(int position) {
-        Intent intent = new Intent(this, JedenKaktus.class);
+        Intent intent = new Intent(this, JedenKaktusTL.class);
         //intent.putExtra("wybrany_kaktus", kaktusy.get(position) );
 
         Long tempId = kaktusy.get(position).getIdkaktus();
@@ -121,4 +122,28 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
 
         startActivity(intent);
     }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case 121:
+                int id = item.getGroupId();
+                displayMessage("Usunięto kaktus o nazwie: "+kaktusy.get(id).getNazwaKaktusa());
+                AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                db.kaktusDAO().deleteByKaktusId(kaktusy.get(id).getIdkaktus());
+                adapter.removeItem(id);
+                return true;
+            case 122:
+                displayMessage("edytuj");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void displayMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
 }
