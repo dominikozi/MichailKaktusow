@@ -103,7 +103,6 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
     public void onNotatkaClick(int position) {
         Intent intent = new Intent(this, JednaNotatka.class);
         Long tempId = notatki.get(position).getIdnotatka();
-        Toast.makeText(this,"d "+tempId, Toast.LENGTH_LONG).show();
 
         intent.putExtra("id_notatki",tempId);
 

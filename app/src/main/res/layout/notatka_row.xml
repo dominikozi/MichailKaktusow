@@ -7,7 +7,7 @@
     android:background="@color/white">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,16 +19,21 @@
             android:layout_width="72dp"
             android:layout_height="96dp"
             android:layout_marginLeft="10dp"/>
+
+        <VideoView
+            android:id="@+id/notatka_row_filmview"
+            android:layout_width="72dp"
+            android:layout_height="96dp"
+            android:layout_marginLeft="10dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-            <LinearLayout
+            android:layout_marginLeft="95dp">
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="5dp">
+                >
                 <TextView
                     android:id="@+id/nazwaNotatki_row"
                     android:layout_width="wrap_content"
@@ -41,9 +46,9 @@
                     android:id="@+id/typNotatki_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="70dp"
                     android:text="typ notatki"
-                    android:textSize="15dp"
-                    android:layout_marginTop="10dp"/>
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/Datadodania_notatki_row"
@@ -51,8 +56,9 @@
                     android:layout_height="wrap_content"
                     android:text="data dodania"
                     android:textSize="15dp"
-                    android:layout_marginTop="15dp"/>
-            </LinearLayout>
+                    android:layout_marginTop="70dp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +69,7 @@
 
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -18,8 +18,9 @@
         <ImageView
             android:id="@+id/preview_zdj_kaktusa_row"
             android:layout_width="72dp"
-            android:layout_height="96dp"/>
-        <LinearLayout
+            android:layout_height="96dp"
+            android:layout_marginLeft="10dp"/>
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -57,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginLeft="55dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_alignParentRight="true"
                 >
                 <TextView
                     android:id="@+id/datadodania_kaktusa_row"
@@ -73,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="Data ost. podlania"
                     android:textSize="15dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="13dp"/>
 
                 <TextView
                     android:id="@+id/data_ost_zakwitu_row"
@@ -81,8 +83,8 @@
                     android:layout_height="wrap_content"
                     android:text="Data ost. zakwitu"
                     android:textSize="15dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="17dp"/>
         </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

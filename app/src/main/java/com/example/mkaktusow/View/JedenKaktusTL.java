@@ -2,15 +2,20 @@ package com.example.mkaktusow.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.mkaktusow.Controller.FragmentAdapter;
@@ -21,9 +26,12 @@ import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.OnNotatkaListener{
+public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.OnNotatkaListener, DatePickerDialog.OnDateSetListener {
 
 
     TabLayout tabLayout;
@@ -121,16 +129,37 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         return true;
     }
 
+    Date datapodlania;
+    Date datakwitniecia;
+    Date datetemp;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.om_k_podlanie:
-                Toast.makeText(this,"podlanie", Toast.LENGTH_SHORT).show();
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(),"date picker podlanie");
+                datapodlania = datetemp;
+           //     Toast.makeText(this,"p "+datapodlania, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.om_k_kwitniecie:
-                Toast.makeText(this,"kwitniecie", Toast.LENGTH_SHORT).show();
+                DialogFragment datePicker2 = new DatePickerFragment();
+                datePicker2.show(getSupportFragmentManager(),"date picker podlanie");
+                datakwitniecia= datetemp;
+            //    Toast.makeText(this,"k "+datakwitniecia, Toast.LENGTH_SHORT).show();
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    /*    Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year-1900);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);*/
+        datetemp = new Date(year-1900,month,dayOfMonth);
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        Toast.makeText(this,"d "+  df.format("yyyy-MM-dd hh:mm", datetemp), Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,9 +70,16 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
 
             if (notatki.get(position).getTypNotatki().equals("zdjecie")) {
                 viewHolderZdj.previewZdjNotatki.setImageURI(Uri.parse(notatki.get(position).getSciezkaDoZdjecia()));
+                viewHolderZdj.videoView.setVisibility(View.GONE);
             }
             if (notatki.get(position).getTypNotatki().equals("film")) {
+                viewHolderZdj.videoView.setVisibility(View.VISIBLE);
+                viewHolderZdj.previewZdjNotatki.setVisibility(View.GONE);
+                viewHolderZdj.videoView.setVideoURI(Uri.parse(notatki.get(position).getSciezkaDoFilmu()));
 
+                viewHolderZdj.videoView.start();
+                viewHolderZdj.videoView.pause();
+                viewHolderZdj.videoView.seekTo(1);
             }
         }
     }
@@ -94,6 +102,7 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView previewZdjNotatki;
+        public VideoView videoView;
         OnNotatkaListener onNotatkaListener;
 
         public ViewHolderZdj(View itemView, OnNotatkaListener onNotatkaListener) {
@@ -102,6 +111,7 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             typNotatki=itemView.findViewById(R.id.typNotatki_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             previewZdjNotatki = itemView.findViewById(R.id.preview_zdj_notatki_row);
+            videoView = itemView.findViewById(R.id.notatka_row_filmview);
             this.onNotatkaListener=onNotatkaListener;
 
             itemView.setOnClickListener(this);
@@ -110,7 +120,6 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
             onNotatkaListener.onNotatkaClick(getAdapterPosition());
-            Toast.makeText(v.getContext(),"a "+getAdapterPosition(), Toast.LENGTH_LONG).show();
         }
     }
 
