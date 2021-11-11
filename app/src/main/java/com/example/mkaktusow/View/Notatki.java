@@ -26,7 +26,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    NotatkaAdapter adapter;
 
     List<Notatka> notatki;
 
@@ -100,6 +100,27 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
     }
 
     @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case 221:
+                int id = item.getGroupId();
+                displayMessage("Usunięto notatke o nazwie: "+notatki.get(id).getNazwaNotatki());
+                AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                db.notatkaDAO().deleteByNotatkaId(notatki.get(id).getIdnotatka());
+                adapter.removeNotatka(id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
+    private void displayMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onNotatkaClick(int position) {
         Intent intent = new Intent(this, JednaNotatka.class);
         Long tempId = notatki.get(position).getIdnotatka();
@@ -108,4 +129,5 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
         startActivity(intent);
     }
+
 }

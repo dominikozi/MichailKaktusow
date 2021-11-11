@@ -1,8 +1,10 @@
 package com.example.mkaktusow.Controller;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.squareup.picasso.Picasso;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -21,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,18 +55,10 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
         holder.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
 
         if (notatki.get(position).getTypNotatki().equals("zdjecie")) {
-            holder.previewZdjNotatki.setImageURI(Uri.parse(notatki.get(position).getSciezkaDoZdjecia()));
-            holder.videoView.setVisibility(View.GONE);
+            Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewZdjNotatki);
         }
         if (notatki.get(position).getTypNotatki().equals("film")) {
-            holder.videoView.setVisibility(View.VISIBLE);
-            holder.previewZdjNotatki.setVisibility(View.GONE);
-            holder.videoView.setVideoURI(Uri.parse(notatki.get(position).getSciezkaDoFilmu()));
-
-            holder.videoView.start();
-            holder.videoView.pause();
-            holder.videoView.seekTo(1);
-
+            Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewZdjNotatki);
         }
         if (notatki.get(position).getTypNotatki().equals("tekstowa")) {
             holder.previewZdjNotatki.setImageResource(R.drawable.ic_text_snippet_24);
@@ -82,7 +78,7 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView previewZdjNotatki;
-        public VideoView videoView;
+   //     public VideoView videoView;
         OnNotatkaZdjListener onNotatkaZdjListener;
 
         public ViewHolder(View itemView, OnNotatkaZdjListener OnNotatkaZdjListener) {
@@ -91,7 +87,7 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
             typNotatki=itemView.findViewById(R.id.typNotatki_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             previewZdjNotatki = itemView.findViewById(R.id.preview_zdj_notatki_row);
-            videoView= itemView.findViewById(R.id.notatka_row_filmview);
+      //      videoView= itemView.findViewById(R.id.notatka_row_filmview);
             this.onNotatkaZdjListener=OnNotatkaZdjListener;
 
             itemView.setOnClickListener(this);
@@ -107,4 +103,16 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
         void onNotatkaZdjClick(int position);
     }
 
+    public Bitmap getBitmap(String path) {
+        Bitmap bitmap=null;
+        try {
+            File f= new File(path);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap ;
+    }
 }

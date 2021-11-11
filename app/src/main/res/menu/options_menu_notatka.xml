@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/om_k_usun"
+    <item android:id="@+id/om_n_zapisz"
+        android:icon="@drawable/ic_save_24"
+        android:title="Usun notatke"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/om_n_usun"
         android:icon="@drawable/ic_delete_24"
         android:title="Usun notatke"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/om_k_podlanie"
-        android:title="Ustaw datę podlania" />
-    <item android:id="@+id/om_k_kwitniecie"
-        android:title="Ustaw datę kwitnięcia"/>
 </menu>

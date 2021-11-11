@@ -1,12 +1,15 @@
 package com.example.mkaktusow.Controller;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.squareup.picasso.Picasso;
 
 import android.net.Uri;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -69,17 +72,10 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             viewHolderZdj.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
 
             if (notatki.get(position).getTypNotatki().equals("zdjecie")) {
-                viewHolderZdj.previewZdjNotatki.setImageURI(Uri.parse(notatki.get(position).getSciezkaDoZdjecia()));
-                viewHolderZdj.videoView.setVisibility(View.GONE);
+                Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(viewHolderZdj.previewZdjNotatki);
             }
             if (notatki.get(position).getTypNotatki().equals("film")) {
-                viewHolderZdj.videoView.setVisibility(View.VISIBLE);
-                viewHolderZdj.previewZdjNotatki.setVisibility(View.GONE);
-                viewHolderZdj.videoView.setVideoURI(Uri.parse(notatki.get(position).getSciezkaDoFilmu()));
-
-                viewHolderZdj.videoView.start();
-                viewHolderZdj.videoView.pause();
-                viewHolderZdj.videoView.seekTo(1);
+                Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(viewHolderZdj.previewZdjNotatki);
             }
         }
     }
@@ -97,13 +93,15 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         return notatki.size();
     }
 
-    public class ViewHolderZdj extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolderZdj extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
         public TextView nazwa;
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView previewZdjNotatki;
-        public VideoView videoView;
+   //     public VideoView videoView;
         OnNotatkaListener onNotatkaListener;
+
+        LinearLayout linearLayout;
 
         public ViewHolderZdj(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
@@ -111,10 +109,21 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             typNotatki=itemView.findViewById(R.id.typNotatki_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             previewZdjNotatki = itemView.findViewById(R.id.preview_zdj_notatki_row);
-            videoView = itemView.findViewById(R.id.notatka_row_filmview);
+         //   videoView = itemView.findViewById(R.id.notatka_row_filmview);
             this.onNotatkaListener=onNotatkaListener;
+            linearLayout = itemView.findViewById(R.id.notatka_row_calyrow);
+            linearLayout.setOnCreateContextMenuListener(this);
 
             itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.setHeaderTitle("Akcja " + nazwa.getText());
+
+            menu.add(this.getAdapterPosition(), 221, 0 , "Usun");
+
         }
 
         @Override
@@ -123,12 +132,14 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public class ViewHolderText extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolderText extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
         public TextView nazwa;
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView ikona;
         OnNotatkaListener onNotatkaListener;
+
+        LinearLayout linearLayout2;
 
         public ViewHolderText(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
@@ -137,6 +148,9 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             ikona = itemView.findViewById(R.id.ikona_notatki_tekstowej_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             this.onNotatkaListener=onNotatkaListener;
+            linearLayout2 = itemView.findViewById(R.id.notatka_text_row_calyrow);
+            linearLayout2.setOnCreateContextMenuListener(this);
+
 
             itemView.setOnClickListener(this);
         }
@@ -144,7 +158,15 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
             onNotatkaListener.onNotatkaClick(getAdapterPosition());
-            Toast.makeText(v.getContext(),"a "+getAdapterPosition(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.setHeaderTitle("Akcja " + nazwa.getText());
+
+            menu.add(this.getAdapterPosition(), 221, 0 , "Usun");
+
         }
     }
 
@@ -153,5 +175,9 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         void onNotatkaClick(int position);
     }
 
+    public void removeNotatka(int position){
+        notatki.remove(position);
+        notifyDataSetChanged();
+    }
 
 }
