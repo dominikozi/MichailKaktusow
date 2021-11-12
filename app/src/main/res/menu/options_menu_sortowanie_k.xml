@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item  android:id="@+id/om_k_sort"
+        android:icon="@drawable/ic_sort_24"
+        android:title="Sortowanie"
+        app:showAsAction="always">
+        <menu >
+            <item android:id="@+id/om_k_sort_nazwa"
+                android:title="Sortowanie po nazwie" />
+            <item android:id="@+id/om_k_sort_data"
+                android:title="Sortowanie po dacie"/>
+            <item android:id="@+id/om_k_sort_gatunek"
+                android:title="Sortowanie po gatunku" />
+        </menu>
+    </item>
+
+</menu>
