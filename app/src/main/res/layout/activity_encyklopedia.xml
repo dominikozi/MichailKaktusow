@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_below="@+id/Encyklopedia_tekst"
-        android:text="https://pl.wikipedia.org/wiki/Kategoria:Kaktusy" />
+        android:text="https://pl.wikipedia.org/wiki/Kategoria:Kaktusy, https://pl.wikipedia.org/wiki/Kaktusowate" />
 
     <TextView
         android:id="@+id/Encyklopedia_textView2"

@@ -49,12 +49,10 @@ public class Encyklopedia extends AppCompatActivity {
         //----bottom navigation bar
         //Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        //set Miejsca selected
+        //set encyklopedia selected
         bottomNavigationView.setSelectedItemId(R.id.Encyklopedia);
         //perform itemSelectedListener
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
                 switch(menuItem.getItemId()){
                     case R.id.Encyklopedia:
                         return true;
@@ -68,18 +66,20 @@ public class Encyklopedia extends AppCompatActivity {
                         return true;
                 }
                 return false;
-            }
-        });
-        //----bottom navigation bar
 
+        });
+
+        //----bottom navigation bar
         //
+        /*
         button. setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickImage();
             }
         });
-
+*/
+        button.setOnClickListener(v -> pickImage());
     }
 
 

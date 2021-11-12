@@ -1,15 +1,15 @@
 package com.example.mkaktusow.View;
 import com.example.mkaktusow.Controller.KaktusAdapter;
-import com.example.mkaktusow.Controller.NotatkaAdapter;
+
 import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
-import com.example.mkaktusow.Model.Notatka;
+
 import com.example.mkaktusow.R;
-import com.google.android.gms.maps.model.LatLng;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.components.Lazy;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +19,11 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.Toast;
 
 import java.util.List;
@@ -35,8 +37,6 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
     FloatingActionButton fabDuzy;
     FloatingActionButton fabMalyZdj;
     FloatingActionButton fabMalyBezZdj;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,4 +152,31 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu_sortowanie_k,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.om_k_sort_nazwa:
+                Toast.makeText(getApplicationContext(),"Posortowano po nazwie",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.om_k_sort_data:
+                Toast.makeText(getApplicationContext(),"Posortowano po dacie",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.om_k_sort_gatunek:
+                Toast.makeText(getApplicationContext(),"Posortowano po gatunku",Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
+    }
 }
