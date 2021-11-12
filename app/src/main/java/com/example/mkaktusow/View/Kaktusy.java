@@ -101,7 +101,13 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         fabMalyZdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"nowy kaktus bez zdj", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"nowy kaktus ze zdj", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(Kaktusy.this, NowyKaktus.class);
+                intent.putExtra("czyZdj", 1);
+
+                startActivity(intent);
+
             }
         });
         fabMalyBezZdj.setOnClickListener(new View.OnClickListener() {

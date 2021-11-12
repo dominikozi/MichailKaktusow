@@ -28,8 +28,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -360,7 +362,41 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 Uri contentUri = Uri.fromFile(f);
                 pathDoFilmu=contentUri.toString();
 
-                Toast.makeText(this, "uri " + contentUri, Toast.LENGTH_LONG).show();
+                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(currentVideoPath);
+
+                Bitmap pierwszaKlatka = mediaMetadataRetriever.getFrameAtTime(1,MediaMetadataRetriever.OPTION_CLOSEST);
+                Bitmap croppedPKlatka = ThumbnailUtils.extractThumbnail(pierwszaKlatka,300,400); //zmiana na 4:3 z 16:9(defaultowe camery)
+
+                //
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+
+                File ff = new File(currentPhotoPath);
+                Uri contentUrii = Uri.fromFile(ff);
+                pathDoZdjecia = contentUrii.toString();
+
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(ff);
+                    croppedPKlatka.compress(Bitmap.CompressFormat.JPEG,90,fileOutputStream);
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //
+
+
+                Toast.makeText(this, "uri " + contentUrii, Toast.LENGTH_LONG).show();
 
                 videoView.setVideoURI(Uri.parse(pathDoFilmu));
                 videoView.seekTo(1);

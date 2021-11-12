@@ -33,10 +33,6 @@ public class Notatka {
 
     private long kaktusid;
 
-    public Notatka(){
-
-    }
-    //nazwa.getText().toString(),idWybranegoKaktusa, typNotatki, trescNotatki, pathDoZdjecia,pathDoAudio,pathDoFilmu,dataDodaniaNotatki
 
 
     public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
@@ -48,25 +44,6 @@ public class Notatka {
         this.sciezkaDoFilmu = sciezkaDoFilmu;
         this.dataDodania = dataDodania;
         this.kaktusid = kaktusid;
-    }
-
-    public Notatka(String nazwaNotatki) {
-        this.nazwaNotatki=nazwaNotatki;
-    }
-
-    public Notatka(String nazwaNotatki, long kaktusid, String typNotatki) {
-           this.nazwaNotatki=nazwaNotatki;
-           this.kaktusid=kaktusid;
-           this.typNotatki=typNotatki;
-    }
-
-    public Notatka(String typNotatki, String nazwaNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, Date dataDodania, long kaktusId) {
-        this.nazwaNotatki=nazwaNotatki;
-        this.typNotatki = typNotatki;
-        this.sciezkaDoZdjecia = sciezkaDoZdjecia;
-        this.sciezkaDoAudio = sciezkaDoAudio;
-        this.dataDodania = dataDodania;
-        this.kaktusid = kaktusId;
     }
 
     public long getIdnotatka() {

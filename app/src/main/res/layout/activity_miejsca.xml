@@ -43,7 +43,7 @@
         android:focusable="true"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_add_24"
-        android:background="@color/green"
+        android:backgroundTint="@color/green_subtle"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -55,6 +55,7 @@
         android:focusable="true"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_no_image_24"
+        android:backgroundTint="@color/green_subtle"
         android:layout_alignBottom="@id/kaktusy_floatingActionButtonDuzy"
         android:layout_marginBottom="60dp"
         android:layout_alignParentRight="true"
@@ -70,6 +71,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="120dp"
+        android:backgroundTint="@color/green_subtle"
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"

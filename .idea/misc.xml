@@ -30,7 +30,8 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_rzad.xml" value="0.36666666666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_text_row.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/nowanotatka_spinner_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_kaktus.xml" value="0.33" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_kaktus.xml" value="0.25" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_notatka.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/xml/file_paths.xml" value="0.265625" />
       </map>
     </option>

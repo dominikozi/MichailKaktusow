@@ -15,7 +15,8 @@
         android:id="@+id/jedenkaktustl_viewpager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/jedenkaktustl_tablayout" >
+        android:layout_below="@+id/jedenkaktustl_tablayout"
+        >
 
     </androidx.viewpager2.widget.ViewPager2>
 

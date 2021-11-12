@@ -21,4 +21,10 @@ public interface NotatkaDAO {
     @Insert
     void insertAll(Notatka... notatki);
 
+    @Query("DELETE FROM notatka WHERE idnotatka = :id")
+    abstract void deleteByNotatkaId(long id);
+
+    @Query("UPDATE notatka SET tresc_notatki=:tresc WHERE idnotatka = :id")
+    void updateNotatka(String tresc, Long id);
+
 }

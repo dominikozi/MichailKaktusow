@@ -7,38 +7,18 @@
     tools:context=".View.JednaNotatka">
 <!--    android:background="#f2eebb">-->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/jednanotatka_nazwa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-
-                />
-
             <TextView
                 android:id="@+id/jednanotatka_typ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/jednanotatka_nazwa"
-                android:text="TextView" />
+                android:text="TextView"
+                android:layout_alignParentLeft="true"/>
 
             <TextView
                 android:id="@+id/jednanotatka_nazwakaktusa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/jednanotatka_typ"
+                android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/cactus"
                 android:text="TextView" />
 
@@ -47,39 +27,63 @@
                 android:layout_width="300dp"
                 android:layout_height="400dp"
                 android:layout_below="@id/jednanotatka_nazwakaktusa"
-                android:layout_centerHorizontal="true"/>
-
-            <TextView
-                android:id="@+id/jednanotatka_tresc_notatki"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/jednanotatka_zdjecie"
-                android:background="@drawable/textview_border"
-                android:gravity="center"
-                android:text="tekst notatki" />
-
-            <ImageButton
-                android:id="@+id/jednanotatka_odtworz_audio"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_below="@+id/jednanotatka_tresc_notatki"
-                android:background="@drawable/zaokraglony_przycisk"
-                android:src="@drawable/ic_play_arrow_24"
-                android:layout_centerHorizontal="true"
-                />
+                android:layout_centerHorizontal="true" />
             <LinearLayout
                 android:id="@+id/jednanotatka_film_linear_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_below="@+id/jednanotatka_odtworz_audio">
+                android:layout_below="@id/jednanotatka_nazwakaktusa">
                 <VideoView
                     android:id="@+id/jednanotatka_video_view"
                     android:layout_width="300dp"
                     android:layout_height="400dp"
                     android:layout_gravity="center"
-                />
+                    />
             </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/jednanotatka_tresc_layout_notatki"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_below="@id/jednanotatka_zdjecie">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/jednanotatka_tresc_notatki"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:hint="Treść notatki:"
+                    android:gravity="top"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/jednanotatka_odtworz_audio"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="70dp"
+                android:layout_alignBottom="@id/jednanotatka_zdjecie"
+                android:layout_marginBottom="12dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/zaokraglony_przycisk"
+                android:src="@drawable/ic_play_arrow_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/notatki_fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_save_24"
+        android:backgroundTint="@color/green_subtle"
+
+        />
+
+
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.mkaktusow.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,7 @@ import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -48,8 +50,6 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jeden_kaktus_tl);
 
-
-
         Long idKaktusa = getIntent().getExtras().getLong("id_kaktusa");
         kaktusid=idKaktusa;
 
@@ -65,6 +65,7 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         FragmentManager fm = getSupportFragmentManager();
         fragmentadapter = new FragmentAdapter(fm,getLifecycle());
         viewPager2.setAdapter(fragmentadapter);
+        viewPager2.setUserInputEnabled(false);
 
         tabLayout.addTab(tabLayout.newTab().setText("Info"));
         tabLayout.addTab(tabLayout.newTab().setText("Mapa"));
@@ -134,6 +135,8 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
     Date datetemp;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         switch(item.getItemId()){
             case R.id.om_k_podlanie:
                 DialogFragment datePicker = new DatePickerFragment();
@@ -146,6 +149,34 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
                 datePicker2.show(getSupportFragmentManager(),"date picker podlanie");
                 datakwitniecia= datetemp;
             //    Toast.makeText(this,"k "+datakwitniecia, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.om_k_usun:
+
+                AlertDialog.Builder alertPotwierdzenie = new AlertDialog.Builder(this);
+                alertPotwierdzenie.setCancelable(true);
+                alertPotwierdzenie.setTitle("Usunięcie kaktusa");
+                alertPotwierdzenie.setMessage("Czy potwierdzasz usunięcie kaktusa?");
+                alertPotwierdzenie.setPositiveButton("Potwierdz", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.kaktusDAO().deleteByKaktusId(kaktus.getIdkaktus());
+                        Toast.makeText(getApplicationContext(),"Usunieto kaktusa "+kaktus.getNazwaKaktusa()+".",Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), Kaktusy.class);
+
+                        startActivity(intent);
+
+                    }
+                });
+                alertPotwierdzenie.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),"Usuniecie kaktusa anulowane.",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                AlertDialog alertDialog = alertPotwierdzenie.create();
+                alertDialog.show();
 
                 return true;
         }

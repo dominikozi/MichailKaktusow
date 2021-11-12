@@ -79,7 +79,6 @@ public class NowyKaktus extends AppCompatActivity {
         imageView.setVisibility(View.GONE);
         client = LocationServices.getFusedLocationProviderClient(this);
 
-
         //obsluga zdjecia
         if (ContextCompat.checkSelfPermission(NowyKaktus.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NowyKaktus.this,
@@ -88,15 +87,15 @@ public class NowyKaktus extends AppCompatActivity {
                     }, 100);
         }
 
-        buttonZrobzdj.setOnClickListener(new View.OnClickListener() {
 
+        //button zrob zdjecie
+        buttonZrobzdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
-
             }
         });
-
+        lokalizacja= new LatLng(50,50);
         if (ActivityCompat.checkSelfPermission(NowyKaktus.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Task<Location> task = client.getLastLocation();
@@ -141,6 +140,16 @@ public class NowyKaktus extends AppCompatActivity {
 
             }
         });
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("czyZdj")) {
+                dispatchTakePictureIntent();
+
+            }
+        }
+
     }
 
 
@@ -200,15 +209,14 @@ public class NowyKaktus extends AppCompatActivity {
                 Toast.makeText(this, "uri " + contentUri, Toast.LENGTH_LONG).show();
 
                 setPic();
-
             }
         }
     }
 
     public void setPic() {
         // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
+        int targetW = 300;
+        int targetH = 400;
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
