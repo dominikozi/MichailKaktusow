@@ -19,6 +19,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mapa extends AppCompatActivity {
 
     Kaktus kaktus;
@@ -30,23 +33,32 @@ public class Mapa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-        Long idKaktusa = getIntent().getExtras().getLong("id_kaktusa");
+    //    Long idKaktusa = getIntent().getExtras().getLong("id_kaktusa");
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        kaktus = db.kaktusDAO().getKaktusWithID(idKaktusa);
+   //     kaktus = db.kaktusDAO().getKaktusWithID(idKaktusa);
+        List<Kaktus> kaktusy= db.kaktusDAO().getAllKaktusy();
 
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
 
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
-                LatLng latLng = new LatLng(kaktus.getLatitude(),kaktus.getLongtitude());
-                //create marker options
-                MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kaktus.getNazwaKaktusa());
-                //zoom camera
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-                //add marker on map
-                googleMap.addMarker(options);
+                for(Kaktus kakus : kaktusy){
+                    LatLng latLng = new LatLng(kakus.getLatitude(),kakus.getLongtitude());
+                    MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kakus.getNazwaKaktusa());
+                    //zoom camera
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                    //add marker on map
+                    googleMap.addMarker(options);
+                }
+//                LatLng latLng = new LatLng(kaktus.getLatitude(),kaktus.getLongtitude());
+//                //create marker options
+//                MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kaktus.getNazwaKaktusa());
+//                //zoom camera
+//                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+//                //add marker on map
+//                googleMap.addMarker(options);
             }
         });
 

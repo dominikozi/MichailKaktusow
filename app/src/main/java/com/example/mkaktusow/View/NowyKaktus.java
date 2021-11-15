@@ -95,14 +95,17 @@ public class NowyKaktus extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
-        lokalizacja= new LatLng(50,50);
+  //      lokalizacja= new LatLng(50,49.99);
         if (ActivityCompat.checkSelfPermission(NowyKaktus.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Task<Location> task = client.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
+                   // Toast.makeText(getApplicationContext(),"tost2",Toast.LENGTH_SHORT).show();
+
                     if (location != null) {
+
                         lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
                     }
                 }
@@ -113,6 +116,7 @@ public class NowyKaktus extends AppCompatActivity {
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
+                   // Toast.makeText(getApplicationContext(),"tost",Toast.LENGTH_SHORT).show();
                     if (location != null) {
                         lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
                     }
@@ -129,15 +133,18 @@ public class NowyKaktus extends AppCompatActivity {
             public void onClick(View v) {
                 Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
 
+                if(nazwaKaktusa.getText().toString().equals("")|| gatunek.getText().toString().equals("")||nazwaMiejsca.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"Musisz wypelnic dane",Toast.LENGTH_SHORT).show();
+                }else {
 
-                if (TextUtils.isEmpty(pathDoZdjecia)) {
-                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(),null, lokalizacja.latitude, lokalizacja.longitude,dataDodaniaKaktusa));
-                } else {
-                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude,dataDodaniaKaktusa));
+                    if (TextUtils.isEmpty(pathDoZdjecia)) {
+                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                    } else {
+                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                    }
+
+                    startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
                 }
-
-                startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
-
             }
         });
 

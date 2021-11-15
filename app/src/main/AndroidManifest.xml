@@ -17,11 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MKaktusow">
-
+        <activity
+            android:name=".View.MapaWK"
+            android:exported="false" />
         <activity
             android:name=".View.JedenKaktusTL"
-            android:parentActivityName=".View.Kaktusy"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".View.Kaktusy" />
 
         <meta-data
             android:name="com.google.android.API_KEY"
@@ -38,6 +40,7 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ica" />
+
         <activity
             android:name=".View.Mapa"
             android:exported="false" />

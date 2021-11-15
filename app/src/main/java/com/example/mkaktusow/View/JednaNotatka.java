@@ -80,15 +80,15 @@ public class JednaNotatka extends AppCompatActivity {
         imageButton = findViewById(R.id.jednanotatka_odtworz_audio);
 
         zdjecie.setVisibility(View.GONE);
-        if(notatka.getTypNotatki().equals("zdjecie")){
+        if(notatka.getTypNotatki().equals("zdjecie")) {
             zdjecie.setVisibility(View.VISIBLE);
             zdjecie.setImageURI(Uri.parse(notatka.getSciezkaDoZdjecia()));
         }
-        if(notatka.getTrescNotatki().length()==0){
-            tresc.setVisibility(View.GONE);
-        }else{
+        if(notatka.getTypNotatki().equals("tekstowa")||notatka.getTypNotatki().equals("zdjecie")){
             tresc.setVisibility(View.VISIBLE);
             tresc.setText(notatka.getTrescNotatki());
+        }else{
+            tresc.setVisibility(View.GONE);
         }
 
         if(notatka.getSciezkaDoAudio()==null){
@@ -137,7 +137,7 @@ public class JednaNotatka extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(notatka.getTrescNotatki().length()!=0) {
+                if(notatka.getTypNotatki().equals("tekstowa")||notatka.getTypNotatki().equals("zdjecie")) {
                     db.notatkaDAO().updateNotatka(tresc.getText().toString(),notatka.getIdnotatka());
 
                     Toast.makeText(getApplicationContext(),"Zmieniono tresc notatki "+notatka.getNazwaNotatki(),Toast.LENGTH_SHORT).show();

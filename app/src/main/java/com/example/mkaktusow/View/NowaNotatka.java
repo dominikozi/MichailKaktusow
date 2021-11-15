@@ -234,7 +234,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 }
             }
         });
-
+        imageView.setVisibility(View.GONE);
 
         //obsluga ZDJECIA
         if(ContextCompat.checkSelfPermission(NowaNotatka.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -319,6 +319,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     }
 
     private void dispatchTakePictureIntent() {
+        imageView.setVisibility(View.VISIBLE);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -407,6 +408,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     }
 
     public void setPic(){
+
         // Get the dimensions of the View
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
@@ -499,11 +501,15 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
     }
     public void przerwijNagrywanieDzwieku(){
-        mediaRecorder.stop();
-        mediaRecorder.release();
+        try {
+            mediaRecorder.stop();
+            mediaRecorder.release();
 
-        textViewCzynagrywanietrwa.setText("Nagrywanie zakończone");
-
+            textViewCzynagrywanietrwa.setText("Nagrywanie zakończone");
+        }
+        catch(Exception e){
+            Toast.makeText(this,"Nagranie nie jest odtwarzane",Toast.LENGTH_SHORT).show();
+        }
     }
     public void OdtworzNagranieDzwieku(){
         MediaPlayer mediaPlayer = new MediaPlayer();
@@ -513,7 +519,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             mediaPlayer.prepare();
             mediaPlayer.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this,"Nie ma nagrania do odtworzenia",Toast.LENGTH_SHORT).show();
+
         }
 
         textViewCzynagrywanietrwa.setText("Odtwarzanie nagrania");
