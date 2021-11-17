@@ -84,6 +84,10 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
                         startActivity(new Intent(getApplicationContext(),Encyklopedia.class));
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.Mapa:
+                        startActivity(new Intent(getApplicationContext(),Mapa.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
                 return false;
             }
@@ -190,5 +194,10 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+    }
 
 }

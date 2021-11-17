@@ -80,6 +80,10 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                         startActivity(new Intent(getApplicationContext(), Kaktusy.class));
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.Mapa:
+                        startActivity(new Intent(getApplicationContext(),Mapa.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
                 return false;
             }
@@ -149,7 +153,6 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                 break;
             case R.id.om_n_sort_data:
                 Toast.makeText(getApplicationContext(),"Posortowano po dacie",Toast.LENGTH_SHORT).show();
-
                 break;
 
         }
@@ -157,5 +160,11 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
     }
 }
