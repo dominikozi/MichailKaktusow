@@ -34,6 +34,7 @@ import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -81,8 +82,10 @@ public class JednaNotatka extends AppCompatActivity {
 
         zdjecie.setVisibility(View.GONE);
         if(notatka.getTypNotatki().equals("zdjecie")) {
+            // Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewZdjNotatki);
             zdjecie.setVisibility(View.VISIBLE);
-            zdjecie.setImageURI(Uri.parse(notatka.getSciezkaDoZdjecia()));
+            Picasso.get().load(notatka.getSciezkaDoZdjecia()).fit().centerInside().into(zdjecie);
+           // zdjecie.setImageURI(Uri.parse(notatka.getSciezkaDoZdjecia()));
         }
         if(notatka.getTypNotatki().equals("tekstowa")||notatka.getTypNotatki().equals("zdjecie")){
             tresc.setVisibility(View.VISIBLE);

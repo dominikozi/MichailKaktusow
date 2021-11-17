@@ -1,6 +1,10 @@
 package com.example.mkaktusow.Controller;
+import com.bumptech.glide.Glide;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.example.mkaktusow.View.Encyklopedia;
+import com.example.mkaktusow.View.FragKZdj;
+import com.example.mkaktusow.View.Notatki;
 import com.squareup.picasso.Picasso;
 
 import android.graphics.Bitmap;

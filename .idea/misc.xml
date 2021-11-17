@@ -14,7 +14,7 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_jeden_kaktus_tl.xml" value="0.2421875" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_jedna_notatka.xml" value="0.25" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_mapa.xml" value="0.24270833333333333" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.33" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.25" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_notatki.xml" value="0.20208333333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowa_notatka.xml" value="0.32252701579384874" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowy_kaktus.xml" value="0.25" />
@@ -30,14 +30,12 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_rzad.xml" value="0.36666666666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_text_row.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/nowanotatka_spinner_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/menu_navigation.xml" value="0.23958333333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_kaktus.xml" value="0.25" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_notatka.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_sortowanie_k.xml" value="0.24895833333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_sortowanie_n.xml" value="0.24895833333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/xml/file_paths.xml" value="0.265625" />
-        <entry key="..\:/Users/Dominik/StudioProjects/MichailKaktusow/app/src/main/res/layout/activity_encyklopedia.xml" value="0.2318840579710145" />
-        <entry key="..\:/Users/Dominik/StudioProjects/MichailKaktusow/app/src/main/res/layout/activity_mapa.xml" value="0.2318840579710145" />
-        <entry key="..\:/Users/Dominik/StudioProjects/MichailKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.2318840579710145" />
       </map>
     </option>
   </component>
