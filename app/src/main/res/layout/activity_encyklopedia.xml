@@ -6,14 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".View.Encyklopedia">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Encyklopedia_tekst"
-        android:text="Encyklopedia"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                android:id="@+id/encyklopedia_z_jakiej_strony"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"
+                android:textSize="10dp"/>
+
+
+                <Spinner
+                    android:id="@+id/encyklopedia_spinner_gatunek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/encyklopedia_tekst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/encyklopedia_zdjecie"
+                android:scaleType="centerCrop"
+                />
+
+
+            <TextView
+                android:id="@+id/encyklopedia_tekst2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+
+            <TextView
+                android:id="@+id/encyklopedia_tekst3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+            <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/encyklopedia_zdjecie2"
+                android:adjustViewBounds="true"/>
+<!--                android:scaleType="centerCrop"-->
+
+            <TextView
+                android:id="@+id/encyklopedia_tekst4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+            <TextView
+                android:id="@+id/encyklopedia_tekst5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+            <TextView
+                android:id="@+id/encyklopedia_tekst6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+            <TextView
+                android:id="@+id/encyklopedia_tekst7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text" />
+
+
+        </LinearLayout>
+    </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -22,42 +98,7 @@
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation"
-        android:layout_alignParentBottom="true"    />
-
-    <TextView
-        android:id="@+id/Encyklopedia_textView1"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_below="@+id/Encyklopedia_tekst"
-        android:text="https://pl.wikipedia.org/wiki/Kategoria:Kaktusy, https://pl.wikipedia.org/wiki/Kaktusowate" />
-
-    <TextView
-        android:id="@+id/Encyklopedia_textView2"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/Encyklopedia_textView1"
-        android:layout_marginTop="-1dp"
-        android:paddingTop="20dp"
-        android:text="http://kaktusy.net/joomla16/index.php/edu-kaktus" />
-
-    <ImageView
-        android:id="@+id/encyklopedia_imageview"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:layout_below="@+id/Encyklopedia_textView2"
-        />
-    <Button
-        android:id="@+id/encyklopedia_zrobzdj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="zrob zdj"
-        android:layout_below="@+id/encyklopedia_imageview"
-        />
-    <TextView
-        android:id="@+id/encyklopedia_tekstimage_ML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/encyklopedia_zrobzdj"
-        />
+        android:layout_alignParentBottom="true"
+        app:labelVisibilityMode="labeled" />
 
 </RelativeLayout>
