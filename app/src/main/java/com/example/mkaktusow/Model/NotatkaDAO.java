@@ -27,4 +27,7 @@ public interface NotatkaDAO {
     @Query("UPDATE notatka SET tresc_notatki=:tresc WHERE idnotatka = :id")
     void updateNotatka(String tresc, Long id);
 
+    @Query("UPDATE notatka SET nazwa_notatki=:nazwa WHERE idnotatka = :id")
+    void updateNazwaNotatki(String nazwa, Long id);
+
 }

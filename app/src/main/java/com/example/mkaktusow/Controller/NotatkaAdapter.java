@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -101,7 +102,8 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
    //     public VideoView videoView;
         OnNotatkaListener onNotatkaListener;
 
-        LinearLayout linearLayout;
+     //   LinearLayout linearLayout;
+        CardView cardView;
 
         public ViewHolderZdj(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
@@ -111,8 +113,10 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             previewZdjNotatki = itemView.findViewById(R.id.preview_zdj_notatki_row);
          //   videoView = itemView.findViewById(R.id.notatka_row_filmview);
             this.onNotatkaListener=onNotatkaListener;
-            linearLayout = itemView.findViewById(R.id.notatka_row_calyrow);
-            linearLayout.setOnCreateContextMenuListener(this);
+        //    linearLayout = itemView.findViewById(R.id.notatka_row_calyrow);
+            cardView = itemView.findViewById(R.id.notatka_row_calyrow);
+          //            //  linearLayout.setOnCreateContextMenuListener(this);
+            cardView.setOnCreateContextMenuListener(this);
 
             itemView.setOnClickListener(this);
         }
@@ -139,8 +143,8 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         public ImageView ikona;
         OnNotatkaListener onNotatkaListener;
 
-        LinearLayout linearLayout2;
-
+      //  LinearLayout linearLayout2;
+        CardView cardView2;
         public ViewHolderText(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
             nazwa=itemView.findViewById(R.id.nazwaNotatki_row);
@@ -148,9 +152,10 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             ikona = itemView.findViewById(R.id.ikona_notatki_tekstowej_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             this.onNotatkaListener=onNotatkaListener;
-            linearLayout2 = itemView.findViewById(R.id.notatka_text_row_calyrow);
-            linearLayout2.setOnCreateContextMenuListener(this);
-
+     //       linearLayout2 = itemView.findViewById(R.id.notatka_text_row_calyrow);
+    //        linearLayout2.setOnCreateContextMenuListener(this);
+            cardView2 = itemView.findViewById(R.id.notatka_text_row_calyrow);
+            cardView2.setOnCreateContextMenuListener(this);
 
             itemView.setOnClickListener(this);
         }

@@ -10,11 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -45,10 +47,20 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         if(kaktusy.get(position).getSciezkaDoZdjecia()==null){
             holder.previewKaktusa.setImageResource(R.drawable.ic_no_image_24);
         }else {
-            holder.previewKaktusa.setImageURI(Uri.parse(kaktusy.get(position).getSciezkaDoZdjecia()));
+            //Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewZdjNotatki);
+            //holder.previewKaktusa.setImageURI(Uri.parse(kaktusy.get(position).getSciezkaDoZdjecia()));
+            Picasso.get().load(kaktusy.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewKaktusa);
         }
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         holder.dataDodaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataDodania()));
+        if(kaktusy.get(position).getDataOstPodlania()!=null){
+            holder.dataOstPodlaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataOstPodlania()));
+        }else
+            holder.dataOstPodlaniaK.setVisibility(View.GONE);
+        if(kaktusy.get(position).getDataOstZakwitu()!=null){
+            holder.dataOstZakwituK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataOstZakwitu()));
+        }else
+            holder.dataOstZakwituK.setVisibility(View.GONE);
     }
 
     @Override
@@ -66,6 +78,7 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         public ImageView previewKaktusa;
         OnKaktusListener onKaktusListener;
 
+        CardView cardView;
         LinearLayout linearLayout;
 
         public ViewHolder(View itemView, OnKaktusListener onKaktusListener) {
@@ -76,9 +89,12 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
             previewKaktusa=itemView.findViewById(R.id.preview_zdj_kaktusa_row);
             dataDodaniaK=itemView.findViewById(R.id.datadodania_kaktusa_row);
             this.onKaktusListener=onKaktusListener;
-            linearLayout = itemView.findViewById(R.id.kaktus_row_Caly_row);
-            linearLayout.setOnCreateContextMenuListener(this);
-
+         //   linearLayout = itemView.findViewById(R.id.kaktus_row_Caly_row);
+         //   linearLayout.setOnCreateContextMenuListener(this);
+            dataOstPodlaniaK=itemView.findViewById(R.id.data_ost_podlania_row);
+            dataOstZakwituK=itemView.findViewById(R.id.data_ost_zakwitu_row);
+            cardView = itemView.findViewById(R.id.kaktus_row_Caly_row);
+            cardView.setOnCreateContextMenuListener(this);
             itemView.setOnClickListener(this);
         }
 

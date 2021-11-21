@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Kaktusy"
-    android:background="@color/white">
+    android:background="@color/szaretlo">
 
 
     <LinearLayout
@@ -24,7 +24,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/teal_700"
+        app:itemBackground="@color/GreenP"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation"
@@ -42,9 +42,9 @@
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
+        android:backgroundTint="#1b5e20"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_add_24"
-        android:backgroundTint="@color/green_subtle"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -54,9 +54,9 @@
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
+        android:backgroundTint="#1b5e20"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_no_image_24"
-        android:backgroundTint="@color/green_subtle"
         android:layout_alignBottom="@id/kaktusy_floatingActionButtonDuzy"
         android:layout_marginBottom="60dp"
         android:layout_alignParentRight="true"
@@ -70,9 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/kaktusy_floatingActionButtonDuzy"
         android:layout_alignParentRight="true"
+        android:backgroundTint="#1b5e20"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="120dp"
-        android:backgroundTint="@color/green_subtle"
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"

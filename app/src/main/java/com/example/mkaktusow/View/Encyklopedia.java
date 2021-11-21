@@ -131,41 +131,45 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         textView7 = findViewById(R.id.encyklopedia_tekst7);
         imageView = findViewById(R.id.encyklopedia_zdjecie);
         imageView2 = findViewById(R.id.encyklopedia_zdjecie2);
+
+        WyswietlLoading();
+
         source = findViewById(R.id.encyklopedia_z_jakiej_strony);
-        source.setText("dane z: fajnyogrod.pl");
+        source.setText("Źródło: fajnyogrod.pl");
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        WyswietlLoading();
         switch(parent.getItemAtPosition(position).toString()){
             case "Opuncja drobnokolczasta":
                 link = "https://fajnyogrod.pl/porady/opuncja-drobnokolczasta-uprawa-pielegnacja-podlewanie-wymagania/";
-                source.setText("dane z: https://fajnyogrod.pl/");
+                source.setText("Źródło: https://fajnyogrod.pl/");
                 s = new scrape();
                 s.execute();
                 break;
             case "Opuncja figowa":
                 link = "https://fajnyogrod.pl/porady/opuncja-figowa-uprawa-hodowla-rozmnazanie-podlewanie-porady/";
-                source.setText("dane z: https://fajnyogrod.pl/");
+                source.setText("Źródło: https://fajnyogrod.pl/");
                 s = new scrape();
                 s.execute();
                 break;
             case "Wielomlecz trójżebrowy":
                 link = "https://fajnyogrod.pl/porady/wilczomlecz-trojzebrowy-sadzenie-uprawa-rozmnazanie-przycinanie/";
-                source.setText("dane z: https://fajnyogrod.pl/");
+                source.setText("Źródło: https://fajnyogrod.pl/");
                 s = new scrape();
                 s.execute();
                 break;
             case "Cereus repandus":
                 link = "https://fajnyogrod.pl/porady/cereus-repandus-w-doniczce-uprawa-pielegnacja-ciekawostki/";
-                source.setText("dane z: https://fajnyogrod.pl/");
+                source.setText("Źródło: https://fajnyogrod.pl/");
                 s = new scrape();
                 s.execute();
                 break;
             case "Echinokaktus Grusonii":
                 link = "https://fajnyogrod.pl/porady/echinocactus-grusonii-w-doniczce-pielegnacja-podlewanie-uprawa/";
-                source.setText("dane z: https://fajnyogrod.pl/");
+                source.setText("Źródło: https://fajnyogrod.pl/");
                 s = new scrape();
                 s.execute();
                 break;
@@ -178,7 +182,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                 wikipediaS wikipedias = new wikipediaS();
                 wikipedias.execute(parent.getItemAtPosition(position).toString());
          //       getDataFromWikipediaAPI(parent.getItemAtPosition(position).toString());
-                source.setText("dane z: https://pl.wikipedia.org/");
+                source.setText("Źródło: https://pl.wikipedia.org/");
                 break;
             default:
                 Toast.makeText(getApplicationContext(),"xd",Toast.LENGTH_SHORT).show();
@@ -391,6 +395,18 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         protected void onPostExecute(Void result) {
 
         }
+    }
+
+    public void WyswietlLoading(){
+        textView.setText("");
+        textView2.setText("");
+        textView3.setText("");
+        textView4.setText("");
+        textView5.setText("");
+        textView6.setText("");
+        textView7.setText("");
+        Picasso.get().load(R.drawable.ic_loading).resize(200,200).into(imageView);
+        imageView2.setVisibility(View.GONE);
     }
 
 }

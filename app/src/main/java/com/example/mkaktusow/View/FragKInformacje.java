@@ -1,6 +1,10 @@
 package com.example.mkaktusow.View;
 
+import android.app.Dialog;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,12 +15,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -68,7 +77,11 @@ public class FragKInformacje extends Fragment {
 
     }
 
-
+    TextView nazwaK;
+    TextView gatunekK;
+    TextView miejsceK;
+    TextView data1;
+    TextView data2;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,13 +89,48 @@ public class FragKInformacje extends Fragment {
         JedenKaktusTL activity = (JedenKaktusTL) getActivity();
         Long idKaktusa = activity.getkaktusIDzaktywnosci();
         Kaktus kaktus = activity.getCurrentKaktusZActivity();
-        TextView nazwaK = (TextView) view.findViewById(R.id.fragkinfo_nazwa);
+        nazwaK = (TextView) view.findViewById(R.id.fragkinfo_nazwa);
         nazwaK.setText(kaktus.getNazwaKaktusa());
-        TextView gatunekK = (TextView) view.findViewById(R.id.jedenkaktustl_gatunekkaktusa);
+        gatunekK = (TextView) view.findViewById(R.id.jedenkaktustl_gatunekkaktusa);
         gatunekK.setText("Gatunek: "+kaktus.getGatunek());
-        TextView miejsceK = (TextView) view.findViewById(R.id.jedenkaktustl_miejsce);
+        miejsceK = (TextView) view.findViewById(R.id.jedenkaktustl_miejsce);
         miejsceK.setText("Lokacja: "+kaktus.getNazwaMiejsca());
         ImageView zdjK = (ImageView) view.findViewById(R.id.frakinfo_zdjkaktusa);
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        data1 = (TextView) view.findViewById(R.id.jedenkaktustl_data1);
+        data1.setText("Brak daty ostatniego podlania.");
+        data2 = (TextView) view.findViewById(R.id.jedenkaktustl_data2);
+        zdjK.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                final Dialog nagDialog = new Dialog(getContext(),android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+                nagDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                nagDialog.setCancelable(false);
+                nagDialog.setContentView(R.layout.popup_full_zdjecie);
+                Button btnClose = (Button)nagDialog.findViewById(R.id.btnIvClose);
+                ImageView ivPreview = (ImageView)nagDialog.findViewById(R.id.iv_preview_image);
+                Picasso.get().load(kaktus.getSciezkaDoZdjecia()).into(ivPreview);
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        nagDialog.dismiss();
+                    }
+                });
+                nagDialog.show();
+
+            }
+        });
+
+        if(kaktus.getDataOstPodlania()!=null){
+            data1.setText("Data ost podlania: "+df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstPodlania()));
+        }
+        data2.setText("Brak daty ostatniego zakwitu.");
+
+        if(kaktus.getDataOstZakwitu()!=null){
+            data2.setText("Data ost zakwitu: "+df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstZakwitu()));
+        }
+
         if(kaktus.getSciezkaDoZdjecia()!=null) {
             zdjK.setImageURI(Uri.parse(kaktus.getSciezkaDoZdjecia()));
         }else{
@@ -113,4 +161,5 @@ public class FragKInformacje extends Fragment {
 
         return view;
     }
+
 }

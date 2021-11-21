@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.App.Button.OutlinedButton.Icon" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+    <item name="android:padding">3dp</item>
+    <item name="iconPadding">3dp</item>
+    <item name="android:insetTop">3dp</item>
+    <item name="android:insetBottom">3dp</item>
+    <item name="android:insetLeft">3dp</item>
+    <item name="android:insetRight">3dp</item>
+</style></resources>

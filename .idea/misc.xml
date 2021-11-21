@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/circular_button.xml" value="0.2713541666666667" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/ic_book_24.xml" value="0.3828125" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/ic_close_24.xml" value="0.2713541666666667" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/ic_leaf_24.xml" value="0.3828125" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/imageview_border.xml" value="0.2916666666666667" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/materialbutton_style.xml" value="0.2713541666666667" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/round_bg.xml" value="0.2713541666666667" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/selector.xml" value="0.3828125" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/textview_border.xml" value="0.3828125" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/zaokraglony_przycisk.xml" value="0.3769230769230769" />
@@ -14,10 +19,10 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_jeden_kaktus_tl.xml" value="0.2421875" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_jedna_notatka.xml" value="0.25" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_mapa.xml" value="0.24270833333333333" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.25" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_miejsca.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_notatki.xml" value="0.20208333333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowa_notatka.xml" value="0.32252701579384874" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowy_kaktus.xml" value="0.25" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowy_kaktus.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/context_menu_header.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/fragment_frag_k_informacje.xml" value="0.25625" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/fragment_frag_k_mapa.xml" value="0.25625" />
@@ -26,10 +31,12 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/fragment_k_informacje.xml" value="0.25625" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/fragment_notatki_recycler_one.xml" value="0.36666666666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/kaktus_row.xml" value="0.33" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_row.xml" value="0.33" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/map_info_window_custom.xml" value="0.5" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_row.xml" value="0.1" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_rzad.xml" value="0.36666666666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/notatka_text_row.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/nowanotatka_spinner_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/popup_full_zdjecie.xml" value="0.2552083333333333" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/menu_navigation.xml" value="0.23958333333333334" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_kaktus.xml" value="0.25" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/menu/options_menu_notatka.xml" value="0.1" />
@@ -44,5 +51,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.25625" />
+      </ProjectState>
+    </option>
   </component>
 </project>

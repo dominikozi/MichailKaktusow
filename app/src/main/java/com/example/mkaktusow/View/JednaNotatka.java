@@ -34,6 +34,7 @@ import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -54,12 +55,12 @@ public class JednaNotatka extends AppCompatActivity {
 
     FloatingActionButton fabSave;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jedna_notatka);
 
-        typ=findViewById(R.id.jednanotatka_typ);
         nazwaKaktusa=findViewById(R.id.jednanotatka_nazwakaktusa);
         fabSave=findViewById(R.id.notatki_fab_save);
         Long idNotatki = getIntent().getExtras().getLong("id_notatki");
@@ -69,7 +70,6 @@ public class JednaNotatka extends AppCompatActivity {
         notatka = db.notatkaDAO().getNotatkaWithID(idNotatki);
         kaktus = db.kaktusDAO().getKaktusWithID(notatka.getKaktusid());
         getSupportActionBar().setTitle(notatka.getNazwaNotatki());
-
         typ.setText("Typ: "+notatka.getTypNotatki());
 
         nazwaKaktusa.setText("Nazwa kaktusa: " + kaktus.getNazwaKaktusa());
@@ -141,13 +141,22 @@ public class JednaNotatka extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(notatka.getTypNotatki().equals("tekstowa")||notatka.getTypNotatki().equals("zdjecie")) {
+                    String trescNotatki = tresc.getText().toString();
+                    if(!trescNotatki.equals("")){
+                        if(trescNotatki.length()>8){
+                            trescNotatki = trescNotatki.substring(0,8)+"...";
+                            db.notatkaDAO().updateNazwaNotatki(trescNotatki,notatka.getIdnotatka());
+                        }else{
+                            db.notatkaDAO().updateNazwaNotatki(trescNotatki,notatka.getIdnotatka());
+                        }
+                    }
                     db.notatkaDAO().updateNotatka(tresc.getText().toString(),notatka.getIdnotatka());
 
                     Toast.makeText(getApplicationContext(),"Zmieniono tresc notatki "+notatka.getNazwaNotatki(),Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Nie mozesz edytowac notatki.", Toast.LENGTH_SHORT).show();
                 }
-
+                    //updateNazwaNotatki();
             }
         });
 

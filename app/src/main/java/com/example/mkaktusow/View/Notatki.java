@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -157,8 +158,6 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
         }
 
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -167,4 +166,19 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         if(adapter!=null)
             adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
+     //   recyclerQuestion.setAdapter(adapterRecyclerQuestion);
+    }
+
+    @Override
+    protected void onRestart() {
+        adapter.notifyDataSetChanged();
+        super.onRestart();
+    }
+
+
 }

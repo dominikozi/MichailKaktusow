@@ -40,17 +40,16 @@
 
         <activity
             android:name=".View.Mapa"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Mapa wszystkich kaktusów"/>
         <activity
             android:name=".View.JednaNotatka"
             android:exported="false"
             android:parentActivityName=".View.Notatki" />
-        <activity
-            android:name=".View.JedenKaktus"
-            android:exported="false"
-            android:parentActivityName=".View.Kaktusy" />
+
         <activity
             android:name=".View.NowyKaktus"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="false"
             android:label="Nowy kaktus"
             android:parentActivityName=".View.Kaktusy" />

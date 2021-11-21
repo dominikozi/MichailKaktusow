@@ -17,19 +17,23 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
-                android:id="@+id/encyklopedia_z_jakiej_strony"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="text"
-                android:textSize="10dp"/>
+                    android:id="@+id/encyklopedia_z_jakiej_strony"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="text"
+                    android:layout_marginTop="2dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    />
 
 
                 <Spinner
                     android:id="@+id/encyklopedia_spinner_gatunek"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"/>
             </RelativeLayout>
 
             <TextView
@@ -94,7 +98,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/teal_700"
+        app:itemBackground="@color/GreenP"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation"

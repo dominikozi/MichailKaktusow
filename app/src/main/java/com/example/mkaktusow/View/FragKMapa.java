@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mkaktusow.Controller.MapInfoWindowAdapter;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -92,12 +94,20 @@ public class FragKMapa extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 LatLng latLng = new LatLng(kaktus.getLatitude(),kaktus.getLongtitude());
+                String snippet = "Gatunek: "+ kaktus.getGatunek() + "!!" + kaktus.getSciezkaDoZdjecia();
+                googleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
                 //create marker options
-                MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kaktus.getNazwaKaktusa());
+                MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kaktus.getNazwaKaktusa()).snippet(snippet);
                 //zoom camera
+           //     MapInfoWindowAdapter mapInfoWindowAdapter = new MapInfoWindowAdapter();
+           //     googleMap.setInfoWindowAdapter(mapInfoWindowAdapter);
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                 //add marker on map
                 googleMap.addMarker(options);
+
+
+
+
             }
         });
         return view;

@@ -4,44 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.FragKInformacje">
+    tools:context=".View.FragKInformacje"
+    android:background="@color/white">
 
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-         android:layout_margin="20dp"
+         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
         >
+
+<!--        <com.pkmmte.view.CircularImageView-->
+<!--            android:id="@+id/frakinfo_zdjkaktusa"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp"-->
+<!--            app:border="true"-->
+<!--            app:border_color="@color/GreenPD"-->
+<!--            app:border_width="4dp"-->
+<!--            app:shadow="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
+
+        <ImageView
+            android:id="@+id/frakinfo_zdjkaktusa"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:background="@drawable/imageview_border"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nazwa"
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/fragkinfo_nazwa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
+            android:textSize="20dp"
             android:textColor="@color/black"/>
 
-        <ImageView
-            android:id="@+id/frakinfo_zdjkaktusa"
-            android:layout_width="225dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gatunek"
+            android:textSize="10dp" />
 
         <TextView
-            android:id="@+id/jedenkaktustl_gatunekkaktusa"
+        android:id="@+id/jedenkaktustl_gatunekkaktusa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Miejsce"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/jedenkaktustl_miejsce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20dp"
+            android:layout_below="@id/jedenkaktustl_gatunekkaktusa"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data ostatniego podlania"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/jedenkaktustl_data1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragkinfo_nazwa"
             android:text="TextView"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20dp"/>
         <TextView
-            android:id="@+id/jedenkaktustl_miejsce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data ostatniego zakwitu"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/jedenkaktustl_data2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"

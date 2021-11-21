@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="szaretlo">#c8e6c9</color>
+    <color name="GreenP">#388e3c</color>
+    <color name="GreenPL">#6abf69</color>
+    <color name="GreenPD">#00600f</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#0B4202</color>
     <color name="purple_700">#0B4202</color>
@@ -11,6 +15,6 @@
     <color name="green">#375338</color>
     <color name="light_green">#B0EFB2</color>
     <color name="blue">#304160</color>
-    <color name="light_blue">#96B8F4</color>
-    <color name="green_subtle">#306827</color>
+    <color name="light_blue">#64b5f6</color>
+    <color name="green_subtle">#c8e6c9</color>
 </resources>

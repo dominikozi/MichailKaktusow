@@ -2,4 +2,4 @@
     -zmiana wpisywania,inicjacji,odczytu z bazy danych na inny thread niż main
 
 
-//TODO lokalizacja+mapy,  przypomnienia, kalendarz, rozpoznawanie po zdjeciu(w google grafika podobne zdjecia)
+//TODO lokalizacja+mapy,  przypomnienia, kalendarz, rozpoznawanie po zdjeciu

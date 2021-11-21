@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.Manifest;
 import android.app.Activity;
@@ -53,17 +54,17 @@ public class NowyKaktus extends AppCompatActivity {
     EditText nazwaKaktusa;
     EditText gatunek;
     EditText nazwaMiejsca;
-    Button buttonDodajKaktusa;
 
     ImageView imageView;
     Button buttonZrobzdj;
 
-    LinearLayout linearLayoutdoukrywaniazdjecia;
     String pathDoZdjecia;
 
     LatLng lokalizacja;
     FusedLocationProviderClient client;
 
+    FloatingActionButton fabDodajKaktus;
+    Button dodajKaktus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +73,11 @@ public class NowyKaktus extends AppCompatActivity {
         nazwaKaktusa = findViewById(R.id.nowykaktus_textinputedittext_1_nazwakaktusa);
         gatunek = findViewById(R.id.nowykaktus_textinputedittext_2_gatunek);
         nazwaMiejsca = findViewById(R.id.nowykaktus_textinputedittext_3_miejsce);
-        buttonDodajKaktusa = findViewById(R.id.nowykaktus_button_dodajkaktus);
         imageView = findViewById(R.id.new_kaktus_image_view);
         buttonZrobzdj = findViewById(R.id.nowykaktus_zrobzdj);
-        linearLayoutdoukrywaniazdjecia = findViewById(R.id.nowykaktus_linear_doukrywania_zdjecia);
-        imageView.setVisibility(View.GONE);
         client = LocationServices.getFusedLocationProviderClient(this);
-
+    //    fabDodajKaktus=findViewById(R.id.nowykaktus_fab_zapisz);
+        dodajKaktus=findViewById(R.id.nowykaktus_button_dodajkaktus);
         //obsluga zdjecia
         if (ContextCompat.checkSelfPermission(NowyKaktus.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NowyKaktus.this,
@@ -128,7 +127,15 @@ public class NowyKaktus extends AppCompatActivity {
         //baza danych
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        buttonDodajKaktusa.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("czyZdj")) {
+                dispatchTakePictureIntent();
+
+            }
+        }
+        dodajKaktus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
@@ -147,15 +154,25 @@ public class NowyKaktus extends AppCompatActivity {
                 }
             }
         });
-
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            if (extras.containsKey("czyZdj")) {
-                dispatchTakePictureIntent();
-
-            }
-        }
+//        fabDodajKaktus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
+//
+//                if(nazwaKaktusa.getText().toString().equals("")|| gatunek.getText().toString().equals("")||nazwaMiejsca.getText().toString().equals("")){
+//                    Toast.makeText(getApplicationContext(),"Musisz wypelnic dane",Toast.LENGTH_SHORT).show();
+//                }else {
+//
+//                    if (TextUtils.isEmpty(pathDoZdjecia)) {
+//                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+//                    } else {
+//                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+//                    }
+//
+//                    startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
+//                }
+//            }
+//        });
 
     }
 
@@ -180,7 +197,6 @@ public class NowyKaktus extends AppCompatActivity {
                         "com.example.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                imageView.setVisibility(View.VISIBLE);
                 buttonZrobzdj.setEnabled(false);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }

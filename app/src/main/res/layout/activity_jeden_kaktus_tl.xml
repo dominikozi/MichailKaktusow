@@ -9,7 +9,10 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/jedenkaktustl_tablayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:tabTextColor="@color/black"
+        app:tabSelectedTextColor="@color/GreenPD"
+        android:background="@color/GreenPL"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/jedenkaktustl_viewpager2"

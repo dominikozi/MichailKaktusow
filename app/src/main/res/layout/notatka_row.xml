@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp"
-    android:background="@color/white"
-    android:id="@+id/notatka_row_calyrow">
+    app:cardBackgroundColor="@color/light_blue"
+    android:layout_margin="3dp"
+    android:background="@drawable/round_bg"
+    android:id="@+id/notatka_row_calyrow"
+    app:cardCornerRadius="15dp"
+    >
 
 
     <RelativeLayout
@@ -68,4 +72,4 @@
     </RelativeLayout>
 
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

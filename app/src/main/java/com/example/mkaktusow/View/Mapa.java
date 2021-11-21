@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.mkaktusow.Controller.MapInfoWindowAdapter;
 import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
@@ -78,13 +79,21 @@ public class Mapa extends AppCompatActivity {
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
+
                 for(Kaktus kakus : kaktusy){
                     LatLng latLng = new LatLng(kakus.getLatitude(),kakus.getLongtitude());
-                    MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kakus.getNazwaKaktusa());
+                    String snippet = "Gatunek: "+ kakus.getGatunek() + "!!" + kakus.getSciezkaDoZdjecia();
+
+                    googleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(Mapa.this));
+
+                    MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kakus.getNazwaKaktusa()).snippet(snippet);
                     //zoom camera
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     //add marker on map
                     googleMap.addMarker(options);
+
+
+
                 }
             }
         });

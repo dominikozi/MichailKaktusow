@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -39,10 +41,12 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     FragmentAdapter fragmentadapter;
-
+    AppDatabase db;
     Long kaktusid;
 
     Kaktus kaktus;
+
+
 
     List<Notatka> notatki;
     @Override
@@ -53,11 +57,11 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         Long idKaktusa = getIntent().getExtras().getLong("id_kaktusa");
         kaktusid=idKaktusa;
 
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         kaktus = db.kaktusDAO().getKaktusWithID(idKaktusa);
         notatki = db.notatkaDAO().getAllNotatkiWithID(kaktus.getIdkaktus());
 
-        getSupportActionBar().setTitle("Kaktus: " + kaktus.getNazwaKaktusa());
+        getSupportActionBar().setTitle(kaktus.getNazwaKaktusa());
 
         tabLayout=findViewById(R.id.jedenkaktustl_tablayout);
         viewPager2=findViewById(R.id.jedenkaktustl_viewpager2);
@@ -130,25 +134,22 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         return true;
     }
 
-    Date datapodlania;
-    Date datakwitniecia;
+    int ktoradata; // 1-datapodlania, 0-datakwitniecia
     Date datetemp;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+     //   AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         switch(item.getItemId()){
             case R.id.om_k_podlanie:
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"date picker podlanie");
-                datapodlania = datetemp;
-           //     Toast.makeText(this,"p "+datapodlania, Toast.LENGTH_SHORT).show();
+                ktoradata=1;
                 return true;
             case R.id.om_k_kwitniecie:
                 DialogFragment datePicker2 = new DatePickerFragment();
                 datePicker2.show(getSupportFragmentManager(),"date picker podlanie");
-                datakwitniecia= datetemp;
-            //    Toast.makeText(this,"k "+datakwitniecia, Toast.LENGTH_SHORT).show();
+                ktoradata=0;
                 return true;
             case R.id.om_k_usun:
 
@@ -185,12 +186,22 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-    /*    Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR,year-1900);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
         calendar.set(Calendar.MONTH,month);
-        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);*/
-        datetemp = new Date(year-1900,month,dayOfMonth);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        datetemp = calendar.getTime();
+     //   AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        Toast.makeText(this,"d "+  df.format("yyyy-MM-dd hh:mm", datetemp), Toast.LENGTH_SHORT).show();
+        if(ktoradata==1){
+            Toast.makeText(this,"Data ost. podlania ustawiona: "+df.format("yyyy-MM-dd hh:mm", datetemp) , Toast.LENGTH_SHORT).show();
+            db.kaktusDAO().updateDataOstPodlania(datetemp, kaktus.getIdkaktus());
+        }else if (ktoradata==0){
+            Toast.makeText(this,"Data ost. kwitniecia ustawiona: "+df.format("yyyy-MM-dd hh:mm", datetemp) , Toast.LENGTH_SHORT).show();
+            db.kaktusDAO().updateDataOstKwitniecia(datetemp, kaktus.getIdkaktus());
+        }
+
+
     }
 }

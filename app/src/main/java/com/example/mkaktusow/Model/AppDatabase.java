@@ -6,7 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.mkaktusow.Controller.Converters;
 
-@Database(entities={Notatka.class,Kaktus.class}, version=18)
+@Database(entities={Notatka.class,Kaktus.class}, version=19)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

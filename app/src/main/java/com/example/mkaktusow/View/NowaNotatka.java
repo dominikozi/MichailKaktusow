@@ -19,6 +19,7 @@ import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.Manifest;
 import android.app.Activity;
@@ -64,6 +65,8 @@ import java.util.List;
 
 public class NowaNotatka extends AppCompatActivity implements View.OnClickListener {
 
+    public static int count;
+
     int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {
             "android.permission.CAMERA",
@@ -74,7 +77,6 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
     EditText nazwa;
     EditText editTrescNotatki;
-    Button buttonDodajNotatke;
     Button buttonZrobzdj;
     Button buttonNagrajfilm;
 
@@ -109,6 +111,10 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     String pathDoAudio;
     String pathDoFilmu;
     String trescNotatki;
+    TextView textViewTrescKaktus;
+    FloatingActionButton fabDodaj;
+
+    boolean widzialnosc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +147,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
         linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
 
+        textViewTrescKaktus = findViewById(R.id.textviewtextkaktus);
+
         radiobutton1= findViewById(R.id.nowanotatka_radiobutton_czytekstowa);
         radiobutton2= findViewById(R.id.nowanotatka_radiobutton_czyzdj);
         radiobutton3= findViewById(R.id.nowanotatka_radiobutton_czyaudio);
@@ -155,6 +163,39 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         imageButtonStop = findViewById(R.id.nowanotatka_przycisk_stop_nagrywania_audio);
         imageButtonOdtworz = findViewById(R.id.nowanotatka_przycisk_odtworz_audio);
         textViewCzynagrywanietrwa = findViewById(R.id.nowanotatka_tekst_czynagrywanietrwa);
+
+        fabDodaj = findViewById(R.id.nowanotatka_fab_zapisz);
+        //OBSLUGA FAB ZAPISZ
+        fabDodaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (widzialnosc==false) {
+                    Toast.makeText(getApplicationContext(),"Wypelnij dane.",Toast.LENGTH_LONG).show();
+                }else{
+                    if(typNotatki=="zdjecie"&&pathDoZdjecia==null){
+                        Toast.makeText(getApplicationContext(),"musi byc zdjecie",Toast.LENGTH_LONG).show();
+                    }else {
+                        trescNotatki = editTrescNotatki.getText().toString();
+                        if(!trescNotatki.equals("")){
+                            if(trescNotatki.length()>8){
+                                nazwa.setText(trescNotatki.substring(0,8)+"...");
+                            }else{
+                                nazwa.setText(trescNotatki);
+                            }
+                        }
+                        Date dataDodaniaNotatki = Calendar.getInstance().getTime();
+                        //    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
+                        db.notatkaDAO().insertAll(new Notatka(typNotatki, nazwa.getText().toString(), trescNotatki, pathDoZdjecia, pathDoAudio, pathDoFilmu, dataDodaniaNotatki, idWybranegoKaktusa));
+
+                        count++;
+                        startActivity(new Intent(NowaNotatka.this, Notatki.class));
+                    }
+                }
+            }
+        });
+
+
         //obsługa AUDIO
         mediaRecorder = new MediaRecorder();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -204,6 +245,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             });
         }else{
             spinnerlistakaktusow.setVisibility(View.GONE);
+            textViewTrescKaktus.setVisibility(View.GONE);
             idWybranegoKaktusa=idkaktusaprzekazana;
         }
 
@@ -211,29 +253,9 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         nazwa=findViewById(R.id.nowanotatka_textinputedittext_1_nazwanotatki);
         int idtemp = getIntent().getIntExtra("liczbanotatek", 0)+1;
         nazwa.setText("Notatka #"+idtemp);
-        buttonDodajNotatke=findViewById(R.id.nowanotatka_button_dodaj_notatke);
 
-        buttonDodajNotatke.setEnabled(false);
+        widzialnosc=false;
 
-        buttonDodajNotatke.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //    String pathDoAudio;
-                //    String pathDoFilmu;
-                //    String trescNotatki;
-                if(typNotatki=="zdjecie"&&pathDoZdjecia==null){
-                    Toast.makeText(getApplicationContext(),"musi byc zdjecie",Toast.LENGTH_LONG).show();
-                }else {
-
-                    trescNotatki = editTrescNotatki.getText().toString();
-                    Date dataDodaniaNotatki = Calendar.getInstance().getTime();
-                    //    public Notatka(String typNotatki, String nazwaNotatki, String trescNotatki, String sciezkaDoZdjecia, String sciezkaDoAudio, String sciezkaDoFilmu, Date dataDodania, long kaktusid) {
-                    db.notatkaDAO().insertAll(new Notatka(typNotatki, nazwa.getText().toString(), trescNotatki, pathDoZdjecia, pathDoAudio, pathDoFilmu, dataDodaniaNotatki, idWybranegoKaktusa));
-
-                    startActivity(new Intent(NowaNotatka.this, Notatki.class));
-                }
-            }
-        });
         imageView.setVisibility(View.GONE);
 
         //obsluga ZDJECIA
@@ -441,7 +463,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
                 typNotatki="tekstowa";
-                buttonDodajNotatke.setEnabled(true);
+                widzialnosc=true;
                 break;
 
             case R.id.nowanotatka_radiobutton_czyzdj:
@@ -450,7 +472,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
                 typNotatki="zdjecie";
-                buttonDodajNotatke.setEnabled(true);
+                widzialnosc=true;
                 break;
 
             case R.id.nowanotatka_radiobutton_czyaudio:
@@ -459,7 +481,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
                 typNotatki="audio";
-                buttonDodajNotatke.setEnabled(true);
+                widzialnosc=true;
                 break;
 
             case R.id.nowanotatka_radiobutton_czyfilm:
@@ -468,7 +490,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniafilmu.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
                 typNotatki="film";
-                buttonDodajNotatke.setEnabled(true);
+                widzialnosc=true;
                 break;
         }
     }
