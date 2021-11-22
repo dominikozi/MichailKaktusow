@@ -41,7 +41,6 @@ import java.io.IOException;
 
 public class JednaNotatka extends AppCompatActivity {
 
-    TextView typ;
     TextView nazwaKaktusa;
 
     ImageView zdjecie;
@@ -70,7 +69,6 @@ public class JednaNotatka extends AppCompatActivity {
         notatka = db.notatkaDAO().getNotatkaWithID(idNotatki);
         kaktus = db.kaktusDAO().getKaktusWithID(notatka.getKaktusid());
         getSupportActionBar().setTitle(notatka.getNazwaNotatki());
-        typ.setText("Typ: "+notatka.getTypNotatki());
 
         nazwaKaktusa.setText("Nazwa kaktusa: " + kaktus.getNazwaKaktusa());
 

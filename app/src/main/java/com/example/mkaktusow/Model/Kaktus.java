@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Comparator;
 import java.util.Date;
 
 @Entity
@@ -131,4 +132,58 @@ public class Kaktus {
         return getNazwaKaktusa();
     }
 
+    public static Comparator<Kaktus> KaktusNazwaAZComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k1.getNazwaKaktusa().compareTo(k2.getNazwaKaktusa());
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusNazwaZAComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k2.getNazwaKaktusa().compareTo(k1.getNazwaKaktusa());
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusDataRosnacoComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k1.getDataDodania().getTime() - (int) k2.getDataDodania().getTime();
+        }
+    };
+    public static Comparator<Kaktus> KaktusDataDescendingComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k2.getDataDodania().getTime() - (int) k1.getDataDodania().getTime();
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusGatunbekAZComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k1.getGatunek().compareTo(k2.getGatunek());
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusGatunbekZAComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k2.getGatunek().compareTo(k1.getGatunek());
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusMiejsceAZComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k1.getNazwaMiejsca().compareTo(k2.getNazwaMiejsca());
+        }
+    };
+
+    public static Comparator<Kaktus> KaktusMiejsceZAComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return k2.getNazwaMiejsca().compareTo(k1.getNazwaMiejsca());
+        }
+    };
 }

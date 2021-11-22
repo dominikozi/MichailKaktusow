@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Comparator;
 import java.util.Date;
 
 @Entity(foreignKeys = @ForeignKey(entity=Kaktus.class,
@@ -118,4 +119,43 @@ public class Notatka {
     public void setNazwaNotatki(String nazwaNotatki) {
         this.nazwaNotatki = nazwaNotatki;
     }
+
+
+    public static Comparator<Notatka> NotatkaNazwaAZComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return n1.getNazwaNotatki().compareTo(n2.getNazwaNotatki());
+        }
+    };
+    public static Comparator<Notatka> NotatkaNazwaZAComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return n2.getNazwaNotatki().compareTo(n1.getNazwaNotatki());
+        }
+    };
+    public static Comparator<Notatka> NotatkaDataRosnacoComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return (int)n1.getDataDodania().getTime() - (int) n2.getDataDodania().getTime();
+        }
+    };
+    public static Comparator<Notatka> NotatkaDataMalejacoComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return (int)n2.getDataDodania().getTime() - (int) n1.getDataDodania().getTime();
+        }
+    };
+    public static Comparator<Notatka> NotatkaTypAZComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return n1.getTypNotatki().compareTo(n2.getTypNotatki());
+        }
+    };
+    public static Comparator<Notatka> NotatkaTypZAComparaotr = new Comparator<Notatka>() {
+        @Override
+        public int compare(Notatka n1, Notatka n2) {
+            return n2.getTypNotatki().compareTo(n1.getTypNotatki());
+        }
+    };
+
 }

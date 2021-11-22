@@ -82,11 +82,11 @@ public class Mapa extends AppCompatActivity {
 
                 for(Kaktus kakus : kaktusy){
                     LatLng latLng = new LatLng(kakus.getLatitude(),kakus.getLongtitude());
-                    String snippet = "Gatunek: "+ kakus.getGatunek() + "!!" + kakus.getSciezkaDoZdjecia();
+                    String snippet = kakus.getGatunek() + "!!" + kakus.getSciezkaDoZdjecia();
 
                     googleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(Mapa.this));
 
-                    MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kakus.getNazwaKaktusa()).snippet(snippet);
+                    MarkerOptions options = new MarkerOptions().position(latLng).title(kakus.getNazwaKaktusa()).snippet(snippet);
                     //zoom camera
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     //add marker on map

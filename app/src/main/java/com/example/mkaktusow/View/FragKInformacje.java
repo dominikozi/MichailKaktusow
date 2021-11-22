@@ -92,9 +92,9 @@ public class FragKInformacje extends Fragment {
         nazwaK = (TextView) view.findViewById(R.id.fragkinfo_nazwa);
         nazwaK.setText(kaktus.getNazwaKaktusa());
         gatunekK = (TextView) view.findViewById(R.id.jedenkaktustl_gatunekkaktusa);
-        gatunekK.setText("Gatunek: "+kaktus.getGatunek());
+        gatunekK.setText(kaktus.getGatunek());
         miejsceK = (TextView) view.findViewById(R.id.jedenkaktustl_miejsce);
-        miejsceK.setText("Lokacja: "+kaktus.getNazwaMiejsca());
+        miejsceK.setText(kaktus.getNazwaMiejsca());
         ImageView zdjK = (ImageView) view.findViewById(R.id.frakinfo_zdjkaktusa);
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         data1 = (TextView) view.findViewById(R.id.jedenkaktustl_data1);
@@ -123,16 +123,16 @@ public class FragKInformacje extends Fragment {
         });
 
         if(kaktus.getDataOstPodlania()!=null){
-            data1.setText("Data ost podlania: "+df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstPodlania()));
+            data1.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstPodlania()));
         }
         data2.setText("Brak daty ostatniego zakwitu.");
 
         if(kaktus.getDataOstZakwitu()!=null){
-            data2.setText("Data ost zakwitu: "+df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstZakwitu()));
+            data2.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstZakwitu()));
         }
 
         if(kaktus.getSciezkaDoZdjecia()!=null) {
-            zdjK.setImageURI(Uri.parse(kaktus.getSciezkaDoZdjecia()));
+            Picasso.get().load(kaktus.getSciezkaDoZdjecia()).fit().centerCrop().into(zdjK);
         }else{
             zdjK.setVisibility(View.GONE);
         }

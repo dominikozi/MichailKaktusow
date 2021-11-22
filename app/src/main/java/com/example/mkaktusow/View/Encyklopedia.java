@@ -17,15 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,15 +78,15 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_encyklopedia);
 
         gatunkiKaktusow = new ArrayList<String>();
-        gatunkiKaktusow.add("Opuncja drobnokolczasta");     //fajnyogrod https://fajnyogrod.pl/porady/opuncja-drobnokolczasta-uprawa-pielegnacja-podlewanie-wymagania/
-        gatunkiKaktusow.add("Opuncja figowa");              //fajnyogrod https://fajnyogrod.pl/porady/opuncja-figowa-uprawa-hodowla-rozmnazanie-podlewanie-porady/
-        gatunkiKaktusow.add("Wielomlecz trójżebrowy");      //fajnyogrod https://fajnyogrod.pl/porady/wilczomlecz-trojzebrowy-sadzenie-uprawa-rozmnazanie-przycinanie/
-        gatunkiKaktusow.add("Cereus repandus");             //fajnyogrod https://fajnyogrod.pl/porady/cereus-repandus-w-doniczce-uprawa-pielegnacja-ciekawostki/
-        gatunkiKaktusow.add("Echinokaktus Grusonii");       //fajnyogrod https://fajnyogrod.pl/porady/echinocactus-grusonii-w-doniczce-pielegnacja-podlewanie-uprawa/
+        gatunkiKaktusow.add("Opuncja drobnokolczasta");
+        gatunkiKaktusow.add("Opuncja figowa");
+        gatunkiKaktusow.add("Wielomlecz trójżebrowy");
+        gatunkiKaktusow.add("Cereus repandus");
+        gatunkiKaktusow.add("Echinokaktus Grusonii");
         gatunkiKaktusow.add("Echinopsis Eyriesa");
         gatunkiKaktusow.add("Echinopsis spachiana");
         gatunkiKaktusow.add("Mammillaria Haw.");
-        gatunkiKaktusow.add("Jazgrza Williamsa");  //fajnyogrod https://fajnyogrod.pl/porady/pejotl-jazgrza-williamsa-uprawa-pielegnacja-podlewanie-wymagania/
+        gatunkiKaktusow.add("Jazgrza Williamsa");
         gatunkiKaktusow.add("Ferokaktus");
         gatunkiKaktusow.add("Gymnocalycium Monvillei");
 
@@ -364,12 +367,24 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                 JSONObject jObjectT3 = jObjectT2.getJSONObject(jsonTemp);
          //       System.out.println(jObjectT3);
                 String tekstExtract = jObjectT3.getString("extract");
+                int itetarotr=0;
+                while(tekstExtract.contains("==")){
+                    if(itetarotr%2==1){
+                        tekstExtract=tekstExtract.replaceFirst("=="," <br> <br> </h2>");
+                    }else{
+                        tekstExtract=tekstExtract.replaceFirst("==","<h2> <br> <br>");
+                    }
+                    itetarotr++;
+                }
 
+                tekstExtract.replaceAll("=","");
+
+                String finalTekstExtract = tekstExtract;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         textView.setText(finalTitle);
-                        textView2.setText(tekstExtract);
+                        textView2.setText(Html.fromHtml(finalTekstExtract));
                         textView3.setText("");
                         textView4.setText("");
                         textView5.setText("");

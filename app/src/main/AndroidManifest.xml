@@ -56,7 +56,7 @@
         <activity
             android:name=".View.NowaNotatka"
             android:exported="false"
-            android:label="Nowa notatka"
+            android:label="Nowy opis"
             android:parentActivityName=".View.Notatki" />
         <activity
             android:name=".View.Encyklopedia"
@@ -65,7 +65,7 @@
         <activity
             android:name=".View.Notatki"
             android:exported="false"
-            android:label="Notatki" />
+            android:label="Opisy multimedialne" />
         <activity
             android:name=".View.Kaktusy"
             android:exported="true"

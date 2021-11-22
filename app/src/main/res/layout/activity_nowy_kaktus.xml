@@ -44,29 +44,23 @@
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:text="Gatunek"
-                    android:textSize="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nowykaktus_textinputlayout_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:id="@+id/nowykaktus_textinputlayout_2"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content">-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nowykaktus_textinputedittext_2_gatunek"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-15dp"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:nextFocusDown="@+id/nowykaktus_textinputedittext_3_gatunek"
-                        android:nextFocusForward="@id/nowykaktus_textinputedittext_3_miejsce"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                <!--                    <com.google.android.material.textfield.TextInputEditText-->
+                <!--                        android:id="@+id/nowykaktus_textinputedittext_2_gatunek"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginTop="-15dp"-->
+                <!--                        android:imeOptions="actionNext"-->
+                <!--                        android:maxLines="1"-->
+                <!--                        android:nextFocusDown="@+id/nowykaktus_textinputedittext_3_gatunek"-->
+                <!--                        android:nextFocusForward="@id/nowykaktus_textinputedittext_3_miejsce"-->
+                <!--                        android:singleLine="true" />-->
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,6 +83,18 @@
                         android:maxLines="1"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="Gatunek"
+                    android:textSize="10dp" />
+
+                <Spinner
+                    android:id="@+id/nowykaktus_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <RelativeLayout
                     android:id="@+id/nowykaktus_linear_doukrywania_zdjecia"
@@ -114,42 +120,101 @@
                     <!--            android:drawableTop="@drawable/ic_image_24"-->
                     <!--            />-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/nowykaktus_zrobzdj"
-                        style="@style/Widget.App.Button.OutlinedButton.Icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignRight="@id/new_kaktus_image_view"
-                        android:layout_alignBottom="@id/new_kaktus_image_view"
-                        android:backgroundTint="@color/szaretlo"
-                        app:icon="@drawable/ic_add_photo_24"
-                        app:iconGravity="textStart"
-                        app:iconPadding="-0.5dp"
-                        app:iconSize="24dp"
-                        app:iconTint="@color/GreenP"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-                        app:strokeColor="@color/GreenP" />
+<!--                    <com.google.android.material.button.MaterialButton-->
+<!--                        android:id="@+id/nowykaktus_zrobzdj"-->
+<!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
+<!--                        android:layout_marginTop="50dp"-->
+<!--                        android:backgroundTint="@color/szaretlo"-->
+<!--                        app:icon="@drawable/ic_add_photo_24"-->
+<!--                        app:iconGravity="textStart"-->
+<!--                        app:iconPadding="-0.5dp"-->
+<!--                        app:iconSize="24dp"-->
+<!--                        app:iconTint="@color/GreenP"-->
+<!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
+<!--                        app:strokeColor="@color/GreenP" />-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/nowykaktus_dodajzdj"
-                        style="@style/Widget.App.Button.OutlinedButton.Icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignRight="@id/new_kaktus_image_view"
-                        android:layout_alignBottom="@id/nowykaktus_zrobzdj"
-                        android:layout_marginBottom="50dp"
-                        android:backgroundTint="@color/szaretlo"
-                        app:icon="@drawable/ic_image_24"
-                        app:iconGravity="textStart"
-                        app:iconPadding="-0.5dp"
-                        app:iconSize="24dp"
-                        app:iconTint="@color/GreenP"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-                        app:strokeColor="@color/GreenP" />
+<!--                    <com.google.android.material.button.MaterialButton-->
+<!--                        android:id="@+id/nowykaktus_dodajzdj"-->
+<!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        android:layout_marginBottom="50dp"-->
+<!--                        android:backgroundTint="@color/szaretlo"-->
+<!--                        app:icon="@drawable/ic_image_24"-->
+<!--                        app:iconGravity="textStart"-->
+<!--                        app:iconPadding="-0.5dp"-->
+<!--                        app:iconSize="24dp"-->
+<!--                        app:iconTint="@color/GreenP"-->
+<!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
+<!--                        app:strokeColor="@color/GreenP" />-->
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/nowykaktus_zrobzdj"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/ic_add_photo_24"
+                            android:backgroundTint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/nowa_notatka_tekstaudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="ZRÓB ZDJĘCIE" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/nowykaktus_dodajzdj"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/ic_image_24"
+                            android:backgroundTint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/nowa_notatka_tekstodtworzaudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="DODAJ Z GALERII" />
+
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
+
+
         </ScrollView>
 
 
@@ -159,15 +224,15 @@
         android:id="@+id/nowykaktus_button_dodajkaktus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/zaokraglony_przycisk"
         android:drawableLeft="@drawable/ic_save_24"
         android:drawableTint="@color/GreenPD"
         android:text="Dodaj"
-        android:textColor="@color/GreenPD"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="@color/GreenPD" />
 
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/nowykaktus_fab_zapisz"-->

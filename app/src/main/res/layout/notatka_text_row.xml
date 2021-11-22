@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/light_blue"
+    app:cardBackgroundColor="@color/GreenPL"
     android:layout_margin="3dp"
     android:background="@drawable/round_bg"
     app:cardCornerRadius="15dp"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="2dp"
-        android:background="@color/light_blue">
+        android:background="@color/green_subtle">
 
         <ImageView
             android:id="@+id/ikona_notatki_tekstowej_row"

@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/om_n_filtr_reset"
+        android:icon="@drawable/ic_refresh_24"
+        android:title="refresh"
+        app:showAsAction="always"/>
     <item  android:id="@+id/om_n_sort"
         android:icon="@drawable/ic_sort_24"
         android:title="sortowanie"
@@ -11,6 +15,21 @@
                 android:title="Sortowanie po nazwie" />
             <item android:id="@+id/om_n_sort_data"
                 android:title="Sortowanie po dacie"/>
+            <item android:id="@+id/om_n_sort_typ"
+            android:title="Sortowanie po typie"/>
+            <item android:id="@+id/om_n_filtry"
+                android:title="Filtry">
+                <menu>
+                    <item android:id="@+id/om_n_filtr_z"
+                        android:title="tylko zdjecia" />
+                    <item android:id="@+id/om_n_filtr_t"
+                        android:title="tylko tekst"/>
+                    <item android:id="@+id/om_n_filtr_f"
+                        android:title="tylko film" />
+                    <item android:id="@+id/om_n_filtr_a"
+                        android:title="tylko audio"/>
+                </menu>
+            </item>
         </menu>
     </item>
 

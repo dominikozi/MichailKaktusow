@@ -16,6 +16,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -37,10 +38,12 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
         LayoutInflater layoutInflater =  LayoutInflater.from(parent.getContext());
 
         if (viewType == 0) {
-            view = layoutInflater.inflate(R.layout.notatka_row,parent,false);
+       //     view = layoutInflater.inflate(R.layout.notatka_row,parent,false);
+            view = layoutInflater.inflate(R.layout.alternatywny_notatka_row_zdj,parent,false);
             return new ViewHolderZdj(view, mOnNotatkaListener);
         }else{
-            view = layoutInflater.inflate(R.layout.notatka_text_row,parent,false);
+        //    view = layoutInflater.inflate(R.layout.notatka_text_row,parent,false);
+            view = layoutInflater.inflate(R.layout.alternatywny_notatka_row_text,parent,false);
             return new ViewHolderText(view, mOnNotatkaListener);
         }
     }
@@ -48,7 +51,7 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(notatki.get(position).getTypNotatki().equals("tekstowa")||notatki.get(position).getTypNotatki().equals("audio")){
-            //bind view holder text
+           /* //bind view holder text
             ViewHolderText viewHolderText = (ViewHolderText) holder;
 
             viewHolderText.nazwa.setText(notatki.get(position).getNazwaNotatki());
@@ -61,9 +64,23 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             }
 
             android.text.format.DateFormat df = new android.text.format.DateFormat();
+            viewHolderText.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));*/
+            ViewHolderText viewHolderText = (ViewHolderText) holder;
+            viewHolderText.ikona.setVisibility(View.GONE);
+            viewHolderText.ikona2.setVisibility(View.GONE);
+
+            viewHolderText.nazwa.setText(notatki.get(position).getNazwaNotatki());
+            if(notatki.get(position).getTypNotatki().equals("tekstowa")){
+                viewHolderText.ikona2.setVisibility(View.VISIBLE);
+            }
+            if(notatki.get(position).getTypNotatki().equals("audio")){
+                viewHolderText.ikona.setVisibility(View.VISIBLE);
+            }
+
+            android.text.format.DateFormat df = new android.text.format.DateFormat();
             viewHolderText.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
         }else{
-            //bind view holder
+        /*    //bind view holder
             ViewHolderZdj viewHolderZdj = (ViewHolderZdj) holder;
             viewHolderZdj.nazwa.setText(notatki.get(position).getNazwaNotatki());
 
@@ -77,10 +94,43 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             }
             if (notatki.get(position).getTypNotatki().equals("film")) {
                 Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(viewHolderZdj.previewZdjNotatki);
+            }*/
+            ViewHolderZdj viewHolderZdj = (ViewHolderZdj) holder;
+            viewHolderZdj.nazwa.setText(notatki.get(position).getNazwaNotatki());
+
+            android.text.format.DateFormat df = new android.text.format.DateFormat();
+            viewHolderZdj.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
+
+            if (notatki.get(position).getTypNotatki().equals("zdjecie")) {
+                wyzerujIkony(viewHolderZdj);
+                viewHolderZdj.iv3.setVisibility(View.VISIBLE);
+                if(notatki.get(position).getSciezkaDoAudio()!=null && !notatki.get(position).getTrescNotatki().equals("") ){
+                    viewHolderZdj.iv5.setVisibility(View.VISIBLE);
+                    viewHolderZdj.iv6.setVisibility(View.VISIBLE);
+                }else if(notatki.get(position).getSciezkaDoAudio()!=null && notatki.get(position).getTrescNotatki().equals("") ){
+                    viewHolderZdj.iv4.setVisibility(View.VISIBLE);
+                }
+                else if (notatki.get(position).getSciezkaDoAudio()==null && notatki.get(position).getTrescNotatki().length()>0){
+                    viewHolderZdj.iv6.setVisibility(View.VISIBLE);
+                }
+                Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(viewHolderZdj.previewZdjNotatki);
             }
+            if (notatki.get(position).getTypNotatki().equals("film")) {
+                wyzerujIkony(viewHolderZdj);
+                viewHolderZdj.iv2.setVisibility(View.VISIBLE);
+
+                Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(viewHolderZdj.previewZdjNotatki);
+            }
+
         }
     }
-
+    public void wyzerujIkony(@NonNull ViewHolderZdj holder){
+        holder.iv2.setVisibility(View.GONE);
+        holder.iv3.setVisibility(View.GONE);
+        holder.iv4.setVisibility(View.GONE);
+        holder.iv5.setVisibility(View.GONE);
+        holder.iv6.setVisibility(View.GONE);
+    }
     @Override
     public int getItemViewType(int position) {
         if(notatki.get(position).getTypNotatki().equals("tekstowa")||notatki.get(position).getTypNotatki().equals("audio")){
@@ -95,7 +145,7 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderZdj extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
-        public TextView nazwa;
+   /*     public TextView nazwa;
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView previewZdjNotatki;
@@ -104,10 +154,21 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
 
      //   LinearLayout linearLayout;
         CardView cardView;
-
+*/
+   public TextView nazwa;
+        public TextView typNotatki;
+        public TextView datadodania;
+        public ImageView previewZdjNotatki;
+        OnNotatkaListener onNotatkaListener;
+        public ImageView iv2;
+        public ImageView iv3;
+        public ImageView iv4;
+        public ImageView iv5;
+        public ImageView iv6;
+        ConstraintLayout constraintLayout;
         public ViewHolderZdj(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
-            nazwa=itemView.findViewById(R.id.nazwaNotatki_row);
+       /*     nazwa=itemView.findViewById(R.id.nazwaNotatki_row);
             typNotatki=itemView.findViewById(R.id.typNotatki_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             previewZdjNotatki = itemView.findViewById(R.id.preview_zdj_notatki_row);
@@ -117,7 +178,19 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             cardView = itemView.findViewById(R.id.notatka_row_calyrow);
           //            //  linearLayout.setOnCreateContextMenuListener(this);
             cardView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(this);*/
 
+            nazwa = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView1);
+            datadodania = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView2);
+            previewZdjNotatki= itemView.findViewById(R.id.alt_notatka_row_imageView);
+            iv2= itemView.findViewById(R.id.alt_notatka_row_imageView2);
+            iv3= itemView.findViewById(R.id.alt_notatka_row_imageView3);
+            iv4= itemView.findViewById(R.id.alt_notatka_tekst_row_imageView2);
+            iv5= itemView.findViewById(R.id.alt_notatka_row_imageView5);  //2-video, 3-image, 4-tekst, 6-audiojeslitekst 5-audiotylkoaudio
+            iv6= itemView.findViewById(R.id.alt_notatka_tekst_row_imageView1);
+            constraintLayout = itemView.findViewById(R.id.alt_row_zdj_constraint);
+            constraintLayout.setOnCreateContextMenuListener(this);
+            this.onNotatkaListener=onNotatkaListener;
             itemView.setOnClickListener(this);
         }
 
@@ -137,17 +210,23 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderText extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
-        public TextView nazwa;
+     /*   public TextView nazwa;
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView ikona;
         OnNotatkaListener onNotatkaListener;
+        CardView cardView2;*/
 
-      //  LinearLayout linearLayout2;
-        CardView cardView2;
+        public TextView nazwa;
+        public TextView typNotatki;
+        public TextView datadodania;
+        public ImageView ikona;
+        public ImageView ikona2;
+        OnNotatkaListener onNotatkaListener;
+        ConstraintLayout constraintLayout;
         public ViewHolderText(View itemView, OnNotatkaListener onNotatkaListener) {
             super(itemView);
-            nazwa=itemView.findViewById(R.id.nazwaNotatki_row);
+   /*         nazwa=itemView.findViewById(R.id.nazwaNotatki_row);
             typNotatki=itemView.findViewById(R.id.typNotatki_row);
             ikona = itemView.findViewById(R.id.ikona_notatki_tekstowej_row);
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
@@ -156,8 +235,18 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
     //        linearLayout2.setOnCreateContextMenuListener(this);
             cardView2 = itemView.findViewById(R.id.notatka_text_row_calyrow);
             cardView2.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(this);*/
 
+
+            nazwa = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView1);
+            datadodania = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView2);
+            ikona=itemView.findViewById(R.id.alt_notatka_tekst_row_imageView1);
+            ikona2=itemView.findViewById(R.id.alt_notatka_tekst_row_imageView2);
+            constraintLayout = itemView.findViewById(R.id.alt_row_tekst_constraint);
+            constraintLayout.setOnCreateContextMenuListener(this);
+            this.onNotatkaListener=onNotatkaListener;
             itemView.setOnClickListener(this);
+
         }
 
         @Override

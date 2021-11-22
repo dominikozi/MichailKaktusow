@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -35,19 +36,31 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class NowyKaktus extends AppCompatActivity {
 
@@ -56,22 +69,25 @@ public class NowyKaktus extends AppCompatActivity {
     EditText nazwaMiejsca;
 
     ImageView imageView;
-    Button buttonZrobzdj;
+    RelativeLayout buttonZrobzdj;
 
     String pathDoZdjecia;
 
     LatLng lokalizacja;
     FusedLocationProviderClient client;
 
-    FloatingActionButton fabDodajKaktus;
     Button dodajKaktus;
 
+    Spinner spinnerGatunek;
+    List<String> gatunkiKaktusow;
+
+    public static final int RESULT_LOAD_IMG = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nowy_kaktus);
         nazwaKaktusa = findViewById(R.id.nowykaktus_textinputedittext_1_nazwakaktusa);
-        gatunek = findViewById(R.id.nowykaktus_textinputedittext_2_gatunek);
+    //    gatunek = findViewById(R.id.nowykaktus_textinputedittext_2_gatunek);
         nazwaMiejsca = findViewById(R.id.nowykaktus_textinputedittext_3_miejsce);
         imageView = findViewById(R.id.new_kaktus_image_view);
         buttonZrobzdj = findViewById(R.id.nowykaktus_zrobzdj);
@@ -85,7 +101,32 @@ public class NowyKaktus extends AppCompatActivity {
                             Manifest.permission.CAMERA
                     }, 100);
         }
+        RelativeLayout buttonzGaleri = findViewById(R.id.nowykaktus_dodajzdj);
+        gatunkiKaktusow = new ArrayList<String>();
+        gatunkiKaktusow.add("Opuncja drobnokolczasta");
+        gatunkiKaktusow.add("Opuncja figowa");
+        gatunkiKaktusow.add("Wielomlecz trójżebrowy");
+        gatunkiKaktusow.add("Cereus repandus");
+        gatunkiKaktusow.add("Echinokaktus Grusonii");
+        gatunkiKaktusow.add("Echinopsis Eyriesa");
+        gatunkiKaktusow.add("Echinopsis spachiana");
+        gatunkiKaktusow.add("Mammillaria Haw.");
+        gatunkiKaktusow.add("Jazgrza Williamsa");
+        gatunkiKaktusow.add("Ferokaktus");
+        gatunkiKaktusow.add("Gymnocalycium Monvillei");
+        spinnerGatunek = findViewById(R.id.nowykaktus_spinner);
+        ArrayAdapter<String> spinnerGatunekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gatunkiKaktusow);
+        spinnerGatunekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGatunek.setAdapter(spinnerGatunekAdapter);
 
+        buttonzGaleri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+            }
+        });
 
         //button zrob zdjecie
         buttonZrobzdj.setOnClickListener(new View.OnClickListener() {
@@ -140,39 +181,24 @@ public class NowyKaktus extends AppCompatActivity {
             public void onClick(View v) {
                 Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
 
-                if(nazwaKaktusa.getText().toString().equals("")|| gatunek.getText().toString().equals("")||nazwaMiejsca.getText().toString().equals("")){
+                if(nazwaKaktusa.getText().toString().equals("")|| nazwaMiejsca.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(),"Musisz wypelnic dane",Toast.LENGTH_SHORT).show();
                 }else {
 
                     if (TextUtils.isEmpty(pathDoZdjecia)) {
-                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+
+                        // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
                     } else {
-                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+
+                        // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
                     }
 
                     startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
                 }
             }
         });
-//        fabDodajKaktus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
-//
-//                if(nazwaKaktusa.getText().toString().equals("")|| gatunek.getText().toString().equals("")||nazwaMiejsca.getText().toString().equals("")){
-//                    Toast.makeText(getApplicationContext(),"Musisz wypelnic dane",Toast.LENGTH_SHORT).show();
-//                }else {
-//
-//                    if (TextUtils.isEmpty(pathDoZdjecia)) {
-//                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
-//                    } else {
-//                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
-//                    }
-//
-//                    startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
-//                }
-//            }
-//        });
 
     }
 
@@ -233,7 +259,45 @@ public class NowyKaktus extends AppCompatActivity {
 
                 setPic();
             }
+            if(requestCode==RESULT_LOAD_IMG){
+                if(resultCode==RESULT_OK) {
+
+//                    Uri imageUri = data.getData();
+//                    String path = imageUri.getPath();
+//                    File f = new File(path);
+//
+//
+//                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//                    String imageFileName = "KAKTUS_" + timeStamp + "_";
+//                    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//                    File image = null;
+//                    try {
+//                        image = File.createTempFile(
+//                                imageFileName,  /* prefix */
+//                                ".jpg",         /* suffix */
+//                                storageDir      /* directory */
+//                        );
+//                        currentPhotoPath = image.getAbsolutePath();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    // Save a file: path for use with ACTION_VIEW intents
+//                    Toast.makeText(NowyKaktus.this, path,Toast.LENGTH_LONG).show();
+//
+//                    try {
+//                        copyFile(f,image);
+//                    } catch (IOException e) {
+//                        Toast.makeText(NowyKaktus.this, "blad 1",Toast.LENGTH_LONG).show();
+//
+//                    }
+//                    setPic();
+                }else{
+                    Toast.makeText(NowyKaktus.this, "Nie wybrano zdjecia.",Toast.LENGTH_LONG).show();
+                }
+            }
         }
+
     }
 
     public void setPic() {
@@ -280,5 +344,25 @@ public class NowyKaktus extends AppCompatActivity {
             }
         }
     }
+
+    public static void copyFile(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
+    }
+
 }
 

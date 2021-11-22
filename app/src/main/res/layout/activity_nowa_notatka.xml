@@ -17,9 +17,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:text="Nazwa"
                 android:textSize="10dp" />
 
@@ -32,30 +32,31 @@
                     android:id="@+id/nowanotatka_textinputedittext_1_nazwanotatki"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                        android:paddingLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kaktus"
-                        android:id="@+id/textviewtextkaktus"
-                        android:textSize="10dp" />
-
-               <Spinner
-                    android:id="@+id/nowanotatka_spinner_listakaktusow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:dropDownWidth="wrap_content"
-                    android:dropDownSelector="@color/gray"></Spinner>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:paddingLeft="5dp"
+                android:id="@+id/textviewtextkaktus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rodzaj notatki"
+                android:paddingLeft="5dp"
+                android:text="Kaktus"
                 android:textSize="10dp" />
+
+            <Spinner
+                android:id="@+id/nowanotatka_spinner_listakaktusow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:dropDownWidth="wrap_content"
+                android:dropDownSelector="@color/gray"></Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="Rodzaj opisu multimedialnego"
+                android:textSize="10dp" />
+
             <RadioGroup
                 android:id="@+id/nowanotatka_radiogroup"
                 android:layout_width="wrap_content"
@@ -89,24 +90,67 @@
 
             <LinearLayout
                 android:id="@+id/nowanotatka_linear_doukrywania_zdjecia"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/nowanotatka_image_view"
                     android:layout_width="300dp"
-                    android:layout_height="400dp" />
-
-                <Button
+                    android:layout_height="300dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/imageview_border" />
+                <RelativeLayout
                     android:id="@+id/nowanotatka_zrobzdj"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Zrob zdjecie" />
-            </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/white">
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_add_photo_24"
+                        android:backgroundTint="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="ZRÓB ZDJĘCIE" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/nowanotatka_dodajzdj"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_image_24"
+                        android:backgroundTint="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="DODAJ Z GALERII" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/nowanotatka_linear_doukrywania_audio"
@@ -119,111 +163,151 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageButton
+
+                    <RelativeLayout
                         android:id="@+id/nowanotatka_przycisk_nagraj_audio"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/zaokraglony_przycisk"
-                        android:src="@drawable/ic_mikrofon_24" />
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/white">
 
-                    <ImageButton
-                        android:id="@+id/nowanotatka_przycisk_stop_nagrywania_audio"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/zaokraglony_przycisk"
-                        android:src="@drawable/ic_stop_24" />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/ic_microphone_24"
+                            android:backgroundTint="@color/black" />
 
-                    <ImageButton
+                        <TextView
+                            android:id="@+id/nowa_notatka_tekstaudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="NAGRAJ AUDIO" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/nowanotatka_przycisk_odtworz_audio"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/zaokraglony_przycisk"
-                        android:src="@drawable/ic_play_arrow_24" />
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/ic_play_arrow_24"
+                            android:backgroundTint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/nowa_notatka_tekstodtworzaudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="ODTWORZ NAGRANIE" />
+
+                    </RelativeLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/nowanotatka_tekst_czynagrywanietrwa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Rozpocznij nagrywanie"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
-
             </LinearLayout>
 
             <TextView
-                android:paddingLeft="5dp"
+                android:id="@+id/nowanotatka_trescnotatki_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:text="Tresc notatki"
                 android:textSize="10dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/nowanotatka_linear_doukrywania_tekstu"
-                    android:orientation="horizontal">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/nowanotatka_textinputlayout_trescnotatki"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/nowanotatka_textinputedittext_trescnotatki"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                 </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/nowanotatka_linear_doukrywania_filmu"
-                android:layout_width="wrap_content"
+                android:id="@+id/nowanotatka_linear_doukrywania_tekstu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nowanotatka_textinputlayout_trescnotatki"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nowanotatka_textinputedittext_trescnotatki"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/nowanotatka_linear_doukrywania_filmu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/nowanotatka_linear_videoview_wrapper"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    >
 
                     <VideoView
                         android:id="@+id/nowanotatka_video_view"
                         android:layout_width="300dp"
-                        android:layout_height="400dp" />
+                        android:layout_height="400dp"/>
+                    <RelativeLayout
+                    android:id="@+id/nowanotatka_nagrajfilm"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_video_24"
+                        android:backgroundTint="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="NAGRAJ VIDEO" />
+
+                </RelativeLayout>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/nowanotatka_nagrajfilm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Nagraj film" />
-            </LinearLayout>
+            </RelativeLayout>
+
 
 
         </LinearLayout>
     </ScrollView>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/nowanotatka_fab_zapisz"
+
+    <Button
+        android:id="@+id/nowanotatka_button_dodajkaktus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@color/white"
-        app:srcCompat="@drawable/ic_save_24"
-        />
+        android:background="@drawable/zaokraglony_przycisk"
+        android:drawableLeft="@drawable/ic_save_24"
+        android:drawableTint="@color/GreenPD"
+        android:text="Dodaj"
+        android:textColor="@color/GreenPD" />
 </RelativeLayout>
 

@@ -35,6 +35,7 @@ import android.view.View;
 
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
@@ -173,19 +174,67 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
 
         return true;
     }
-
+    int c1=0;
+    int c2=0;
+    int c3=0;
+    int c4=0;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        String komunikat=null;
         switch(item.getItemId()){
+
             case R.id.om_k_sort_nazwa:
-                Toast.makeText(getApplicationContext(),"Posortowano po nazwie",Toast.LENGTH_SHORT).show();
+                if(c1==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusNazwaAZComparaotr);
+                    c1++;
+                    komunikat = "A->Z";
+                }else if(c1==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusNazwaZAComparaotr);
+                    c1--;
+                    komunikat = "Z->A";
+                }
+                Toast.makeText(getApplicationContext(),"Posortowano po nazwie "+komunikat,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.om_k_sort_data:
-                Toast.makeText(getApplicationContext(),"Posortowano po dacie",Toast.LENGTH_SHORT).show();
+                if(c2==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataRosnacoComparaotr);
+                    c2++;
+                    komunikat = "Rosnąco";
+                }else if(c2==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataDescendingComparaotr);
+                    c2--;
+                    komunikat = "Malejąco";
+                }
+                Toast.makeText(getApplicationContext(),"Posortowano po dacie "+komunikat,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.om_k_sort_gatunek:
-                Toast.makeText(getApplicationContext(),"Posortowano po gatunku",Toast.LENGTH_SHORT).show();
+                if(c3==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusGatunbekAZComparaotr);
+                    c3++;
+                    komunikat = "A->Z";
+                }else if(c3==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusGatunbekZAComparaotr);
+                    c3--;
+                    komunikat = "Z->A";
+                }
+
+                Toast.makeText(getApplicationContext(),"Posortowano po gatunku "+komunikat,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                break;
+            case R.id.om_k_sort_miejscu:
+                if(c4==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusMiejsceAZComparaotr);
+                    c4++;
+                    komunikat = "A->Z";
+                }else if(c4==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusMiejsceZAComparaotr);
+                    c4--;
+                    komunikat = "Z->A";
+                }
+                Toast.makeText(getApplicationContext(),"Posortowano po miejscu "+komunikat ,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
                 break;
         }
 
@@ -200,4 +249,9 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
             adapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
 }

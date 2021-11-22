@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Kaktusy"
-    android:background="@color/szaretlo">
+    android:background="@color/white">
 
 
     <LinearLayout
@@ -42,7 +42,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTint="#1b5e20"
+        android:background="@color/green"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_add_24"
         />
@@ -54,7 +54,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTint="#1b5e20"
+        android:background="@color/green"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_no_image_24"
         android:layout_alignBottom="@id/kaktusy_floatingActionButtonDuzy"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/kaktusy_floatingActionButtonDuzy"
         android:layout_alignParentRight="true"
-        android:backgroundTint="#1b5e20"
+        android:background="@color/green"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="120dp"
         android:layout_weight="1"

@@ -47,6 +47,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,27 +78,25 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
     EditText nazwa;
     EditText editTrescNotatki;
-    Button buttonZrobzdj;
-    Button buttonNagrajfilm;
+    RelativeLayout buttonZrobzdj;
+    RelativeLayout buttonNagrajfilm;
 
     RadioButton radiobutton1;
     RadioButton radiobutton2;
     RadioButton radiobutton3;
     RadioButton radiobutton4;
-
+    TextView trescnotatki_wiadomosc;
     LinearLayout linearLayoutdoukrywaniazdjecia;
     LinearLayout linearLayoutdoukrywaniatekstu;
-    LinearLayout linearLayoutdoukrywaniafilmu;
+    RelativeLayout linearLayoutdoukrywaniafilmu;
     LinearLayout linearLayoutdoukrywaniaaudio;
     LinearLayout linearvideoviewwrapper;
     ImageView imageView;
     VideoView videoView;
-    TextView textViewCzynagrywanietrwa;
     MediaRecorder mediaRecorder;
     public static String fileName = "recorded.3gp";
-    ImageButton imageButtonStart;
-    ImageButton imageButtonStop;
-    ImageButton imageButtonOdtworz;
+    RelativeLayout imageButtonStart;
+    RelativeLayout imageButtonOdtworz;
 
     String file = Environment.getExternalStorageDirectory()+"/Kaktusy/"+File.separator+fileName;
     String filmpath;
@@ -112,8 +111,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     String pathDoFilmu;
     String trescNotatki;
     TextView textViewTrescKaktus;
-    FloatingActionButton fabDodaj;
-
+    Button buttonDodaj;
     boolean widzialnosc;
 
     @Override
@@ -128,22 +126,25 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
+        buttonDodaj=findViewById(R.id.nowanotatka_button_dodajkaktus);
+
         linearLayoutdoukrywaniazdjecia=findViewById(R.id.nowanotatka_linear_doukrywania_zdjecia);
         linearLayoutdoukrywaniatekstu=findViewById(R.id.nowanotatka_linear_doukrywania_tekstu);
         linearLayoutdoukrywaniafilmu=findViewById(R.id.nowanotatka_linear_doukrywania_filmu);
         linearLayoutdoukrywaniaaudio=findViewById(R.id.nowanotatka_linear_doukrywania_audio);
         linearvideoviewwrapper = findViewById(R.id.nowanotatka_linear_videoview_wrapper);
-
+        trescnotatki_wiadomosc=findViewById(R.id.nowanotatka_trescnotatki_);
         buttonZrobzdj=findViewById(R.id.nowanotatka_zrobzdj);
         buttonNagrajfilm=findViewById(R.id.nowanotatka_nagrajfilm);
 
         editTrescNotatki=findViewById(R.id.nowanotatka_textinputedittext_trescnotatki);
         imageView = findViewById(R.id.nowanotatka_image_view);
         videoView = findViewById(R.id.nowanotatka_video_view);
-        videoView.setVisibility(View.GONE);
+  //      videoView.setVisibility(View.GONE);
         //ustawienie poczatkowe widzialnosci
         linearLayoutdoukrywaniazdjecia.setVisibility(View.GONE);
         linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
+        trescnotatki_wiadomosc.setVisibility(View.GONE);
         linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
         linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
 
@@ -160,13 +161,11 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         radiobutton4.setOnClickListener(this);
 
         imageButtonStart = findViewById(R.id.nowanotatka_przycisk_nagraj_audio);
-        imageButtonStop = findViewById(R.id.nowanotatka_przycisk_stop_nagrywania_audio);
         imageButtonOdtworz = findViewById(R.id.nowanotatka_przycisk_odtworz_audio);
-        textViewCzynagrywanietrwa = findViewById(R.id.nowanotatka_tekst_czynagrywanietrwa);
 
-        fabDodaj = findViewById(R.id.nowanotatka_fab_zapisz);
+
         //OBSLUGA FAB ZAPISZ
-        fabDodaj.setOnClickListener(new View.OnClickListener() {
+        buttonDodaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -178,8 +177,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                     }else {
                         trescNotatki = editTrescNotatki.getText().toString();
                         if(!trescNotatki.equals("")){
-                            if(trescNotatki.length()>8){
-                                nazwa.setText(trescNotatki.substring(0,8)+"...");
+                            if(trescNotatki.length()>60){
+                                nazwa.setText(trescNotatki.substring(0,60)+"...");
                             }else{
                                 nazwa.setText(trescNotatki);
                             }
@@ -202,24 +201,31 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 0);
         }
 
+        TextView tekstaudio = findViewById(R.id.nowa_notatka_tekstaudio);
+        TextView tekstaudioodtworz = findViewById(R.id.nowa_notatka_tekstodtworzaudio);
+
         imageButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rozpocznijNagrywanieDzwieku();
+                if (ktora_akcja == 0) {
+                    rozpocznijNagrywanieDzwieku();
+                    tekstaudio.setText("ZATRZYMAJ NAGRYWANIE");
+                } else if (ktora_akcja == 1) {
+                    przerwijNagrywanieDzwieku();
+                    tekstaudio.setText("NAGRANIE ZAPISANE");
+                }else if(ktora_akcja == 2){
+                    Toast.makeText(NowaNotatka.this,"Nagranie zostało już zapisane.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        imageButtonStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                przerwijNagrywanieDzwieku();
-            }
-        });
 
         imageButtonOdtworz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OdtworzNagranieDzwieku();
+                if(ktora_akcja==2){
+                     OdtworzNagranieDzwieku();
+                }
             }
         });
 
@@ -256,7 +262,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
         widzialnosc=false;
 
-        imageView.setVisibility(View.GONE);
+ //       imageView.setVisibility(View.GONE);
 
         //obsluga ZDJECIA
         if(ContextCompat.checkSelfPermission(NowaNotatka.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -459,6 +465,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         switch(v.getId()){
             case R.id.nowanotatka_radiobutton_czytekstowa:
                 linearLayoutdoukrywaniatekstu.setVisibility(View.VISIBLE);
+                trescnotatki_wiadomosc.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniazdjecia.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
@@ -469,6 +476,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             case R.id.nowanotatka_radiobutton_czyzdj:
                 linearLayoutdoukrywaniazdjecia.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniatekstu.setVisibility(View.VISIBLE);
+                trescnotatki_wiadomosc.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
                 typNotatki="zdjecie";
@@ -480,6 +488,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.VISIBLE);
+                trescnotatki_wiadomosc.setVisibility(View.GONE);
+
                 typNotatki="audio";
                 widzialnosc=true;
                 break;
@@ -489,15 +499,18 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 linearLayoutdoukrywaniatekstu.setVisibility(View.GONE);
                 linearLayoutdoukrywaniafilmu.setVisibility(View.VISIBLE);
                 linearLayoutdoukrywaniaaudio.setVisibility(View.GONE);
+                trescnotatki_wiadomosc.setVisibility(View.GONE);
+
                 typNotatki="film";
                 widzialnosc=true;
                 break;
         }
     }
-
+    int ktora_akcja=0;
     public void rozpocznijNagrywanieDzwieku(){
         try {
             if(pathDoAudio==null) {
+
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "3GP_" + timeStamp + "_";
                 fileName = imageFileName;
@@ -512,7 +525,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 mediaRecorder.setOutputFile(file);
                 mediaRecorder.prepare();
                 mediaRecorder.start();
-                textViewCzynagrywanietrwa.setText("Trwa nagrywanie dźwięku");
+                ktora_akcja=1;
             }else{
                 Toast.makeText(this, "nagrales juz audio",Toast.LENGTH_LONG).show();
             }
@@ -524,16 +537,18 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     }
     public void przerwijNagrywanieDzwieku(){
         try {
+
             mediaRecorder.stop();
             mediaRecorder.release();
 
-            textViewCzynagrywanietrwa.setText("Nagrywanie zakończone");
+            ktora_akcja=2;
         }
         catch(Exception e){
             Toast.makeText(this,"Nagranie nie jest odtwarzane",Toast.LENGTH_SHORT).show();
         }
     }
     public void OdtworzNagranieDzwieku(){
+
         MediaPlayer mediaPlayer = new MediaPlayer();
 
         try {
@@ -545,7 +560,6 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
         }
 
-        textViewCzynagrywanietrwa.setText("Odtwarzanie nagrania");
 
     }
 

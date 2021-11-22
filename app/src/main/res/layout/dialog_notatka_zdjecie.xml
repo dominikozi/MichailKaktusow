@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_green"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/dialognotatka_audio_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/GreenPL">
+
+            <TextView
+                android:id="@+id/dialog_notatkazdjecie_nazwa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:text="Nazwa notatki" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/dialognotatka_audio_linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/GreenPL">
+
+            <TextView
+                android:id="@+id/dialog_notatkazdjecie_nazwa2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Data" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/dialog_notatkazdjecie_zdjecie"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/dialog_notatkazdjecie_tekst_zawartosc"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/dialog_notatkazdjecie_edytuj"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_edit_24"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="EDYTUJ" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialog_notatkazdjecie_audio"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_microphone_24"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ODTWORZ AUDIO" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/dialog_notatkazdjecie_tekst"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_text_snippet_24"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:id="@+id/dialognotatkazdjecie_zobacz_tekst_notatki"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ZOBACZ TEKST NOTATKI" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialog_notatkazdjecie_zamknij"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_close_24"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ZAMKNIJ" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
