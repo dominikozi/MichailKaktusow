@@ -6,12 +6,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
@@ -21,21 +25,33 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +63,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,12 +73,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class NowyKaktus extends AppCompatActivity {
 
@@ -81,10 +103,11 @@ public class NowyKaktus extends AppCompatActivity {
     Spinner spinnerGatunek;
     List<String> gatunkiKaktusow;
 
-    public static final int RESULT_LOAD_IMG = 1111;
+    public static final int PICK_IMAGE = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_nowy_kaktus);
         nazwaKaktusa = findViewById(R.id.nowykaktus_textinputedittext_1_nazwakaktusa);
     //    gatunek = findViewById(R.id.nowykaktus_textinputedittext_2_gatunek);
@@ -122,9 +145,12 @@ public class NowyKaktus extends AppCompatActivity {
         buttonzGaleri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            /*    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG); */
+
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, PICK_IMAGE);
             }
         });
 
@@ -135,34 +161,8 @@ public class NowyKaktus extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
-  //      lokalizacja= new LatLng(50,49.99);
-        if (ActivityCompat.checkSelfPermission(NowyKaktus.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Task<Location> task = client.getLastLocation();
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                   // Toast.makeText(getApplicationContext(),"tost2",Toast.LENGTH_SHORT).show();
 
-                    if (location != null) {
-
-                        lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
-                    }
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(NowyKaktus.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-            Task<Location> task = client.getLastLocation();
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                   // Toast.makeText(getApplicationContext(),"tost",Toast.LENGTH_SHORT).show();
-                    if (location != null) {
-                        lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
-                    }
-                }
-            });
-        }
+        askForLocPerm();
 
 
         //baza danych
@@ -179,29 +179,54 @@ public class NowyKaktus extends AppCompatActivity {
         dodajKaktus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
+                if(isNetworkAvailable()) {
+                    if(isLocationEnabled(NowyKaktus.this)) {
+                      //  if(lokalizacja!=null){
 
-                if(nazwaKaktusa.getText().toString().equals("")|| nazwaMiejsca.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),"Musisz wypelnic dane",Toast.LENGTH_SHORT).show();
-                }else {
+                            Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
 
-                    if (TextUtils.isEmpty(pathDoZdjecia)) {
-                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                            if (nazwaKaktusa.getText().toString().equals("") || nazwaMiejsca.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "Musisz wypelnic dane", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (TextUtils.isEmpty(pathDoZdjecia)) {
+                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
 
-                        // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
-                    } else {
-                        db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                                    // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                                } else {
+                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
 
-                        // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                                    // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                                }
+
+                                startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
+                            }
+                     //   }else{
+                   //         askForLocPerm();
+                   //     }
+                    }else{
+                        Toast.makeText(NowyKaktus.this, "nie można stworzyć kaktusa bez dostępu do lokalizacji.", Toast.LENGTH_SHORT).show();
                     }
-
-                    startActivity(new Intent(NowyKaktus.this, Kaktusy.class));
+                }else{
+                    Toast.makeText(NowyKaktus.this, "nie można stworzyć kaktusa bez połączenia z internetem.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
+    @SuppressWarnings("deprecation")
+    public static Boolean isLocationEnabled(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // This is a new method provided in API 28
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            return lm.isLocationEnabled();
+        } else {
+            // This was deprecated in API 28
+            int mode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE,
+                    Settings.Secure.LOCATION_MODE_OFF);
+            return (mode != Settings.Secure.LOCATION_MODE_OFF);
+        }
+    }
 
     String currentPhotoPath;
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -254,44 +279,83 @@ public class NowyKaktus extends AppCompatActivity {
                 File f = new File(currentPhotoPath);
                 Uri contentUri = Uri.fromFile(f);
                 pathDoZdjecia = contentUri.toString();
+                System.out.println(pathDoZdjecia);
 
                 Toast.makeText(this, "uri " + contentUri, Toast.LENGTH_LONG).show();
+                Picasso.get().load(contentUri).fit().centerCrop().into(imageView);
 
-                setPic();
+                //                setPic();
             }
-            if(requestCode==RESULT_LOAD_IMG){
+            if(requestCode==PICK_IMAGE){
                 if(resultCode==RESULT_OK) {
 
-//                    Uri imageUri = data.getData();
-//                    String path = imageUri.getPath();
-//                    File f = new File(path);
-//
-//
-//                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//                    String imageFileName = "KAKTUS_" + timeStamp + "_";
-//                    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//                    File image = null;
-//                    try {
-//                        image = File.createTempFile(
-//                                imageFileName,  /* prefix */
-//                                ".jpg",         /* suffix */
-//                                storageDir      /* directory */
-//                        );
-//                        currentPhotoPath = image.getAbsolutePath();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    // Save a file: path for use with ACTION_VIEW intents
-//                    Toast.makeText(NowyKaktus.this, path,Toast.LENGTH_LONG).show();
-//
-//                    try {
-//                        copyFile(f,image);
-//                    } catch (IOException e) {
-//                        Toast.makeText(NowyKaktus.this, "blad 1",Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    setPic();
+                    Uri imageUri = data.getData();
+              //      NowyKaktus.zrobnadrugimThreadzie load = new NowyKaktus.zrobnadrugimThreadzie();
+           //         load.execute(imageUri);
+                    Picasso.get().load(imageUri).fit().centerCrop().into(imageView);
+
+                    Toast.makeText(NowyKaktus.this, "Ładowanie...",Toast.LENGTH_LONG).show();
+
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(imageUri)
+                            .into(new CustomTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                    String imageFileName = "KAKTUS_" + timeStamp + "_";
+                                    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                                    File image = null;
+                                    try {
+                                        image = File.createTempFile(
+                                                imageFileName,  /* prefix */
+                                                ".jpg",         /* suffix */
+                                                storageDir      /* directory */
+                                        );
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    // Save a file: path for use with ACTION_VIEW intents
+                                    currentPhotoPath = image.getAbsolutePath();
+                                    File f = new File(currentPhotoPath);
+                                    Uri contentUri = Uri.fromFile(f);
+                                    pathDoZdjecia = contentUri.toString();
+                                    System.out.println(pathDoZdjecia);
+
+                                    boolean success = false;
+                                    FileOutputStream outStream;
+                                    try {
+
+                                        outStream = new FileOutputStream(f);
+                                        resource.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                                        /* 100 to keep full quality of the image */
+
+                                        outStream.flush();
+                                        outStream.close();
+                                        success = true;
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (success) {
+                                        Toast.makeText(getApplicationContext(), "Zdjęcie zapisane pomyślnie",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Błąd podczas zapisywania zdjęcia", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                }
+                            });
+
+
+
+
                 }else{
                     Toast.makeText(NowyKaktus.this, "Nie wybrano zdjecia.",Toast.LENGTH_LONG).show();
                 }
@@ -299,7 +363,7 @@ public class NowyKaktus extends AppCompatActivity {
         }
 
     }
-
+/*
     public void setPic() {
         // Get the dimensions of the View
         int targetW = 300;
@@ -322,7 +386,7 @@ public class NowyKaktus extends AppCompatActivity {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -334,9 +398,7 @@ public class NowyKaktus extends AppCompatActivity {
                     task.addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            if (location != null){
-                                lokalizacja = new LatLng(location.getLatitude(),location.getLongitude());
-                            }
+
                         }
                     });
                 }
@@ -345,24 +407,140 @@ public class NowyKaktus extends AppCompatActivity {
         }
     }
 
-    public static void copyFile(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        try {
-            OutputStream out = new FileOutputStream(dst);
-            try {
-                // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-            } finally {
-                out.close();
-            }
-        } finally {
-            in.close();
-        }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+//    private class zrobnadrugimThreadzie extends AsyncTask<Uri,Void,Void> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+
+//        @Override
+//        protected Void doInBackground(Uri... params) {
+//            Uri imageUri = params[0];
+//            runOnUiThread(new Runnable() {
+//                  @Override
+//                  public void run() {
+//                      Picasso.get().load(imageUri).fit().centerCrop().into(imageView);
+//                      Toast.makeText(NowyKaktus.this, "Ładowanie...",Toast.LENGTH_LONG).show();
+//                  }
+//            });
+//
+//
+//            Glide.with(NowyKaktus.this)
+//                    .asBitmap()
+//                    .load(imageUri)
+//                    .into(new CustomTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//                            String imageFileName = "KAKTUS_" + timeStamp + "_";
+//                            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//                            File image = null;
+//                            try {
+//                                image = File.createTempFile(
+//                                        imageFileName,  /* prefix */
+//                                        ".jpg",         /* suffix */
+//                                        storageDir      /* directory */
+//                                );
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            // Save a file: path for use with ACTION_VIEW intents
+//                            currentPhotoPath = image.getAbsolutePath();
+//                            File f = new File(currentPhotoPath);
+//                            Uri contentUri = Uri.fromFile(f);
+//                            pathDoZdjecia = contentUri.toString();
+//                            System.out.println(pathDoZdjecia);
+//
+//                            boolean success = false;
+//                            FileOutputStream outStream;
+//                            try {
+//
+//                                outStream = new FileOutputStream(f);
+//                                resource.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+//                                /* 100 to keep full quality of the image */
+//
+//                                outStream.flush();
+//                                outStream.close();
+//                                success = true;
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                            if (success) {runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    Toast.makeText(getApplicationContext(), "Zdjęcie zapisane pomyślnie",
+//                                        Toast.LENGTH_LONG).show();}
+//                               });
+//                            } else {runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Toast.makeText(getApplicationContext(),
+//                                                "Błąd podczas zapisywania zdjęcia", Toast.LENGTH_LONG).show();}
+//                                        });
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onLoadCleared(@Nullable Drawable placeholder) {
+//                        }
+//                    });
+//
+//
+//
+//
+//
+//
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//
+//        }
+//    }
+
+    public void askForLocPerm(){
+        if (ActivityCompat.checkSelfPermission(NowyKaktus.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Task<Location> task = client.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    // Toast.makeText(getApplicationContext(),"tost2",Toast.LENGTH_SHORT).show();
+
+                    if (location != null) {
+                        lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
+                    }else{
+                        lokalizacja=null;
+                    }
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(NowyKaktus.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            Task<Location> task = client.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    // Toast.makeText(getApplicationContext(),"tost",Toast.LENGTH_SHORT).show();
+                    if (location != null) {
+                        lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
+                    }else{
+                        lokalizacja=null;
+                    }
+                }
+            });
+        }
+    }
 }
 

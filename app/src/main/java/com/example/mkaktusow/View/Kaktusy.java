@@ -64,7 +64,21 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         adapter=new KaktusAdapter(kaktusy, this);
 
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fabDuzy.isShown())
+                    fabDuzy.hide();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    fabDuzy.show();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         //----bottom navigation bar
         //Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

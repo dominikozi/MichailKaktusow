@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,15 +80,16 @@ public class FragKNotatkitekstowe extends Fragment implements NotatkaTextAdapter
     RecyclerView.Adapter adapter;
     List<Notatka> notatki;
     List<Notatka> notatkiText;
-
+    RecyclerView.LayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frag_k_notatkitekstowe, container, false);
 
-        recyclerViewNotatki=view.findViewById(R.id.fragknotatkitekstowe_recycler);
-        recyclerViewNotatki.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    //    recyclerViewNotatki=view.findViewById(R.id.fragknotatkitekstowe_recycler);
+    //    recyclerViewNotatki.setLayoutManager(new LinearLayoutManager(view.getContext()));
+      //  recyclerViewNotatki.setAdapter(adapter);
         JedenKaktusTL activity = (JedenKaktusTL) getActivity();
         notatkiText= new ArrayList<Notatka>();
         notatki = activity.getCurrentNotatkiZActivity();
@@ -96,8 +98,14 @@ public class FragKNotatkitekstowe extends Fragment implements NotatkaTextAdapter
                 notatkiText.add(notatka);
             }
         }
+    //    adapter=new NotatkaTextAdapter(notatkiText, this);
+
+        recyclerViewNotatki=view.findViewById(R.id.fragknotatkitekstowe_recycler);
+        layoutManager=new GridLayoutManager(getContext(),2);
+        recyclerViewNotatki.setLayoutManager(layoutManager);
         adapter=new NotatkaTextAdapter(notatkiText, this);
         recyclerViewNotatki.setAdapter(adapter);
+        recyclerViewNotatki.setHasFixedSize(true);
 
         return view;
     }

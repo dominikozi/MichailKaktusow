@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/alt_notatka_row_text_grid_layout">
 
     <ImageView
         android:id="@+id/alt_notatka_zdj_row_grid_imageview"
@@ -12,13 +13,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-
-        android:background="@color/light_gray"
-        app:layout_constraintDimensionRatio="1:0.3"
+        android:background="@drawable/container_bg"
+        app:layout_constraintDimensionRatio="1:0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.95" />
+<!--        android:background="@color/light_gray"-->
+
 
     <TextView
         android:id="@+id/alt_notatka_text_row_grid_textview1"
@@ -26,9 +28,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:maxLines="3"
         android:text="TextView"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:ellipsize="end"
         app:layout_constraintWidth_percent="0.70"
         app:layout_constraintStart_toStartOf="@+id/alt_notatka_zdj_row_grid_imageview"
         app:layout_constraintTop_toTopOf="@+id/alt_notatka_zdj_row_grid_imageview" />
@@ -44,17 +47,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/alt_notatka_zdj_row_grid_imageview"
         app:layout_constraintEnd_toEndOf="@+id/alt_notatka_zdj_row_grid_imageview" />
 
-    <TextView
-        android:id="@+id/alt_notatka_text_row_grid_textview2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.70"
-        app:layout_constraintHeight_percent="0.06"
-        android:layout_marginStart="8dp"
+    <ImageView
+        android:id="@+id/alt_notatka_text_row_grid_imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/alt_notatka_zdj_row_grid_imageview"
-        app:layout_constraintTop_toBottomOf="@+id/alt_notatka_text_row_grid_textview1" />
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/alt_notatka_zdj_row_grid_imageview"
+        app:layout_constraintTop_toTopOf="@+id/alt_notatka_zdj_row_grid_imageview"
+        android:background="@drawable/ic_edit_24" />
 
     <ImageView
         android:id="@+id/alt_notatka_text_row_grid_imageView1"
@@ -62,18 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/alt_notatka_zdj_row_grid_imageview"
-        app:layout_constraintTop_toTopOf="@+id/alt_notatka_zdj_row_grid_imageview"
-        android:background="@drawable/ic_edit_24" />
-
-    <ImageView
-        android:id="@+id/alt_notatka_text_row_grid_imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/alt_notatka_zdj_row_grid_imageview"
         app:layout_constraintTop_toTopOf="@+id/alt_notatka_zdj_row_grid_imageview"
         android:background="@drawable/ic_microphone_24" />

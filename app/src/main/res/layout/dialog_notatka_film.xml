@@ -22,9 +22,9 @@
                 android:id="@+id/dialog_notatka_film_nazwa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
-                android:text="Nazwa notatki" />
+                android:text="Nazwa notatki"
+                android:textStyle="bold" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -33,12 +33,12 @@
         android:layout_height="wrap_content"
         android:background="@color/GreenPL">
 
-        <TextView
-            android:id="@+id/dialog_notatkazdjecie_nazwa2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Data" />
+            <TextView
+                android:id="@+id/dialog_notatkafilm_nazwa2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Data" />
 
     </RelativeLayout>
         <RelativeLayout

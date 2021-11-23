@@ -38,7 +38,9 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
     public NotatkaTextAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
      //   View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notatka_text_row,parent,false);
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alternatywny_notatka_row_text,parent,false);
+      //  View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alternatywny_notatka_row_text,parent,false);
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alt_notatka_text_row_grid,parent,false);
 
         return new ViewHolder(view, mOnNotatkaTextListener);
     }
@@ -57,7 +59,7 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         holder.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
 */
-        holder.ikona.setVisibility(View.GONE);
+    /*    holder.ikona.setVisibility(View.GONE);
         holder.ikona2.setVisibility(View.GONE);
 
         holder.nazwa.setText(notatki.get(position).getNazwaNotatki());
@@ -69,7 +71,26 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
         }
 
         android.text.format.DateFormat df = new android.text.format.DateFormat();
+        holder.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));*/
+
+        holder.ikona.setVisibility(View.GONE);
+        holder.ikona2.setVisibility(View.GONE);
+
+
+        String nazwa = notatki.get(position).getTrescNotatki();
+      //  if(nazwa.length()>35){
+     //       nazwa= nazwa.substring(0,35)+"...";
+      //  }
+        holder.nazwa.setText(nazwa);
+
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
         holder.datadodania.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
+        if(notatki.get(position).getTypNotatki().equals("tekstowa")){
+            holder.ikona2.setVisibility(View.VISIBLE);
+        }
+        if(notatki.get(position).getTypNotatki().equals("audio")){
+            holder.ikona.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public int getItemCount() {
@@ -77,12 +98,17 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView nazwa;
+   /*     public TextView nazwa;
         public TextView typNotatki;
         public TextView datadodania;
         public ImageView ikona;
-        public ImageView ikona2;
+        public ImageView ikona2;*/
         OnNotatkaTextListener onNotatkaTextListener;
+
+        public TextView nazwa;
+        public TextView datadodania;
+        public ImageView ikona;
+        public ImageView ikona2;
 
         public ViewHolder(View itemView, OnNotatkaTextListener onNotatkaTextListener) {
             super(itemView);
@@ -91,11 +117,17 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
             datadodania= itemView.findViewById(R.id.Datadodania_notatki_row);
             ikona = itemView.findViewById(R.id.ikona_notatki_tekstowej_row);
 */
-
+            /*
             nazwa = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView1);
             datadodania = itemView.findViewById(R.id.alt_notatka_tekstt_row_textView2);
             ikona=itemView.findViewById(R.id.alt_notatka_tekst_row_imageView1);
-            ikona2=itemView.findViewById(R.id.alt_notatka_tekst_row_imageView2);
+            ikona2=itemView.findViewById(R.id.alt_notatka_tekst_row_imageView2);*/
+
+            nazwa=itemView.findViewById(R.id.alt_notatka_text_row_grid_textview1);
+
+            datadodania= itemView.findViewById(R.id.alt_notatka_text_row_grid_textview3);
+            ikona = itemView.findViewById(R.id.alt_notatka_text_row_grid_imageView1);
+            ikona2 = itemView.findViewById(R.id.alt_notatka_text_row_grid_imageView2);
 
             this.onNotatkaTextListener=onNotatkaTextListener;
             itemView.setOnClickListener(this);

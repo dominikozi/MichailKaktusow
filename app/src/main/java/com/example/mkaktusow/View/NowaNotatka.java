@@ -8,18 +8,24 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mkaktusow.BuildConfig;
 import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,6 +35,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -39,6 +46,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,6 +83,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.READ_EXTERNAL_STORAGE"
     };
+    public static final int PICK_IMAGE = 1111;
 
     EditText nazwa;
     EditText editTrescNotatki;
@@ -97,7 +106,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     public static String fileName = "recorded.3gp";
     RelativeLayout imageButtonStart;
     RelativeLayout imageButtonOdtworz;
-
+    RelativeLayout buttonZGalerii;
     String file = Environment.getExternalStorageDirectory()+"/Kaktusy/"+File.separator+fileName;
     String filmpath;
 
@@ -125,7 +134,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         buttonDodaj=findViewById(R.id.nowanotatka_button_dodajkaktus);
 
         linearLayoutdoukrywaniazdjecia=findViewById(R.id.nowanotatka_linear_doukrywania_zdjecia);
@@ -136,7 +145,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
         trescnotatki_wiadomosc=findViewById(R.id.nowanotatka_trescnotatki_);
         buttonZrobzdj=findViewById(R.id.nowanotatka_zrobzdj);
         buttonNagrajfilm=findViewById(R.id.nowanotatka_nagrajfilm);
-
+        buttonZGalerii=findViewById(R.id.nowanotatka_dodajzdj);
         editTrescNotatki=findViewById(R.id.nowanotatka_textinputedittext_trescnotatki);
         imageView = findViewById(R.id.nowanotatka_image_view);
         videoView = findViewById(R.id.nowanotatka_video_view);
@@ -177,8 +186,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                     }else {
                         trescNotatki = editTrescNotatki.getText().toString();
                         if(!trescNotatki.equals("")){
-                            if(trescNotatki.length()>60){
-                                nazwa.setText(trescNotatki.substring(0,60)+"...");
+                            if(trescNotatki.length()>23){
+                                nazwa.setText(trescNotatki.substring(0,23)+"...");
                             }else{
                                 nazwa.setText(trescNotatki);
                             }
@@ -194,6 +203,17 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             }
         });
 
+        buttonZGalerii.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            /*    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG); */
+
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, PICK_IMAGE);
+            }
+        });
 
         //obsługa AUDIO
         mediaRecorder = new MediaRecorder();
@@ -372,7 +392,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_CANCELED) {
+        if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
                 File f = new File(currentPhotoPath);
@@ -381,7 +401,8 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
                 Toast.makeText(this, "uri " + contentUri, Toast.LENGTH_LONG).show();
 
-                setPic();
+                Picasso.get().load(contentUri).fit().centerCrop().into(imageView);
+                //  setPic();
 
 
             }
@@ -389,13 +410,13 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
                 File f = new File(currentVideoPath);
                 Uri contentUri = Uri.fromFile(f);
-                pathDoFilmu=contentUri.toString();
+                pathDoFilmu = contentUri.toString();
 
                 MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.setDataSource(currentVideoPath);
 
-                Bitmap pierwszaKlatka = mediaMetadataRetriever.getFrameAtTime(1,MediaMetadataRetriever.OPTION_CLOSEST);
-                Bitmap croppedPKlatka = ThumbnailUtils.extractThumbnail(pierwszaKlatka,300,400); //zmiana na 4:3 z 16:9(defaultowe camery)
+                Bitmap pierwszaKlatka = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
+                Bitmap croppedPKlatka = ThumbnailUtils.extractThumbnail(pierwszaKlatka, 300, 400); //zmiana na 4:3 z 16:9(defaultowe camery)
 
                 //
                 File photoFile = null;
@@ -414,7 +435,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
                 try {
                     FileOutputStream fileOutputStream = new FileOutputStream(ff);
-                    croppedPKlatka.compress(Bitmap.CompressFormat.JPEG,90,fileOutputStream);
+                    croppedPKlatka.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
                     fileOutputStream.flush();
                     fileOutputStream.close();
                 } catch (FileNotFoundException e) {
@@ -432,9 +453,80 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 videoView.setVisibility(View.VISIBLE);
                 buttonNagrajfilm.setEnabled(false);
             }
+            if (requestCode == PICK_IMAGE) {
+                if (resultCode == RESULT_OK) {
+
+                    Uri imageUri = data.getData();
+
+                    Picasso.get().load(imageUri).fit().centerCrop().into(imageView);
+
+                    Toast.makeText(NowaNotatka.this, "Ładowanie...", Toast.LENGTH_LONG).show();
+
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(imageUri)
+                            .into(new CustomTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                    String imageFileName = "JPEG_" + timeStamp + "_";
+                                    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                                    File image = null;
+                                    try {
+                                        image = File.createTempFile(
+                                                imageFileName,  /* prefix */
+                                                ".jpg",         /* suffix */
+                                                storageDir      /* directory */
+                                        );
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    // Save a file: path for use with ACTION_VIEW intents
+                                    currentPhotoPath = image.getAbsolutePath();
+                                    File f = new File(currentPhotoPath);
+                                    Uri contentUri = Uri.fromFile(f);
+                                    pathDoZdjecia = contentUri.toString();
+                                    System.out.println(pathDoZdjecia);
+
+                                    boolean success = false;
+                                    FileOutputStream outStream;
+                                    try {
+
+                                        outStream = new FileOutputStream(f);
+                                        resource.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                                        /* 100 to keep full quality of the image */
+
+                                        outStream.flush();
+                                        outStream.close();
+                                        success = true;
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (success) {
+                                        Toast.makeText(getApplicationContext(), "Zdjęcie zapisane pomyślnie",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Błąd podczas zapisywania zdjęcia", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                }
+                            });
+
+
+                } else {
+                    Toast.makeText(NowaNotatka.this, "Nie wybrano zdjecia.", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
-
+/*
     public void setPic(){
 
         // Get the dimensions of the View
@@ -458,7 +550,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

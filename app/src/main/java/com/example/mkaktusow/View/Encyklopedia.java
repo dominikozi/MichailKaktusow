@@ -18,8 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +54,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class Encyklopedia extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextView textView;
@@ -71,60 +76,16 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
     scrape s;
     String link = null;
 
+    GifImageView gifImageView;
+
     List<String> gatunkiKaktusow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encyklopedia);
-
-        gatunkiKaktusow = new ArrayList<String>();
-        gatunkiKaktusow.add("Opuncja drobnokolczasta");
-        gatunkiKaktusow.add("Opuncja figowa");
-        gatunkiKaktusow.add("Wielomlecz trójżebrowy");
-        gatunkiKaktusow.add("Cereus repandus");
-        gatunkiKaktusow.add("Echinokaktus Grusonii");
-        gatunkiKaktusow.add("Echinopsis Eyriesa");
-        gatunkiKaktusow.add("Echinopsis spachiana");
-        gatunkiKaktusow.add("Mammillaria Haw.");
-        gatunkiKaktusow.add("Jazgrza Williamsa");
-        gatunkiKaktusow.add("Ferokaktus");
-        gatunkiKaktusow.add("Gymnocalycium Monvillei");
-
+        gifImageView=findViewById(R.id.encyklopedia_gif);
         //spinner gatunek
         spinnerGatunek = findViewById(R.id.encyklopedia_spinner_gatunek);
-
-        ArrayAdapter<String> spinnerGatunekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gatunkiKaktusow);
-        spinnerGatunekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGatunek.setAdapter(spinnerGatunekAdapter);
-        spinnerGatunek.setOnItemSelectedListener(this);
-
-        //----bottom navigation bar
-        //Initialize and assign variable
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        //set encyklopedia selected
-        bottomNavigationView.setSelectedItemId(R.id.Encyklopedia);
-        //perform itemSelectedListener
-        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
-                switch(menuItem.getItemId()){
-                    case R.id.Encyklopedia:
-                        return true;
-                    case R.id.Notatki:
-                        startActivity(new Intent(getApplicationContext(),Notatki.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.Miejsca:
-                        startActivity(new Intent(getApplicationContext(), Kaktusy.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.Mapa:
-                        startActivity(new Intent(getApplicationContext(),Mapa.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-
-        });
-
         textView = findViewById(R.id.encyklopedia_tekst);
         textView2 = findViewById(R.id.encyklopedia_tekst2);
         textView3 = findViewById(R.id.encyklopedia_tekst3);
@@ -134,12 +95,75 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         textView7 = findViewById(R.id.encyklopedia_tekst7);
         imageView = findViewById(R.id.encyklopedia_zdjecie);
         imageView2 = findViewById(R.id.encyklopedia_zdjecie2);
-
-        WyswietlLoading();
-
         source = findViewById(R.id.encyklopedia_z_jakiej_strony);
-        source.setText("Źródło: fajnyogrod.pl");
+//----bottom navigation bar
+        //Initialize and assign variable
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        //set encyklopedia selected
+        bottomNavigationView.setSelectedItemId(R.id.Encyklopedia);
+        //perform itemSelectedListener
+        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.Encyklopedia:
+                    return true;
+                case R.id.Notatki:
+                    startActivity(new Intent(getApplicationContext(), Notatki.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case R.id.Miejsca:
+                    startActivity(new Intent(getApplicationContext(), Kaktusy.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case R.id.Mapa:
+                    startActivity(new Intent(getApplicationContext(), Mapa.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+            }
+            return false;
 
+        });
+        if(!isNetworkAvailable()){
+            source.setText("Brak połączenia z internetem. Połącz się z internetem by skorzystać z funkcjonalności.");
+            textView.setText("");
+            textView2.setText("");
+            textView3.setText("");
+            textView4.setText("");
+            gifImageView.setVisibility(View.GONE);
+            textView5.setText("");
+            textView6.setText("");
+            textView7.setText("");
+            imageView2.setVisibility(View.GONE);
+            spinnerGatunek.setVisibility(View.GONE);
+            Toast.makeText(this, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show();
+        }else {
+
+            gatunkiKaktusow = new ArrayList<String>();
+            gatunkiKaktusow.add("Opuncja drobnokolczasta");
+            gatunkiKaktusow.add("Opuncja figowa");
+            gatunkiKaktusow.add("Wielomlecz trójżebrowy");
+            gatunkiKaktusow.add("Cereus repandus");
+            gatunkiKaktusow.add("Echinokaktus Grusonii");
+            gatunkiKaktusow.add("Echinopsis Eyriesa");
+            gatunkiKaktusow.add("Echinopsis spachiana");
+            gatunkiKaktusow.add("Mammillaria Haw.");
+            gatunkiKaktusow.add("Jazgrza Williamsa");
+            gatunkiKaktusow.add("Ferokaktus");
+            gatunkiKaktusow.add("Gymnocalycium Monvillei");
+
+
+
+            ArrayAdapter<String> spinnerGatunekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gatunkiKaktusow);
+            spinnerGatunekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerGatunek.setAdapter(spinnerGatunekAdapter);
+            spinnerGatunek.setOnItemSelectedListener(this);
+
+
+
+
+            WyswietlLoading();
+
+            source.setText("Źródło: fajnyogrod.pl");
+        }
     }
 
     @Override
@@ -261,7 +285,8 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void run() {
-
+                    imageView.setVisibility(View.VISIBLE);
+                    gifImageView.setVisibility(View.GONE);
                     textView.setText(naglowek.text());
                     textView2.setText(html2text(Articlelead3.text()));
                     textView3.setText(html2text(tekst.get(2)));
@@ -383,6 +408,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        imageView.setVisibility(View.VISIBLE);
                         textView.setText(finalTitle);
                         textView2.setText(Html.fromHtml(finalTekstExtract));
                         textView3.setText("");
@@ -390,6 +416,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                         textView5.setText("");
                         textView6.setText("");
                         textView7.setText("");
+                        gifImageView.setVisibility(View.GONE);
                         Picasso.get().load(linkdozdj).into(imageView);
                         if(imageView2.getVisibility()==View.VISIBLE){
                             imageView2.setVisibility(View.GONE);
@@ -420,8 +447,14 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         textView5.setText("");
         textView6.setText("");
         textView7.setText("");
-        Picasso.get().load(R.drawable.ic_loading).resize(200,200).into(imageView);
+        imageView.setVisibility(View.GONE);
+        gifImageView.setVisibility(View.VISIBLE);
         imageView2.setVisibility(View.GONE);
     }
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 }

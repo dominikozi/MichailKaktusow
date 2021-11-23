@@ -104,7 +104,7 @@
                 <RelativeLayout
                     android:id="@+id/nowanotatka_zrobzdj"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:background="@color/white">
 
                     <ImageView
@@ -112,7 +112,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/ic_add_photo_24"
                         android:backgroundTint="@color/black" />
 
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:text="ZRÓB ZDJĘCIE" />
 
                 </RelativeLayout>
@@ -128,7 +128,7 @@
                 <RelativeLayout
                     android:id="@+id/nowanotatka_dodajzdj"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:background="@color/white">
 
                     <ImageView
@@ -136,7 +136,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/ic_image_24"
                         android:backgroundTint="@color/black" />
 
@@ -144,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:text="DODAJ Z GALERII" />
 
                 </RelativeLayout>
@@ -169,7 +169,7 @@
                     <RelativeLayout
                         android:id="@+id/nowanotatka_przycisk_nagraj_audio"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:background="@color/white">
 
                         <ImageView
@@ -177,7 +177,7 @@
                             android:layout_height="20dp"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/ic_microphone_24"
                             android:backgroundTint="@color/black" />
 
@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:text="NAGRAJ AUDIO" />
 
                     </RelativeLayout>
@@ -194,7 +194,7 @@
                     <RelativeLayout
                         android:id="@+id/nowanotatka_przycisk_odtworz_audio"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:background="@color/white">
 
                         <ImageView
@@ -202,7 +202,7 @@
                             android:layout_height="20dp"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/ic_play_arrow_24"
                             android:backgroundTint="@color/black" />
 
@@ -211,7 +211,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:text="ODTWORZ NAGRANIE" />
 
                     </RelativeLayout>
@@ -267,7 +267,7 @@
                     <RelativeLayout
                     android:id="@+id/nowanotatka_nagrajfilm"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:background="@color/white">
 
                     <ImageView
@@ -275,7 +275,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/ic_video_24"
                         android:backgroundTint="@color/black" />
 
@@ -283,7 +283,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:text="NAGRAJ VIDEO" />
 
                 </RelativeLayout>

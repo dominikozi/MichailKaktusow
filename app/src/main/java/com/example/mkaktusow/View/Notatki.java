@@ -12,8 +12,10 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.room.Room;
 
 import android.app.Dialog;
@@ -23,6 +25,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,7 +57,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
     List<Notatka> notatki;
     List<Notatka> notatki_wszystkie;
     FloatingActionButton fabDuzy;
-
+    RecyclerView.LayoutManager layoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +72,32 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
 
         //recycler view
-        recyclerView = findViewById(R.id.notatkiRecyclerView);
+    /*    recyclerView = findViewById(R.id.notatkiRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter=new NotatkaAdapter(notatki, this);
 
         recyclerView.setAdapter(adapter);
+*/
+        recyclerView = findViewById(R.id.notatkiRecyclerView);
+        layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter=new NotatkaAdapter(notatki,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fabDuzy.isShown())
+                    fabDuzy.hide();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    fabDuzy.show();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         //----bottom navigation bar
         //Initialize and assign variable
@@ -268,7 +291,9 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
             myDialog.setContentView(R.layout.dialog_notatka_film);
             VideoView videoView = (VideoView) myDialog.findViewById(R.id.dialog_notatka_film_filmview);
             RelativeLayout relativeLayoutZamknij = (RelativeLayout) myDialog.findViewById(R.id.dialog_notatka_film_zamknij);
-            TextView data = (TextView) myDialog.findViewById(R.id.dialog_notatkazdjecie_nazwa2);
+            TextView nazwa = (TextView) myDialog.findViewById(R.id.dialog_notatka_film_nazwa);
+            nazwa.setText(notatki.get(position).getNazwaNotatki());
+            TextView data = (TextView) myDialog.findViewById(R.id.dialog_notatkafilm_nazwa2);
             android.text.format.DateFormat df = new android.text.format.DateFormat();
             data.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
             videoView.setVideoURI(Uri.parse(notatki.get(position).getSciezkaDoFilmu()));
@@ -335,6 +360,14 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
         return true;
     }
+
+    public void resetFiltr(){
+        notatki.clear();
+        for (Notatka notatka:notatki_wszystkie){
+            notatki.add(notatka);
+        }
+    }
+
     int c1=0;
     int c2=0;
     int c3=0;
@@ -343,10 +376,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         String komunikat=null;
         switch(item.getItemId()){
             case R.id.om_n_filtr_reset:
-                notatki.clear();
-                for (Notatka notatka:notatki_wszystkie){
-                    notatki.add(notatka);
-                }
+                resetFiltr();
                 adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"Odswiezono notatki",Toast.LENGTH_SHORT).show();
                 break;
@@ -390,6 +420,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.om_n_filtr_z:
+                resetFiltr();
                 ArrayList<Notatka> notatkitemp=new ArrayList<>();
                 for (Notatka notatka:notatki){
                     if(notatka.getTypNotatki().equals("zdjecie")){
@@ -404,6 +435,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                 Toast.makeText(getApplicationContext(),"filtr tylko zdjecia",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.om_n_filtr_t:
+                resetFiltr();
                 ArrayList<Notatka> notatkitemp2=new ArrayList<>();
                 for (Notatka notatka:notatki){
                     if(notatka.getTypNotatki().equals("tekstowa")){
@@ -418,6 +450,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                 Toast.makeText(getApplicationContext(),"filtr tylko tekst",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.om_n_filtr_f:
+                resetFiltr();
                 ArrayList<Notatka> notatkitemp3=new ArrayList<>();
                 for (Notatka notatka:notatki){
                     if(notatka.getTypNotatki().equals("film")){
@@ -432,6 +465,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
                 Toast.makeText(getApplicationContext(),"filtr tylko film",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.om_n_filtr_a:
+                resetFiltr();
                 ArrayList<Notatka> notatkitemp4=new ArrayList<>();
                 for (Notatka notatka:notatki){
                     if(notatka.getTypNotatki().equals("audio")){

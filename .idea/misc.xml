@@ -13,6 +13,7 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/materialbutton_style.xml" value="0.2713541666666667" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/round_bg.xml" value="0.2713541666666667" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/selector.xml" value="0.3828125" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/text_border.xml" value="0.31197916666666664" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/textview_border.xml" value="0.3828125" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/drawable/zaokraglony_przycisk.xml" value="0.3769230769230769" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_encyklopedia.xml" value="0.2966485507246377" />
@@ -25,7 +26,7 @@
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowa_notatka.xml" value="0.32252701579384874" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/activity_nowy_kaktus.xml" value="0.33" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alt_notatka_text_row_grid.xml" value="0.5" />
-        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alt_notatka_zdj_row_grid.xml" value="0.5" />
+        <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alt_notatka_zdj_row_grid.xml" value="0.4619883040935672" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alternatywny_kaktus_row.xml" value="0.5" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alternatywny_notatka_row.xml" value="0.5" />
         <entry key="..\:/INZYNIERKA/MKaktusow/app/src/main/res/layout/alternatywny_notatka_row_text.xml" value="0.33" />

@@ -120,38 +120,38 @@
                     <!--            android:drawableTop="@drawable/ic_image_24"-->
                     <!--            />-->
 
-<!--                    <com.google.android.material.button.MaterialButton-->
-<!--                        android:id="@+id/nowykaktus_zrobzdj"-->
-<!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
-<!--                        android:layout_marginTop="50dp"-->
-<!--                        android:backgroundTint="@color/szaretlo"-->
-<!--                        app:icon="@drawable/ic_add_photo_24"-->
-<!--                        app:iconGravity="textStart"-->
-<!--                        app:iconPadding="-0.5dp"-->
-<!--                        app:iconSize="24dp"-->
-<!--                        app:iconTint="@color/GreenP"-->
-<!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
-<!--                        app:strokeColor="@color/GreenP" />-->
+                    <!--                    <com.google.android.material.button.MaterialButton-->
+                    <!--                        android:id="@+id/nowykaktus_zrobzdj"-->
+                    <!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
+                    <!--                        android:layout_width="50dp"-->
+                    <!--                        android:layout_height="50dp"-->
+                    <!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
+                    <!--                        android:layout_marginTop="50dp"-->
+                    <!--                        android:backgroundTint="@color/szaretlo"-->
+                    <!--                        app:icon="@drawable/ic_add_photo_24"-->
+                    <!--                        app:iconGravity="textStart"-->
+                    <!--                        app:iconPadding="-0.5dp"-->
+                    <!--                        app:iconSize="24dp"-->
+                    <!--                        app:iconTint="@color/GreenP"-->
+                    <!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
+                    <!--                        app:strokeColor="@color/GreenP" />-->
 
-<!--                    <com.google.android.material.button.MaterialButton-->
-<!--                        android:id="@+id/nowykaktus_dodajzdj"-->
-<!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
-<!--                        android:layout_marginTop="3dp"-->
-<!--                        android:layout_marginBottom="50dp"-->
-<!--                        android:backgroundTint="@color/szaretlo"-->
-<!--                        app:icon="@drawable/ic_image_24"-->
-<!--                        app:iconGravity="textStart"-->
-<!--                        app:iconPadding="-0.5dp"-->
-<!--                        app:iconSize="24dp"-->
-<!--                        app:iconTint="@color/GreenP"-->
-<!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
-<!--                        app:strokeColor="@color/GreenP" />-->
+                    <!--                    <com.google.android.material.button.MaterialButton-->
+                    <!--                        android:id="@+id/nowykaktus_dodajzdj"-->
+                    <!--                        style="@style/Widget.App.Button.OutlinedButton.Icon"-->
+                    <!--                        android:layout_width="50dp"-->
+                    <!--                        android:layout_height="50dp"-->
+                    <!--                        android:layout_alignRight="@id/new_kaktus_image_view"-->
+                    <!--                        android:layout_marginTop="3dp"-->
+                    <!--                        android:layout_marginBottom="50dp"-->
+                    <!--                        android:backgroundTint="@color/szaretlo"-->
+                    <!--                        app:icon="@drawable/ic_image_24"-->
+                    <!--                        app:iconGravity="textStart"-->
+                    <!--                        app:iconPadding="-0.5dp"-->
+                    <!--                        app:iconSize="24dp"-->
+                    <!--                        app:iconTint="@color/GreenP"-->
+                    <!--                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"-->
+                    <!--                        app:strokeColor="@color/GreenP" />-->
 
                 </RelativeLayout>
 
@@ -165,7 +165,7 @@
                     <RelativeLayout
                         android:id="@+id/nowykaktus_zrobzdj"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:background="@color/white">
 
                         <ImageView
@@ -173,7 +173,7 @@
                             android:layout_height="20dp"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/ic_add_photo_24"
                             android:backgroundTint="@color/black" />
 
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:text="ZRÓB ZDJĘCIE" />
 
                     </RelativeLayout>
@@ -190,7 +190,7 @@
                     <RelativeLayout
                         android:id="@+id/nowykaktus_dodajzdj"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:background="@color/white">
 
                         <ImageView
@@ -198,7 +198,7 @@
                             android:layout_height="20dp"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/ic_image_24"
                             android:backgroundTint="@color/black" />
 
@@ -207,7 +207,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:text="DODAJ Z GALERII" />
 
                     </RelativeLayout>
