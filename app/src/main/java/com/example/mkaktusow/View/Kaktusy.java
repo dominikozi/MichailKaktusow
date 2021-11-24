@@ -4,6 +4,7 @@ import com.example.mkaktusow.Controller.KaktusAdapter;
 import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 
+import com.example.mkaktusow.Model.MKaktusow;
 import com.example.mkaktusow.R;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -19,11 +20,14 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -37,6 +41,7 @@ import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
+import android.support.v4.app.*;
 
 public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
 
@@ -53,6 +58,7 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miejsca);
 
+        notificationManagerCompat=NotificationManagerCompat.from(this);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
@@ -142,6 +148,8 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         fabMalyBezZdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SendNotificationPodlanie("kaktus na oknie");
+                SendNotificationDziennik("kaktus mamy");
                 startActivity(new Intent(Kaktusy.this, NowyKaktus.class));
             }
         });
@@ -268,4 +276,34 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         adapter.notifyDataSetChanged();
         super.onResume();
     }
+
+    NotificationManagerCompat  notificationManagerCompat;
+
+    public void SendNotificationPodlanie(String listaK){
+        Notification notification = new NotificationCompat.Builder(this, MKaktusow.CHANNEL_PODLEWANIE)
+                .setSmallIcon(R.drawable.ic_woda_24)
+                .setContentTitle("Nie zapomnij podlać kaktusa")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Od miesiąca nie podlałeś kaktusów: "+ listaK))
+                .build();
+
+        notificationManagerCompat.notify(1,notification);
+    }
+    public void SendNotificationDziennik(String listaK){
+        Notification notification = new NotificationCompat.Builder(this, MKaktusow.CHANNEL_DZIENNIK)
+                .setSmallIcon(R.drawable.ic_calendar_24)
+                .setContentTitle("Dawno nie odwiedziłeś kaktusów")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Od miesiąca nie dodałeś opisu multimedialnego do kaktusów: "+ listaK))
+                .build();
+
+        notificationManagerCompat.notify(2,notification);
+    }
+
+    public void NieOdwiedzoneKaktusy(){
+
+    }
+
 }

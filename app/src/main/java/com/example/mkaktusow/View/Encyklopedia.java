@@ -123,7 +123,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
 
         });
         if(!isNetworkAvailable()){
-            source.setText("Brak połączenia z internetem. Połącz się z internetem by skorzystać z funkcjonalności.");
+            source.setText(""); // Brak połączenia z internetem. Połącz się z internetem by skorzystać z funkcjonalności.
             textView.setText("");
             textView2.setText("");
             textView3.setText("");
@@ -134,7 +134,8 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
             textView7.setText("");
             imageView2.setVisibility(View.GONE);
             spinnerGatunek.setVisibility(View.GONE);
-            Toast.makeText(this, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show();
+            openNoInternetDialog();
+        //    Toast.makeText(this, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show();
         }else {
 
             gatunkiKaktusow = new ArrayList<String>();
@@ -164,6 +165,15 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
 
             source.setText("Źródło: fajnyogrod.pl");
         }
+    }
+
+    private void openNoInternetDialog() {
+
+
+        NoInternetDialog noInternetDialog = new NoInternetDialog();
+        noInternetDialog.show(getSupportFragmentManager(),"no internet dialog");
+
+
     }
 
     @Override
