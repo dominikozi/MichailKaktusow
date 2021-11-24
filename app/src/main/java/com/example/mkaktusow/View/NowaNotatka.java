@@ -179,7 +179,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             public void onClick(View v) {
 
                 if (widzialnosc==false) {
-                    Toast.makeText(getApplicationContext(),"Wypelnij dane.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Wypelnij dane",Toast.LENGTH_LONG).show();
                 }else{
                     if(typNotatki=="zdjecie"&&pathDoZdjecia==null){
                         Toast.makeText(getApplicationContext(),"musi byc zdjecie",Toast.LENGTH_LONG).show();
@@ -234,7 +234,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                     przerwijNagrywanieDzwieku();
                     tekstaudio.setText("NAGRANIE ZAPISANE");
                 }else if(ktora_akcja == 2){
-                    Toast.makeText(NowaNotatka.this,"Nagranie zostało już zapisane.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NowaNotatka.this,"Nagranie zostało już zapisane",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -521,36 +521,11 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
 
 
                 } else {
-                    Toast.makeText(NowaNotatka.this, "Nie wybrano zdjecia.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NowaNotatka.this, "Nie wybrano zdjecia", Toast.LENGTH_LONG).show();
                 }
             }
         }
     }
-/*
-    public void setPic(){
-
-        // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-        imageView.setImageBitmap(bitmap);
-    }*/
 
     @Override
     public void onClick(View v) {
@@ -619,7 +594,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                 mediaRecorder.start();
                 ktora_akcja=1;
             }else{
-                Toast.makeText(this, "nagrales juz audio",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Nagrałeś już audio",Toast.LENGTH_LONG).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -636,7 +611,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             ktora_akcja=2;
         }
         catch(Exception e){
-            Toast.makeText(this,"Nagranie nie jest odtwarzane",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Odtrwórz nagranie by móc je zatrzymać",Toast.LENGTH_SHORT).show();
         }
     }
     public void OdtworzNagranieDzwieku(){
@@ -648,7 +623,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
             mediaPlayer.prepare();
             mediaPlayer.start();
         } catch (IOException e) {
-            Toast.makeText(this,"Nie ma nagrania do odtworzenia",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Nie ma zapisanego nagrania do odtworzenia",Toast.LENGTH_SHORT).show();
 
         }
 

@@ -39,6 +39,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -102,6 +103,7 @@ public class NowyKaktus extends AppCompatActivity {
 
     Spinner spinnerGatunek;
     List<String> gatunkiKaktusow;
+    LocationManager mLocationManager;
 
     public static final int PICK_IMAGE = 1111;
     @Override
@@ -164,6 +166,10 @@ public class NowyKaktus extends AppCompatActivity {
 
         askForLocPerm();
 
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1,
+               1, mLocationListener);
 
         //baza danych
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
@@ -186,7 +192,7 @@ public class NowyKaktus extends AppCompatActivity {
                             Date dataDodaniaKaktusa = Calendar.getInstance().getTime();
 
                             if (nazwaKaktusa.getText().toString().equals("") || nazwaMiejsca.getText().toString().equals("")) {
-                                Toast.makeText(getApplicationContext(), "Musisz wypelnic dane", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Musisz podać imię i nazwe miejsca.", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (TextUtils.isEmpty(pathDoZdjecia)) {
                                     db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
@@ -204,10 +210,10 @@ public class NowyKaktus extends AppCompatActivity {
                    //         askForLocPerm();
                    //     }
                     }else{
-                        Toast.makeText(NowyKaktus.this, "nie można stworzyć kaktusa bez dostępu do lokalizacji.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NowyKaktus.this, "Nie można stworzyć kaktusa bez dostępu do lokalizacji.", Toast.LENGTH_LONG).show();
                     }
                 }else{
-                    Toast.makeText(NowyKaktus.this, "nie można stworzyć kaktusa bez połączenia z internetem.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NowyKaktus.this, "Nie można stworzyć kaktusa bez połączenia z internetem.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -363,30 +369,6 @@ public class NowyKaktus extends AppCompatActivity {
         }
 
     }
-/*
-    public void setPic() {
-        // Get the dimensions of the View
-        int targetW = 300;
-        int targetH = 400;
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-        imageView.setImageBitmap(bitmap);
-    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -518,11 +500,8 @@ public class NowyKaktus extends AppCompatActivity {
                 @Override
                 public void onSuccess(Location location) {
                     // Toast.makeText(getApplicationContext(),"tost2",Toast.LENGTH_SHORT).show();
-
                     if (location != null) {
                         lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
-                    }else{
-                        lokalizacja=null;
                     }
                 }
             });
@@ -535,12 +514,31 @@ public class NowyKaktus extends AppCompatActivity {
                     // Toast.makeText(getApplicationContext(),"tost",Toast.LENGTH_SHORT).show();
                     if (location != null) {
                         lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
-                    }else{
-                        lokalizacja=null;
                     }
                 }
             });
         }
     }
+
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            if (location != null) {
+                lokalizacja = new LatLng(location.getLatitude(), location.getLongitude());
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+            askForLocPerm();
+            Toast.makeText(NowyKaktus.this, "Lokalizacja jest wyłączona.", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onProviderEnabled(@NonNull String provider) {
+            Toast.makeText(NowyKaktus.this, "Lokalizacja jest włączona.", Toast.LENGTH_SHORT).show();
+        }
+    };
 }
 
