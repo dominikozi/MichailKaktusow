@@ -73,8 +73,8 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
 
         tabLayout.addTab(tabLayout.newTab().setText("Info"));
         tabLayout.addTab(tabLayout.newTab().setText("Mapa"));
-        tabLayout.addTab(tabLayout.newTab().setText("Zdjecia"));
-        tabLayout.addTab(tabLayout.newTab().setText("Notatki"));
+        tabLayout.addTab(tabLayout.newTab().setText("Zdjecia i filmy"));
+        tabLayout.addTab(tabLayout.newTab().setText("Teksty i audio"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

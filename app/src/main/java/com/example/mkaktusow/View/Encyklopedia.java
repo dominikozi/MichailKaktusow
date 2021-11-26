@@ -395,7 +395,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                 int itetarotr=0;
                 while(tekstExtract.contains("==")){
                     if(itetarotr%2==1){
-                        tekstExtract=tekstExtract.replaceFirst("=="," <br> <br> </h2>");
+                        tekstExtract=tekstExtract.replaceFirst("=="," <br> </h2>");
                     }else{
                         tekstExtract=tekstExtract.replaceFirst("==","<h2> <br> <br>");
                     }

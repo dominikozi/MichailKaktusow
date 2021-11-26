@@ -44,6 +44,7 @@
         android:focusable="true"
         android:background="@color/green"
         android:tint="@color/white"
+        app:tint="@color/GreenPD"
         app:srcCompat="@drawable/ic_add_24"
         />
 
@@ -54,6 +55,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
+        app:tint="@color/GreenPD"
         android:background="@color/green"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_no_image_24"
@@ -72,6 +74,7 @@
         android:layout_alignParentRight="true"
         android:background="@color/green"
         android:layout_marginRight="10dp"
+        app:tint="@color/GreenPD"
         android:layout_marginBottom="120dp"
         android:layout_weight="1"
         android:clickable="true"
