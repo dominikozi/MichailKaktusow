@@ -394,6 +394,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
 
                 //searchLink
                 String tekst = "https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=&titles="+title;
+                System.out.println("https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=&titles="+title);
                 String json2 = Jsoup.connect(tekst).ignoreContentType(true).execute().body();
                 JSONObject jObjectT = new JSONObject(json2);
          //       System.out.println(jsonTemp);
@@ -405,16 +406,25 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
                 int itetarotr=0;
                 while(tekstExtract.contains("==")){
                     if(itetarotr%2==1){
-                        tekstExtract=tekstExtract.replaceFirst("=="," <br> </h2>");
+                        tekstExtract=tekstExtract.replaceFirst("==","</h2>");
                     }else{
-                        tekstExtract=tekstExtract.replaceFirst("==","<h2> <br> <br>");
+                        tekstExtract=tekstExtract.replaceFirst("==","<h2>");
                     }
                     itetarotr++;
                 }
 
-                tekstExtract.replaceAll("=","");
+                tekstExtract=tekstExtract.replaceAll("=","");
+                String informacjeHtml=tekstExtract;
+                String finalInformacje = informacjeHtml;
+                runOnUiThread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      textView.setText(Html.fromHtml(finalInformacje));
+                                  }
+                });
 
-                String finalTekstExtract = tekstExtract;
+
+                        String finalTekstExtract = tekstExtract;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
