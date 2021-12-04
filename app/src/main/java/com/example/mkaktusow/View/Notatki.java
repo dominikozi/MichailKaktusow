@@ -69,6 +69,7 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
 
         notatki = db.notatkaDAO().getAllNotatki();
         notatki_wszystkie= db.notatkaDAO().getAllNotatki();
+        Collections.sort(notatki,Notatka.NotatkaDataMalejacoComparaotr);
 
 
         //recycler view

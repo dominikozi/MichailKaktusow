@@ -94,10 +94,10 @@ public class FragKMapa extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 LatLng latLng = new LatLng(kaktus.getLatitude(),kaktus.getLongtitude());
-                String snippet = "Gatunek: "+ kaktus.getGatunek() + "!!" + kaktus.getSciezkaDoZdjecia();
+                String snippet = kaktus.getGatunek() + "!!" + kaktus.getSciezkaDoZdjecia();
                 googleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
                 //create marker options
-                MarkerOptions options = new MarkerOptions().position(latLng).title("Kaktus: " + kaktus.getNazwaKaktusa()).snippet(snippet);
+                MarkerOptions options = new MarkerOptions().position(latLng).title(kaktus.getNazwaKaktusa()).snippet(snippet);
                 //zoom camera
            //     MapInfoWindowAdapter mapInfoWindowAdapter = new MapInfoWindowAdapter();
            //     googleMap.setInfoWindowAdapter(mapInfoWindowAdapter);

@@ -14,55 +14,61 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/GreenP">
 
                 <TextView
                     android:id="@+id/encyklopedia_z_jakiej_strony"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="text"
                     android:layout_marginTop="2dp"
-                    android:textSize="17dp"
+                    android:text="text"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="17dp" />
 
 
                 <Spinner
                     android:id="@+id/encyklopedia_spinner_gatunek"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@color/GreenPL">
             <TextView
                 android:id="@+id/encyklopedia_tekst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="text"
+                android:textColor="@color/black"
                 android:textSize="22dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-
+                android:textStyle="bold" />
+        </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/encyklopedia_zdjecie"
-                android:scaleType="centerCrop"
-                />
-            <pl.droidsonroids.gif.GifImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/encyklopedia_gif"
-                android:scaleType="centerCrop"
-                android:src="@drawable/loading"
-                />
+
+                <ImageView
+                    android:id="@+id/encyklopedia_zdjecie"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/encyklopedia_gif"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/loading" />
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/encyklopedia_tekst2"
                 android:layout_width="wrap_content"
@@ -74,28 +80,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="text" />
+
             <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/encyklopedia_zdjecie2"
-                android:adjustViewBounds="true"/>
-<!--                android:scaleType="centerCrop"-->
+                android:id="@+id/encyklopedia_zdjecie2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true" />
+            <!--                android:scaleType="centerCrop"-->
 
             <TextView
                 android:id="@+id/encyklopedia_tekst4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="text" />
+
             <TextView
                 android:id="@+id/encyklopedia_tekst5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="text" />
+
             <TextView
                 android:id="@+id/encyklopedia_tekst6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="text" />
+
             <TextView
                 android:id="@+id/encyklopedia_tekst7"
                 android:layout_width="wrap_content"

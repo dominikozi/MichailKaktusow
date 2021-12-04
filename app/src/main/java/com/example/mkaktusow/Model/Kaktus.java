@@ -186,4 +186,34 @@ public class Kaktus {
             return k2.getNazwaMiejsca().compareTo(k1.getNazwaMiejsca());
         }
     };
+
+
+
+
+    public static Comparator<Kaktus> KaktusDataPRosnacoComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k1.getDataOstPodlania().getTime() - (int) k2.getDataOstPodlania().getTime();
+        }
+    };
+    public static Comparator<Kaktus> KaktusDataPDescendingComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k2.getDataOstPodlania().getTime() - (int) k1.getDataOstPodlania().getTime();
+        }
+    };
+
+
+    public static Comparator<Kaktus> KaktusDataKRosnacoComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k1.getDataOstZakwitu().getTime() - (int) k2.getDataOstZakwitu().getTime();
+        }
+    };
+    public static Comparator<Kaktus> KaktusDataKDescendingComparaotr = new Comparator<Kaktus>() {
+        @Override
+        public int compare(Kaktus k1, Kaktus k2) {
+            return (int)k2.getDataOstZakwitu().getTime() - (int) k1.getDataOstZakwitu().getTime();
+        }
+    };
 }

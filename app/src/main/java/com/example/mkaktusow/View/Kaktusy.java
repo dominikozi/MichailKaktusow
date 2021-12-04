@@ -5,6 +5,7 @@ import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 
 import com.example.mkaktusow.Model.MKaktusow;
+import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -39,11 +40,19 @@ import android.view.View;
 
 import android.widget.Toast;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import android.support.v4.app.*;
 
 public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktusListener {
+
+    public static final int POWIADOMIENIE_DZIENNIK_ILE_DNI=1;
 
     RecyclerView recyclerView;
     KaktusAdapter adapter;
@@ -149,7 +158,13 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
             @Override
             public void onClick(View v) {
                 SendNotificationPodlanie("kaktus na oknie");
-                SendNotificationDziennik("kaktus mamy");
+
+
+                String listaK= getListOfDziennik();
+                if(!listaK.equals("BRAK")) {
+                    SendNotificationDziennik(listaK);
+                }
+
                 startActivity(new Intent(Kaktusy.this, NowyKaktus.class));
             }
         });
@@ -200,6 +215,8 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
     int c2=0;
     int c3=0;
     int c4=0;
+    int c5=0;
+    int c6=0;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         String komunikat=null;
@@ -258,10 +275,33 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
                 Toast.makeText(getApplicationContext(),"Posortowano po miejscu "+komunikat ,Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
                 break;
+            case R.id.om_k_sort_data_k:
+                if(c5==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataKRosnacoComparaotr);
+                    c5++;
+                    komunikat = "rosnąco";
+                }else if(c5==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataKDescendingComparaotr);
+                    c5--;
+                    komunikat = "malejąco";
+                }
+                Toast.makeText(getApplicationContext(),"Posortowano po dacie ost zakwitu "+komunikat ,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                break;
+            case R.id.om_k_sort_data_p:
+                if(c6==0){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataPRosnacoComparaotr);
+                    c6++;
+                    komunikat = "rosnąco";
+                }else if(c6==1){
+                    Collections.sort(kaktusy,Kaktus.KaktusDataPDescendingComparaotr);
+                    c6--;
+                    komunikat = "malejąco";
+                }
+                Toast.makeText(getApplicationContext(),"Posortowano po dacie ost podlania "+komunikat ,Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                break;
         }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -275,6 +315,51 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
     protected void onResume() {
         adapter.notifyDataSetChanged();
         super.onResume();
+    }
+
+    public String getListOfDziennik(){
+        String result="\n";
+        int puste=0;
+        Date teraz = new java.util.Date();
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        ArrayList<Notatka> notatki;
+        for(Kaktus kaktus : kaktusy){
+            System.out.println(kaktusy.size());
+            System.out.println(kaktus.getNazwaKaktusa());
+            notatki = new ArrayList<Notatka>(db.notatkaDAO().getAllNotatkiWithID(kaktus.getIdkaktus()));
+
+            int liczban=0;
+
+            if(notatki.size()>0) {
+                for (Notatka notatka : notatki) {
+
+                    if (getDifferenceDays(teraz,notatka.getDataDodania())>POWIADOMIENIE_DZIENNIK_ILE_DNI){
+                        liczban++;
+                    }
+                }
+                if(liczban==notatki.size()){
+                    result+=kaktus.getNazwaKaktusa()+", \n";
+                }
+                continue;
+            }else{
+                result+=kaktus.getNazwaKaktusa()+", \n";
+                puste++;
+                continue;
+            }
+
+
+        }
+        System.out.println(result.substring(0,result.length()-2));
+        if(puste==kaktusy.size()){ //jesli masz nie wyswietlic notyfikacji
+            return "BRAK";
+        }
+        return result.substring(0,result.length()-3)+".";
+    }
+
+    public long getDifferenceDays(Date d1, Date d2){
+        long diff = d1.getTime() - d2.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
     NotificationManagerCompat  notificationManagerCompat;

@@ -45,9 +45,7 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull KaktusAdapter.ViewHolder holder, int position) {
         String nazwakaktusa = kaktusy.get(position).getNazwaKaktusa();
-        if(nazwakaktusa.length()>10){
-            nazwakaktusa=nazwakaktusa.substring(0,8)+"...";
-        }
+
         holder.nazwaKaktusa.setText(nazwakaktusa);
         String gatunekKaktusa = kaktusy.get(position).getGatunek();
         if(gatunekKaktusa.length()>14){

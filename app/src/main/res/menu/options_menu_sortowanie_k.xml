@@ -11,10 +11,23 @@
                 android:title="Sortowanie po nazwie" />
             <item android:id="@+id/om_k_sort_data"
                 android:title="Sortowanie po dacie dodania"/>
+            <item android:id="@+id/om_k_sort_data_p"
+                android:title="Sortowanie po dacie podlania"/>
+            <item android:id="@+id/om_k_sort_data_k"
+                android:title="Sortowanie po dacie kwitniecia"/>
             <item android:id="@+id/om_k_sort_gatunek"
                 android:title="Sortowanie po gatunku" />
             <item android:id="@+id/om_k_sort_miejscu"
                 android:title="Sortowanie po miejscu" />
+            <item android:id="@+id/om_k_filtry"
+                android:title="Filtry">
+                <menu>
+                    <item android:id="@+id/om_k_filtr_z"
+                        android:title="" />
+                    roid:title="tylko tekst"/>
+
+                </menu>
+            </item>
         </menu>
     </item>
 
