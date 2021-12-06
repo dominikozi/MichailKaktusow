@@ -60,7 +60,6 @@ public class JednaNotatka extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jedna_notatka);
 
-        nazwaKaktusa=findViewById(R.id.jednanotatka_nazwakaktusa);
         fabSave=findViewById(R.id.notatki_fab_save);
         Long idNotatki = getIntent().getExtras().getLong("id_notatki");
 
@@ -69,8 +68,6 @@ public class JednaNotatka extends AppCompatActivity {
         notatka = db.notatkaDAO().getNotatkaWithID(idNotatki);
         kaktus = db.kaktusDAO().getKaktusWithID(notatka.getKaktusid());
         getSupportActionBar().setTitle(notatka.getNazwaNotatki());
-
-        nazwaKaktusa.setText("Nazwa kaktusa: " + kaktus.getNazwaKaktusa());
 
         zdjecie=findViewById(R.id.jednanotatka_zdjecie);
         film = findViewById(R.id.jednanotatka_video_view);

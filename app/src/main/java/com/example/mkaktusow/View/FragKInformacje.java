@@ -11,16 +11,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.Database;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -77,19 +82,22 @@ public class FragKInformacje extends Fragment {
 
     }
 
-    TextView nazwaK;
+ //   TextView nazwaK;
+    EditText nazwaK;
     TextView gatunekK;
     TextView miejsceK;
     TextView data1;
     TextView data2;
+    Long idKaktusa;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         JedenKaktusTL activity = (JedenKaktusTL) getActivity();
-        Long idKaktusa = activity.getkaktusIDzaktywnosci();
+        idKaktusa = activity.getkaktusIDzaktywnosci();
         Kaktus kaktus = activity.getCurrentKaktusZActivity();
-        nazwaK = (TextView) view.findViewById(R.id.fragkinfo_nazwa);
+     //   nazwaK = (TextView) view.findViewById(R.id.fragkinfo_nazwa);
+        nazwaK = (EditText) view.findViewById(R.id.fragkinfo_nazwa);
         nazwaK.setText(kaktus.getNazwaKaktusa());
         gatunekK = (TextView) view.findViewById(R.id.jedenkaktustl_gatunekkaktusa);
         gatunekK.setText(kaktus.getGatunek());
@@ -98,7 +106,7 @@ public class FragKInformacje extends Fragment {
         ImageView zdjK = (ImageView) view.findViewById(R.id.frakinfo_zdjkaktusa);
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         data1 = (TextView) view.findViewById(R.id.jedenkaktustl_data1);
-        data1.setText("Brak daty ostatniego podlania.");
+        data1.setText("brak ustawionej daty");
         data2 = (TextView) view.findViewById(R.id.jedenkaktustl_data2);
         zdjK.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -125,7 +133,7 @@ public class FragKInformacje extends Fragment {
         if(kaktus.getDataOstPodlania()!=null){
             data1.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstPodlania()));
         }
-        data2.setText("Brak daty ostatniego zakwitu.");
+        data2.setText("brak ustawionej daty");
 
         if(kaktus.getDataOstZakwitu()!=null){
             data2.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstZakwitu()));
@@ -139,21 +147,33 @@ public class FragKInformacje extends Fragment {
 
     }
 
+    public String getZmienionaNazwaK(){
+        return nazwaK.getText().toString();
+    }
+    public String getZmienionaNazwaM(){
+        return miejsceK.getText().toString();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frag_k_informacje, container, false);
-
+        AppDatabase db = Room.databaseBuilder(getActivity(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragkinfo_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JedenKaktusTL activity = (JedenKaktusTL) getActivity();
-                Long idKaktusa = activity.getkaktusIDzaktywnosci();
-                Intent intent = new Intent(getActivity(), NowaNotatka.class);
-                intent.putExtra("idkaktusap",idKaktusa);
-                startActivity(intent);
+//                JedenKaktusTL activity = (JedenKaktusTL) getActivity();
+//                Long idKaktusa = activity.getkaktusIDzaktywnosci();
+//                Intent intent = new Intent(getActivity(), NowaNotatka.class);
+//                intent.putExtra("idkaktusap",idKaktusa);
+//                startActivity(intent);
+
+                db.kaktusDAO().updateNazwy(nazwaK.getText().toString(),miejsceK.getText().toString(),idKaktusa);
+
+                Toast.makeText(getActivity(),"Zmieniono informacje o kaktusie ",Toast.LENGTH_SHORT).show();
+
             }
         });
 

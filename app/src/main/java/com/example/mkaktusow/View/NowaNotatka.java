@@ -185,7 +185,7 @@ public class NowaNotatka extends AppCompatActivity implements View.OnClickListen
                         Toast.makeText(getApplicationContext(),"musi byc zdjecie",Toast.LENGTH_LONG).show();
                     }else {
                         trescNotatki = editTrescNotatki.getText().toString();
-                        if(!trescNotatki.equals("")){
+                        if(!trescNotatki.equals("") && nazwa.getText().toString().contains("Notatka")){
                             if(trescNotatki.length()>23){
                                 nazwa.setText(trescNotatki.substring(0,23)+"...");
                             }else{

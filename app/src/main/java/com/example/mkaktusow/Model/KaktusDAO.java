@@ -29,4 +29,8 @@ public interface KaktusDAO {
     @Query("UPDATE kaktus SET data_zakwitu=:datak WHERE idkaktus = :id")
     void updateDataOstKwitniecia(Date datak, Long id);
 
+    @Query("UPDATE kaktus SET nazwa_kaktusa=:nazwak, nazwa_miejsca=:nazwam WHERE idkaktus = :id")
+    void updateNazwy(String nazwak, String nazwam, Long id);
+
+
 }

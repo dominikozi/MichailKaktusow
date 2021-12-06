@@ -8,28 +8,18 @@
 <!--    android:background="#f2eebb">-->
 
 
-            <TextView
-                android:id="@+id/jednanotatka_nazwakaktusa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:drawableLeft="@drawable/cactus"
-                android:text="TextView"
-                android:textSize="18dp"/>
 
             <ImageView
                 android:layout_marginTop="5dp"
                 android:id="@+id/jednanotatka_zdjecie"
                 android:layout_width="300dp"
                 android:layout_height="400dp"
-                android:layout_below="@id/jednanotatka_nazwakaktusa"
                 android:layout_centerHorizontal="true" />
             <LinearLayout
                 android:id="@+id/jednanotatka_film_linear_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@id/jednanotatka_nazwakaktusa">
+                android:orientation="vertical">
                 <VideoView
                     android:id="@+id/jednanotatka_video_view"
                     android:layout_width="300dp"

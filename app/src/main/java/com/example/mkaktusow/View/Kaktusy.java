@@ -157,14 +157,14 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         fabMalyBezZdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendNotificationPodlanie("kaktus na oknie");
-
-
-                String listaK= getListOfDziennik();
-                if(!listaK.equals("BRAK")) {
-                    SendNotificationDziennik(listaK);
+//                SendNotificationPodlanie("kaktus na oknie");
+//
+                if(kaktusy.size()>0) {
+                    String listaK= getListOfDziennik();
+                    if(!listaK.equals("BRAK")) {
+                        SendNotificationDziennik(listaK);
+                    }
                 }
-
                 startActivity(new Intent(Kaktusy.this, NowyKaktus.class));
             }
         });

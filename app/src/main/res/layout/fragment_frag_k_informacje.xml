@@ -41,26 +41,23 @@
             android:text="Nazwa"
             android:textSize="10dp" />
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/fragkinfo_nazwa"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="TextView"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@color/black"/>-->
+
+        <EditText
             android:id="@+id/fragkinfo_nazwa"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="20dp"
+            android:paddingLeft="0dp"
             android:textColor="@color/black"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gatunek"
-            android:textSize="10dp" />
-
-        <TextView
-        android:id="@+id/jedenkaktustl_gatunekkaktusa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,13 +65,29 @@
             android:text="Miejsce"
             android:textSize="10dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/jedenkaktustl_miejsce"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="20dp"
+            android:paddingLeft="0dp"
             android:layout_below="@id/jedenkaktustl_gatunekkaktusa"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gatunek"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/jedenkaktustl_gatunekkaktusa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:paddingLeft="0dp"
+            android:textSize="20dp"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,9 +96,10 @@
 
         <TextView
             android:id="@+id/jedenkaktustl_data1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragkinfo_nazwa"
+            android:paddingLeft="0dp"
             android:text="TextView"
             android:textSize="20dp"/>
         <TextView
@@ -96,8 +110,9 @@
 
         <TextView
             android:id="@+id/jedenkaktustl_data2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="0dp"
             android:text="TextView"
             android:textSize="20dp"
             android:layout_below="@id/jedenkaktustl_gatunekkaktusa"/>
@@ -108,7 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:src="@drawable/ic_add_24"
+        android:src="@drawable/ic_save_24"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"

@@ -68,9 +68,10 @@ public class NotatkaAdapter extends RecyclerView.Adapter {
             ViewHolderText viewHolderText = (ViewHolderText) holder;
             viewHolderText.ikona.setVisibility(View.GONE);
             viewHolderText.ikona2.setVisibility(View.GONE);
+            String nazwa="";
 
+            nazwa = notatki.get(position).getNazwaNotatki();
 
-            String nazwa = notatki.get(position).getTrescNotatki();
           //  if(nazwa.length()>35){
         //        nazwa= nazwa.substring(0,35)+"...";
           //  }
