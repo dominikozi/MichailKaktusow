@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +70,8 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
     TextView textView8;
     ImageView imageView;
     ImageView imageView2;
+    LinearLayout linearLayoutzielony;
+
     TextView source;
     List<String> img;
     List<String> img2;
@@ -84,6 +88,7 @@ public class Encyklopedia extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encyklopedia);
         gifImageView=findViewById(R.id.encyklopedia_gif);
+        linearLayoutzielony=findViewById(R.id.encyuklopedia_zielony_pasek_pood_title);
         //spinner gatunek
         spinnerGatunek = findViewById(R.id.encyklopedia_spinner_gatunek);
         textView = findViewById(R.id.encyklopedia_tekst);

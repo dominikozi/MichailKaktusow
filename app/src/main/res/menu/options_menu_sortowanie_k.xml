@@ -19,15 +19,7 @@
                 android:title="Sortowanie po gatunku" />
             <item android:id="@+id/om_k_sort_miejscu"
                 android:title="Sortowanie po miejscu" />
-            <item android:id="@+id/om_k_filtry"
-                android:title="Filtry">
-                <menu>
-                    <item android:id="@+id/om_k_filtr_z"
-                        android:title="" />
-                    roid:title="tylko tekst"/>
 
-                </menu>
-            </item>
         </menu>
     </item>
 

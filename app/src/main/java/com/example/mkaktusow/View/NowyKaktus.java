@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.mkaktusow.Model.AppDatabase;
+import com.example.mkaktusow.Model.Gatunek;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,8 +54,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +67,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -81,6 +87,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -99,6 +106,8 @@ public class NowyKaktus extends AppCompatActivity {
     LatLng lokalizacja;
     FusedLocationProviderClient client;
 
+    Long idWybranegoGatunku;
+
     Button dodajKaktus;
 
     Spinner spinnerGatunek;
@@ -109,6 +118,9 @@ public class NowyKaktus extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_nowy_kaktus);
         nazwaKaktusa = findViewById(R.id.nowykaktus_textinputedittext_1_nazwakaktusa);
@@ -127,22 +139,72 @@ public class NowyKaktus extends AppCompatActivity {
                     }, 100);
         }
         RelativeLayout buttonzGaleri = findViewById(R.id.nowykaktus_dodajzdj);
-        gatunkiKaktusow = new ArrayList<String>();
-        gatunkiKaktusow.add("Opuncja drobnokolczasta");
-        gatunkiKaktusow.add("Opuncja figowa");
-        gatunkiKaktusow.add("Wielomlecz trójżebrowy");
-        gatunkiKaktusow.add("Cereus repandus");
-        gatunkiKaktusow.add("Echinokaktus Grusonii");
-        gatunkiKaktusow.add("Echinopsis Eyriesa");
-        gatunkiKaktusow.add("Echinopsis spachiana");
-        gatunkiKaktusow.add("Mammillaria Haw.");
-        gatunkiKaktusow.add("Jazgrza Williamsa");
-        gatunkiKaktusow.add("Ferokaktus");
-        gatunkiKaktusow.add("Gymnocalycium Monvillei");
+
+        //Spinner z lista kaktusow do wyboru
         spinnerGatunek = findViewById(R.id.nowykaktus_spinner);
-        ArrayAdapter<String> spinnerGatunekAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gatunkiKaktusow);
-        spinnerGatunekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGatunek.setAdapter(spinnerGatunekAdapter);
+        List<Gatunek> gatunki = db.gatunekDAO().getAllGatunki();
+        gatunki.add(new Gatunek("Dodaj nowy gatunek...",6666));
+
+        ArrayAdapter<Gatunek> spinnnerGatunkiAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gatunki);
+        spinnnerGatunkiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGatunek.setAdapter(spinnnerGatunkiAdapter);
+
+        spinnerGatunek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(id == gatunki.size()-1){
+
+                    Dialog myDialog = new Dialog(NowyKaktus.this);
+                    myDialog.setContentView(R.layout.dialog_dodanie_gatunku);
+
+                    RelativeLayout relativeLayoutDodaj = (RelativeLayout) myDialog.findViewById(R.id.dialog_new_gatunek_dodaj);
+                    RelativeLayout relativeLayoutZamknij = (RelativeLayout) myDialog.findViewById(R.id.dialog_new_gatunek_zamknij);
+
+                    myDialog.show();
+
+                    relativeLayoutDodaj.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Dialog dialogObj = Dialog.class.cast(myDialog);
+                            EditText nazwa = (EditText) dialogObj.findViewById(R.id.nowykaktus_textinputedittext_1_nazwakaktusa);
+                            EditText liczba = (EditText) dialogObj.findViewById(R.id.nowykaktus_textinputedittext_2_nazwakaktusa);
+
+                            if(nazwa.length()>0 && liczba.length()>0 && isNumeric(liczba.getText().toString())){
+                                int liczbaDni = Integer.parseInt(liczba.getText().toString());
+                                String nazwaG = nazwa.getText().toString();
+
+                                db.gatunekDAO().insertAll(new Gatunek(nazwaG,  liczbaDni));
+                                gatunki.remove(gatunki.get(gatunki.size()-1));
+                                gatunki.add(new Gatunek(nazwaG,  liczbaDni));
+                                gatunki.add(new Gatunek("Dodaj nowy gatunek...",6666));
+                                idWybranegoGatunku = gatunki.get(gatunki.size()-2).getIdgatunek();
+                                spinnnerGatunkiAdapter.notifyDataSetChanged();
+
+                                Toast.makeText(NowyKaktus.this, "Pomyslnie dodano gatunek "+ nazwaG, Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(NowyKaktus.this, "Źle podane dane", Toast.LENGTH_SHORT).show();
+                            }
+                            myDialog.hide();
+                        }
+                    });
+                    relativeLayoutZamknij.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.hide();
+                        }
+                    });
+
+
+
+                }else {
+                    Gatunek gatunekTemp = (Gatunek) spinnerGatunek.getSelectedItem();
+                    idWybranegoGatunku = gatunekTemp.getIdgatunek();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         buttonzGaleri.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,9 +233,6 @@ public class NowyKaktus extends AppCompatActivity {
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1,
                1, mLocationListener);
 
-        //baza danych
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -195,11 +254,12 @@ public class NowyKaktus extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Musisz podać imię i nazwe miejsca.", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (TextUtils.isEmpty(pathDoZdjecia)) {
-                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+
+                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), idWybranegoGatunku, nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
 
                                     // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), null, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
                                 } else {
-                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), spinnerGatunek.getSelectedItem().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
+                                    db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), idWybranegoGatunku, nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
 
                                     // db.kaktusDAO().insertAll(new Kaktus(nazwaKaktusa.getText().toString(), gatunek.getText().toString(), nazwaMiejsca.getText().toString(), pathDoZdjecia, lokalizacja.latitude, lokalizacja.longitude, dataDodaniaKaktusa));
                                 }
@@ -236,6 +296,14 @@ public class NowyKaktus extends AppCompatActivity {
 
     String currentPhotoPath;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private boolean isNumeric(String string){
+        Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+        if (string == null) {
+            return false;
+        }
+        return pattern.matcher(string).matches();
+    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

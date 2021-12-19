@@ -64,7 +64,6 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         setContentView(R.layout.activity_notatki);
 
 
-        //TODO robić to w background threat a nie w main!
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         notatki = db.notatkaDAO().getAllNotatki();
@@ -136,10 +135,14 @@ public class Notatki extends AppCompatActivity implements NotatkaAdapter.OnNotat
         fabDuzy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notatki.this, NowaNotatka.class);
-                intent.putExtra("idkaktusap",-1L);
-                intent.putExtra("liczbanotatek",adapter.getItemCount());
-                startActivity(intent);
+                if(db.kaktusDAO().getAllKaktusy().size()==0){
+                    Toast.makeText(getApplicationContext(), "Nie mozna stworzyc notatki jesli nie istnieje zaden kaktus", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = new Intent(Notatki.this, NowaNotatka.class);
+                    intent.putExtra("idkaktusap",-1L);
+                    intent.putExtra("liczbanotatek",adapter.getItemCount());
+                    startActivity(intent);
+                }
             }
         });
 

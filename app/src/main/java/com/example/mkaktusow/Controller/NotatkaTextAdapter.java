@@ -77,7 +77,7 @@ public class NotatkaTextAdapter extends RecyclerView.Adapter<NotatkaTextAdapter.
         holder.ikona2.setVisibility(View.GONE);
 
 
-        String nazwa = notatki.get(position).getTrescNotatki();
+        String nazwa = notatki.get(position).getNazwaNotatki();
       //  if(nazwa.length()>35){
      //       nazwa= nazwa.substring(0,35)+"...";
       //  }

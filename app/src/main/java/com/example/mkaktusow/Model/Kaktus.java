@@ -5,21 +5,26 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.Room;
 
 import java.util.Comparator;
 import java.util.Date;
 
-@Entity
-public class Kaktus {
+@Entity(foreignKeys = @ForeignKey(entity=Gatunek.class,
+        parentColumns = "idgatunek",
+        childColumns="gatunekid"))
+public
+class Kaktus {
 
     @PrimaryKey(autoGenerate = true)
     private long idkaktus;
 
     @ColumnInfo(name="nazwa_kaktusa")
     private String nazwaKaktusa;
-    @ColumnInfo(name="gatunek")
-    private String gatunek;
+    @ColumnInfo(name="gatunekid")
+    private long gatunekid;
     @ColumnInfo(name="sciezkadozdjecia")
     private String sciezkaDoZdjecia;
     @ColumnInfo(name="nazwa_miejsca")
@@ -35,14 +40,32 @@ public class Kaktus {
     @ColumnInfo(name="data_zakwitu")
     private Date dataOstZakwitu;
 
-    public Kaktus(String nazwaKaktusa, String gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude, Date dataDodania) {
+    public Kaktus(String nazwaKaktusa, long gatunek, String nazwaMiejsca, String sciezkaDoZdjecia, Double latitude, Double longtitude, Date dataDodania) {
         this.nazwaKaktusa = nazwaKaktusa;
-        this.gatunek = gatunek;
+        this.gatunekid = gatunek;
         this.nazwaMiejsca = nazwaMiejsca;
         this.sciezkaDoZdjecia=sciezkaDoZdjecia;
         this.latitude=latitude;
         this.longtitude=longtitude;
         this.dataDodania=dataDodania;
+    }
+
+    public Kaktus(String nazwaKaktusa, long gatunekid, String sciezkaDoZdjecia, String nazwaMiejsca, Double latitude, Double longtitude, Date dataDodania, Date dataOstPodlania, Date dataOstZakwitu) {
+        this.nazwaKaktusa = nazwaKaktusa;
+        this.gatunekid = gatunekid;
+        this.sciezkaDoZdjecia = sciezkaDoZdjecia;
+        this.nazwaMiejsca = nazwaMiejsca;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.dataDodania = dataDodania;
+    }
+
+    public long getGatunekid() {
+        return gatunekid;
+    }
+
+    public void setGatunekid(long gatunekid) {
+        this.gatunekid = gatunekid;
     }
 
     public long getIdkaktus() {
@@ -61,12 +84,12 @@ public class Kaktus {
         this.nazwaKaktusa = nazwaKaktusa;
     }
 
-    public String getGatunek() {
-        return gatunek;
+    public long getGatunek() {
+        return gatunekid;
     }
 
-    public void setGatunek(String gatunek) {
-        this.gatunek = gatunek;
+    public void setGatunek(long gatunek) {
+        this.gatunekid = gatunek;
     }
 
     public Date getDataDodania() {
@@ -162,14 +185,14 @@ public class Kaktus {
     public static Comparator<Kaktus> KaktusGatunbekAZComparaotr = new Comparator<Kaktus>() {
         @Override
         public int compare(Kaktus k1, Kaktus k2) {
-            return k1.getGatunek().compareTo(k2.getGatunek());
+            return 0;
         }
     };
 
     public static Comparator<Kaktus> KaktusGatunbekZAComparaotr = new Comparator<Kaktus>() {
         @Override
         public int compare(Kaktus k1, Kaktus k2) {
-            return k2.getGatunek().compareTo(k1.getGatunek());
+            return 0;
         }
     };
 

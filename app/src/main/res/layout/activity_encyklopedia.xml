@@ -38,10 +38,11 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/encyuklopedia_zielony_pasek_pood_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@color/GreenPL">
+                android:background="@color/white">
             <TextView
                 android:id="@+id/encyklopedia_tekst"
                 android:layout_width="wrap_content"

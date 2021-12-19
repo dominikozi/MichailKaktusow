@@ -18,4 +18,5 @@
     <color name="light_blue">#64b5f6</color>
     <color name="green_subtle">#c8e6c9</color>
     <color name="light_gray">#f3f3f3</color>
+    <color name="dark_gray_nav">#2C2C2C</color>
 </resources>

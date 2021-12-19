@@ -17,7 +17,7 @@ public class NoInternetDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Brak połączenia z internetem")
-               .setMessage("Funkcja Wiedzy potrzebuje dostępu do internetu by działać. ")
+               .setMessage("Funkcja Encyklopedii wiedzy potrzebuje dostępu do internetu by działać. ")
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {

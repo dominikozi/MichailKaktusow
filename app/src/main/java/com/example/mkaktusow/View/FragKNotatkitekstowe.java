@@ -27,6 +27,7 @@ import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -98,7 +99,8 @@ public class FragKNotatkitekstowe extends Fragment implements NotatkaTextAdapter
                 notatkiText.add(notatka);
             }
         }
-    //    adapter=new NotatkaTextAdapter(notatkiText, this);
+        Collections.sort(notatkiText,Notatka.NotatkaDataMalejacoComparaotr);
+        //    adapter=new NotatkaTextAdapter(notatkiText, this);
 
         recyclerViewNotatki=view.findViewById(R.id.fragknotatkitekstowe_recycler);
         layoutManager=new GridLayoutManager(getContext(),2);

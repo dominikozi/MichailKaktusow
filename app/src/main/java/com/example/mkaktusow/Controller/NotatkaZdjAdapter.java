@@ -68,20 +68,33 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
         holder.iv4.setVisibility(View.GONE);
         holder.iv5.setVisibility(View.GONE);
         holder.iv6.setVisibility(View.GONE);
+        holder.iv11.setVisibility(View.GONE);
+        holder.iv12.setVisibility(View.GONE);
+        holder.iv13.setVisibility(View.GONE);
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         holder.data.setText(df.format("yyyy-MM-dd hh:mm", notatki.get(position).getDataDodania()));
 
         if (notatki.get(position).getTypNotatki().equals("film")) {
             holder.iv2.setVisibility(View.VISIBLE);
+            holder.iv11.setVisibility(View.VISIBLE);
+
         }else  if (notatki.get(position).getTypNotatki().equals("zdjecie")) {
             holder.iv3.setVisibility(View.VISIBLE);
+            holder.iv11.setVisibility(View.VISIBLE);
+
             if(notatki.get(position).getSciezkaDoAudio()!=null && !notatki.get(position).getTrescNotatki().equals("")){
                 holder.iv5.setVisibility(View.VISIBLE);
                 holder.iv6.setVisibility(View.VISIBLE);
+                holder.iv13.setVisibility(View.VISIBLE);
+
             }else if(notatki.get(position).getSciezkaDoAudio()==null && !notatki.get(position).getTrescNotatki().equals("")){
                 holder.iv5.setVisibility(View.VISIBLE);
+                holder.iv12.setVisibility(View.VISIBLE);
+
             }else if(notatki.get(position).getSciezkaDoAudio()!=null && notatki.get(position).getTrescNotatki().equals("")){
                 holder.iv4.setVisibility(View.VISIBLE);
+                holder.iv12.setVisibility(View.VISIBLE);
+
             }
         }
         Picasso.get().load(notatki.get(position).getSciezkaDoZdjecia()).fit().centerCrop().into(holder.iv);
@@ -117,6 +130,11 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
         public ImageView iv4;
         public ImageView iv5;
         public ImageView iv6;
+
+        public ImageView iv11;
+        public ImageView iv12;
+        public ImageView iv13;
+
         public TextView data;
         OnNotatkaZdjListener onNotatkaZdjListener;
         public ViewHolder(View itemView, OnNotatkaZdjListener OnNotatkaZdjListener) {
@@ -146,6 +164,14 @@ public class NotatkaZdjAdapter extends RecyclerView.Adapter<NotatkaZdjAdapter.Vi
             iv5= itemView.findViewById(R.id.alt_notatka_zdj_row_grid_imageview5);
             iv6= itemView.findViewById(R.id.alt_notatka_zdj_row_grid_imageview6);
             data= itemView.findViewById(R.id.alt_notatka_zdj_row_grid_textview1);
+
+
+            iv11=itemView.findViewById(R.id.alt_notatka_row_bialy_prostokat_1);
+            iv12=itemView.findViewById(R.id.alt_notatka_row_bialy_prostokat_2);
+            iv13=itemView.findViewById(R.id.alt_notatka_row_bialy_prostokat_3);
+
+
+
             this.onNotatkaZdjListener=OnNotatkaZdjListener;
             itemView.setOnClickListener(this);
         }

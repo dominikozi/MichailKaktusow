@@ -34,6 +34,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragKInformacje#newInstance} factory method to
@@ -92,6 +94,7 @@ public class FragKInformacje extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        AppDatabase db = Room.databaseBuilder(getActivity(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         JedenKaktusTL activity = (JedenKaktusTL) getActivity();
         idKaktusa = activity.getkaktusIDzaktywnosci();
@@ -100,13 +103,14 @@ public class FragKInformacje extends Fragment {
         nazwaK = (EditText) view.findViewById(R.id.fragkinfo_nazwa);
         nazwaK.setText(kaktus.getNazwaKaktusa());
         gatunekK = (TextView) view.findViewById(R.id.jedenkaktustl_gatunekkaktusa);
-        gatunekK.setText(kaktus.getGatunek());
+        String nazwaG = db.gatunekDAO().getGatunek(kaktus.getGatunek()).getNazwaGatunku();
+        gatunekK.setText(nazwaG);
         miejsceK = (TextView) view.findViewById(R.id.jedenkaktustl_miejsce);
         miejsceK.setText(kaktus.getNazwaMiejsca());
         ImageView zdjK = (ImageView) view.findViewById(R.id.frakinfo_zdjkaktusa);
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         data1 = (TextView) view.findViewById(R.id.jedenkaktustl_data1);
-        data1.setText("brak ustawionej daty");
+
         data2 = (TextView) view.findViewById(R.id.jedenkaktustl_data2);
         zdjK.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -130,13 +134,20 @@ public class FragKInformacje extends Fragment {
             }
         });
 
-        if(kaktus.getDataOstPodlania()!=null){
-            data1.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstPodlania()));
-        }
-        data2.setText("brak ustawionej daty");
 
-        if(kaktus.getDataOstZakwitu()!=null){
-            data2.setText(df.format("yyyy-MM-dd hh:mm", kaktus.getDataOstZakwitu()));
+        Date datajeden = db.kaktusDAO().getDataPWithID(idKaktusa);
+//        if(kaktus.getDataOstPodlania()!=null){
+        if(datajeden!=null){
+            data1.setText(df.format("yyyy-MM-dd hh:mm", datajeden));
+        }else{
+            data1.setText("brak ustawionej daty");
+        }
+        Date datadwa = db.kaktusDAO().getDataKWithID(idKaktusa);
+
+        if(datadwa!=null){
+            data2.setText(df.format("yyyy-MM-dd hh:mm", datadwa));
+        }else{
+            data2.setText("brak ustawionej daty");
         }
 
         if(kaktus.getSciezkaDoZdjecia()!=null) {

@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Room;
 
+import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -34,13 +36,16 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         String title = marker.getTitle();
         TextView tvTitle = (TextView) mWindow.findViewById(R.id.infowindow_nazwa);
 
+        AppDatabase db = Room.databaseBuilder(mWindow.getContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         if(!title.equals("")){
             tvTitle.setText(title);
         }
         String snippet = marker.getSnippet();
         String[] dane = snippet.split("!!");
 
-        String gatunek = dane[0];
+        long gatunekkid = Long.parseLong(dane[0]);
+        String gatunek = db.gatunekDAO().getGatunek(gatunekkid).getNazwaGatunku();
         TextView tvGatunek = (TextView) mWindow.findViewById(R.id.infowindow_gatunek);
 
         if(!title.equals("")){

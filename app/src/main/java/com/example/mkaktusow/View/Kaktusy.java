@@ -160,10 +160,17 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
 //                SendNotificationPodlanie("kaktus na oknie");
 //
                 if(kaktusy.size()>0) {
-                    String listaK= getListOfDziennik();
-                    if(!listaK.equals("BRAK")) {
-                        SendNotificationDziennik(listaK);
+                    String listaK= null;
+                    try {
+                        listaK = getListOfDziennik();
+                        if(!listaK.equals("BRAK")) {
+                            SendNotificationDziennik(listaK);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+
                 }
                 startActivity(new Intent(Kaktusy.this, NowyKaktus.class));
             }
@@ -317,7 +324,7 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
         super.onResume();
     }
 
-    public String getListOfDziennik(){
+    public String getListOfDziennik() throws Exception{
         String result="\n";
         int puste=0;
         Date teraz = new java.util.Date();
@@ -350,7 +357,6 @@ public class Kaktusy extends AppCompatActivity implements KaktusAdapter.OnKaktus
 
 
         }
-        System.out.println(result.substring(0,result.length()-2));
         if(puste==kaktusy.size()){ //jesli masz nie wyswietlic notyfikacji
             return "BRAK";
         }

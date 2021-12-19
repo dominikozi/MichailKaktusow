@@ -6,7 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.mkaktusow.Controller.Converters;
 
-@Database(entities={Notatka.class,Kaktus.class}, version=19)
+@Database(entities={Notatka.class,Kaktus.class, Gatunek.class}, version=22)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -14,5 +14,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract KaktusDAO kaktusDAO();
 
-
+    public abstract GatunekDAO gatunekDAO();
 }

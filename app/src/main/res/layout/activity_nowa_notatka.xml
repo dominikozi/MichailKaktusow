@@ -235,7 +235,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/nowanotatka_textinputlayout_trescnotatki"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="500dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nowanotatka_textinputedittext_trescnotatki"
@@ -306,8 +306,8 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/zaokraglony_przycisk"
         android:drawableLeft="@drawable/ic_save_24"
-        android:drawableTint="@color/GreenPD"
+        android:drawableTint="@color/dark_gray_nav"
         android:text="Dodaj"
-        android:textColor="@color/GreenPD" />
+        android:textColor="@color/dark_gray_nav" />
 </RelativeLayout>
 

@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.example.mkaktusow.Model.AppDatabase;
 import com.example.mkaktusow.Model.Kaktus;
 import com.example.mkaktusow.Model.Notatka;
 import com.example.mkaktusow.R;
@@ -22,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder>{
@@ -46,8 +49,12 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
     public void onBindViewHolder(@NonNull KaktusAdapter.ViewHolder holder, int position) {
         String nazwakaktusa = kaktusy.get(position).getNazwaKaktusa();
 
+        AppDatabase db = Room.databaseBuilder(holder.itemView.getContext(), AppDatabase.class, "production").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         holder.nazwaKaktusa.setText(nazwakaktusa);
-        String gatunekKaktusa = kaktusy.get(position).getGatunek();
+
+        String nazwaG = db.gatunekDAO().getGatunek(kaktusy.get(position).getGatunek()).getNazwaGatunku();
+        String gatunekKaktusa = nazwaG;
         if(gatunekKaktusa.length()>14){
             gatunekKaktusa=gatunekKaktusa.substring(0,12)+"...";
         }
@@ -66,16 +73,21 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
             Picasso.get().load(kaktusy.get(position).getSciezkaDoZdjecia()).resize(180,240).centerCrop().into(holder.previewKaktusa);
         }
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        holder.dataDodaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataDodania()));
-        if(kaktusy.get(position).getDataOstPodlania()!=null){
-            holder.dataOstPodlaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataOstPodlania()));
-        }else
-            holder.dataOstPodlaniaK.setVisibility(View.GONE);
-        if(kaktusy.get(position).getDataOstZakwitu()!=null){
-            holder.dataOstZakwituK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataOstZakwitu()));
-        }else
-            holder.dataOstZakwituK.setVisibility(View.GONE);
 
+        Date datajeden = db.kaktusDAO().getDataPWithID(kaktusy.get(position).getIdkaktus());
+        Date datadwa = db.kaktusDAO().getDataKWithID(kaktusy.get(position).getIdkaktus());
+
+        holder.dataDodaniaK.setText(df.format("yyyy-MM-dd hh:mm",kaktusy.get(position).getDataDodania()));
+        if(datajeden!=null){
+            holder.dataOstPodlaniaK.setText(df.format("yyyy-MM-dd hh:mm",datajeden));
+        }else {
+            holder.dataOstPodlaniaK.setVisibility(View.GONE);
+        }
+        if(datadwa!=null){
+            holder.dataOstZakwituK.setText(df.format("yyyy-MM-dd hh:mm",datadwa));
+        }else {
+            holder.dataOstZakwituK.setVisibility(View.GONE);
+        }
 
     }
 
@@ -138,10 +150,9 @@ public class KaktusAdapter extends RecyclerView.Adapter<KaktusAdapter.ViewHolder
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
             menu.setHeaderIcon(R.drawable.cactus);
-            menu.setHeaderTitle("Akcja " + nazwaKaktusa.getText());
+            menu.setHeaderTitle(nazwaKaktusa.getText());
 
             menu.add(this.getAdapterPosition(), 121, 0 , "Usun");
-            menu.add(this.getAdapterPosition(), 122, 1 , "Edytuj");
 
         }
     }

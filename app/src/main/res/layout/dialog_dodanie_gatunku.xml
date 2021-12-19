@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_green"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/dialognotatka_film_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/GreenPL">
+
+            <TextView
+                android:id="@+id/dialog_notatka_film_nazwa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Dodaj gatunek"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="Nazwa kaktusa i liczba dni na podlanie kaktusa"
+                android:textSize="10dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nowykaktus_textinputlayout_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nowykaktus_textinputedittext_1_nazwakaktusa"
+                    android:layout_width="228dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-8dp"
+                    android:hint="Gatunek"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+<!--                    android:layout_marginTop="-15dp"-->
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nowykaktus_textinputlayout_2"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nowykaktus_textinputedittext_2_nazwakaktusa"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:hint="dni"
+                    android:layout_marginTop="-8dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    />
+<!--                    android:layout_marginTop="-15dp"-->
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialog_new_gatunek_dodaj"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="DODAJ" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialog_new_gatunek_zamknij"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="ZAMKNIJ" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

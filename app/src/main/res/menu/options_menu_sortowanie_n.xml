@@ -21,13 +21,13 @@
                 android:title="Filtry">
                 <menu>
                     <item android:id="@+id/om_n_filtr_z"
-                        android:title="tylko zdjecia" />
+                        android:title="Filtr - zdjecia" />
                     <item android:id="@+id/om_n_filtr_t"
-                        android:title="tylko tekst"/>
+                        android:title="Filtr - tekstowe"/>
                     <item android:id="@+id/om_n_filtr_f"
-                        android:title="tylko film" />
+                        android:title="Filtr - wideo" />
                     <item android:id="@+id/om_n_filtr_a"
-                        android:title="tylko audio"/>
+                        android:title="Filtr - audio"/>
                 </menu>
             </item>
         </menu>

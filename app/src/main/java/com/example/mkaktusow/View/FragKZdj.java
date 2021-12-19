@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -112,6 +113,8 @@ public class FragKZdj extends Fragment  implements NotatkaZdjAdapter.OnNotatkaZd
                 notatkiZdj.add(notatka);
             }
         }
+        Collections.sort(notatkiZdj,Notatka.NotatkaDataMalejacoComparaotr);
+
         recyclerViewNotatki=view.findViewById(R.id.fragkzdj_recycler);
         layoutManager=new GridLayoutManager(getContext(),2);
         recyclerViewNotatki.setLayoutManager(layoutManager);

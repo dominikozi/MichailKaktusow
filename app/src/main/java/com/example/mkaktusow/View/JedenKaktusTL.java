@@ -196,6 +196,7 @@ public class JedenKaktusTL extends AppCompatActivity implements NotatkaAdapter.O
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         if(ktoradata==1){
             Toast.makeText(this,"Data ost. podlania ustawiona: "+df.format("yyyy-MM-dd hh:mm", datetemp) , Toast.LENGTH_SHORT).show();
+
             db.kaktusDAO().updateDataOstPodlania(datetemp, kaktus.getIdkaktus());
         }else if (ktoradata==0){
             Toast.makeText(this,"Data ost. kwitniecia ustawiona: "+df.format("yyyy-MM-dd hh:mm", datetemp) , Toast.LENGTH_SHORT).show();
