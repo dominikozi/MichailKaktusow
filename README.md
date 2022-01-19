@@ -1,0 +1,3 @@
+# MichailKaktusow
+Mobile application for suculent observers. 
+Java, Android, Room Persistance Library, Google Maps SDK, MediaWiki API, JSoup, Picasso, ...
